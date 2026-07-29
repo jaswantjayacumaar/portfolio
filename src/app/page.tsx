@@ -232,6 +232,9 @@ export default function Home() {
             <a href="#tooling" className="hidden transition-colors hover:text-fg sm:block">
               tooling
             </a>
+            <a href="#research" className="transition-colors hover:text-fg">
+              research
+            </a>
             <a href="#about" className="transition-colors hover:text-fg">
               about
             </a>
@@ -414,6 +417,126 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Research */}
+        <section id="research" className="pb-28">
+          <SectionHeading
+            kicker="RESEARCH"
+            title="Timing pulsars with MeerKAT"
+            lede="Before dashboards and bidding systems: two years at the Jodrell Bank Centre for Astrophysics measuring how cosmic clocks drift — an MSc by Research in the statistics I still use every day."
+          />
+          <div className="mt-12 grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
+            <Reveal>
+              <div className="space-y-5 text-base leading-7 text-muted">
+                <p>
+                  Pulsars are rotating neutron stars whose radio beams sweep
+                  past Earth with clock-like regularity — regular enough that
+                  microsecond deviations carry physics. Timing one means
+                  recording pulse arrival times, comparing them against a
+                  rotational model, and studying the residuals: the part the
+                  model can&apos;t explain.
+                </p>
+                <p>
+                  Starting from 515 pulsars in the MeerTime
+                  Thousand-Pulsar-Array programme, I produced updated timing
+                  solutions (ephemerides) for <strong className="text-fg">179 of them</strong>{" "}
+                  with TEMPO2 — fitting spin frequency and spin-down rate, and
+                  merging observations from the 76-m Lovell telescope with the
+                  64-dish MeerKAT interferometer into combined datasets, with
+                  the cross-instrument clock offsets fitted explicitly.
+                </p>
+                <p>
+                  For eight pulsars I then measured variations in the spin-down
+                  rate (ν̇) two independent ways, on three datasets each. The
+                  point wasn&apos;t just the measurements — it was knowing when
+                  each method can be trusted, and when adding more data makes an
+                  estimate worse.
+                </p>
+              </div>
+            </Reveal>
+            <Reveal delay={120}>
+              <div className="flex h-full flex-col rounded-xl border border-line bg-panel p-6">
+                <p className="kicker font-mono text-[11px] text-accent-3">
+                  THE MACHINERY
+                </p>
+                <ul className="mt-4 space-y-3">
+                  {[
+                    "Timing noise modelled as a stationary red-noise process with a power-law spectrum, with a spectral-index floor (γ ≥ 4) to keep spurious periodicity out of the ν̇ series",
+                    "Posteriors sampled with emcee ensemble MCMC — 32 walkers exploring Fourier-domain Gaussian-process parameters via run_enterprise",
+                    "Cross-checked with fitwaves harmonic whitening: fit harmonically related sinusoids to the residuals, double-differentiate to estimate ν̇",
+                    "The two methods agree for six of eight pulsars; fitwaves degrades on irregular sampling and near-white residuals — the Bayesian approach doesn't",
+                    "Combining telescopes only helps when the added data has low uncertainty; high-σ observations are worth excluding entirely",
+                  ].map((p) => (
+                    <li
+                      key={p}
+                      className="border-l-2 border-line pl-3 text-sm leading-6 text-muted"
+                    >
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          </div>
+          <div className="mt-10 space-y-5">
+            <Reveal>
+              <figure className="rounded-xl border border-line bg-panel p-4">
+                <div className="overflow-hidden rounded-lg">
+                  <Image
+                    src="/thesis/fig4-1_aitoff_sky_map_dark.png"
+                    alt="Aitoff projection sky map showing the 515-pulsar Thousand-Pulsar-Array sample and the pulsars selected for timing analysis"
+                    width={1560}
+                    height={810}
+                    className="h-auto w-full"
+                  />
+                </div>
+                <figcaption className="mt-3 font-mono text-[11px] leading-5 text-faint">
+                  Sky coverage: the Thousand-Pulsar-Array sample (red ×) and
+                  the pulsars selected for analysis (blue ●) — thesis fig. 4.1.
+                </figcaption>
+              </figure>
+            </Reveal>
+            <div className="grid items-start gap-5 md:grid-cols-2">
+              <Reveal>
+                <figure className="rounded-xl border border-line bg-panel p-4">
+                  <div className="overflow-hidden rounded-lg">
+                    <Image
+                      src="/thesis/fig4-3_J1833-0338_nudot_dark.png"
+                      alt="Timing residuals and spin-down-rate variations of PSR J1833-0338 measured with Bayesian and fitwaves analysis across JBO, MeerKAT and combined datasets"
+                      width={1440}
+                      height={990}
+                      className="h-auto w-full"
+                    />
+                  </div>
+                  <figcaption className="mt-3 font-mono text-[11px] leading-5 text-faint">
+                    PSR J1833-0338 — ν̇ oscillating every ~200 days, resolved
+                    consistently by both methods; one of the cases where
+                    combining JBO + MeerKAT genuinely tightens the constraint
+                    (fig. 4.3).
+                  </figcaption>
+                </figure>
+              </Reveal>
+              <Reveal delay={120}>
+                <figure className="rounded-xl border border-line bg-panel p-4">
+                  <div className="overflow-hidden rounded-lg">
+                    <Image
+                      src="/thesis/fig4-2_J1801-2920_nudot_dark.png"
+                      alt="Timing residuals and spin-down-rate variations of PSR J1801-2920, where a dip is visible only in the high-cadence MeerKAT data"
+                      width={1440}
+                      height={1008}
+                      className="h-auto w-full"
+                    />
+                  </div>
+                  <figcaption className="mt-3 font-mono text-[11px] leading-5 text-faint">
+                    PSR J1801-2920 — a ν̇ dip near MJD 59150 that only the
+                    high-cadence MeerKAT data can recover; sparse JBO coverage
+                    misses it (fig. 4.2).
+                  </figcaption>
+                </figure>
+              </Reveal>
+            </div>
+          </div>
+        </section>
+
         {/* About */}
         <section id="about" className="pb-28">
           <SectionHeading kicker="ABOUT" title="From pulsars to profit margins" />
@@ -472,45 +595,6 @@ export default function Home() {
                   </div>
                 ))}
               </dl>
-            </Reveal>
-          </div>
-
-          {/* Thesis figures */}
-          <div className="mt-10 grid items-start gap-5 md:grid-cols-2">
-            <Reveal>
-              <figure className="rounded-xl border border-line bg-panel p-4">
-                <div className="overflow-hidden rounded-lg bg-white p-2">
-                  <Image
-                    src="/thesis/fig4-1_aitoff_sky_map.png"
-                    alt="Aitoff projection sky map showing the 515-pulsar Thousand-Pulsar-Array sample and the pulsars selected for timing analysis"
-                    width={1560}
-                    height={810}
-                    className="h-auto w-full"
-                  />
-                </div>
-                <figcaption className="mt-3 font-mono text-[11px] leading-5 text-faint">
-                  Sky coverage of the Thousand-Pulsar-Array sample (red ×) and
-                  the pulsars selected for analysis (blue ●) — thesis fig. 4.1.
-                </figcaption>
-              </figure>
-            </Reveal>
-            <Reveal delay={120}>
-              <figure className="rounded-xl border border-line bg-panel p-4">
-                <div className="overflow-hidden rounded-lg bg-white p-2">
-                  <Image
-                    src="/thesis/fig4-3_J1833-0338_nudot.png"
-                    alt="Timing residuals and spin-down-rate variations of PSR J1833-0338 measured with Bayesian and fitwaves analysis across JBO, MeerKAT and combined datasets"
-                    width={1440}
-                    height={990}
-                    className="h-auto w-full"
-                  />
-                </div>
-                <figcaption className="mt-3 font-mono text-[11px] leading-5 text-faint">
-                  PSR J1833-0338: spin-down-rate variations resolved by
-                  Bayesian inference across JBO / MeerKAT / combined data,
-                  cross-checked with fitwaves — thesis fig. 4.3.
-                </figcaption>
-              </figure>
             </Reveal>
           </div>
         </section>
