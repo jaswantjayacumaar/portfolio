@@ -589,6 +589,14 @@ export default function Home() {
                     Hanford (H1) and Livingston (L1) detectors.
                   </figcaption>
                 </figure>
+                <a
+                  href="https://github.com/jaswantjayacumaar/Classyfying-LensGW-DL"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 inline-block font-mono text-xs text-accent-4 transition-opacity hover:opacity-80"
+                >
+                  code on GitHub →
+                </a>
               </article>
             </Reveal>
           </div>
