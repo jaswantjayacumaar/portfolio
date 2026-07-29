@@ -29,20 +29,4 @@ global e-commerce.
 - Animations are hand-rolled (IntersectionObserver scroll-reveal,
   requestAnimationFrame count-ups) and respect `prefers-reduced-motion`
 - Open Graph image generated at build time via `next/og`
-
-## Develop
-
-```bash
-npm install
-npm run dev
-```
-
-## Build
-
-```bash
-npm run build
-```
-
-## Deploy
-
-Hosted on Vercel — every push to `main` deploys automatically.
+- Hosted on Vercel
