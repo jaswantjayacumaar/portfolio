@@ -13,7 +13,7 @@ const LINKS = {
 type Work = {
   title: string;
   domain: string;
-  accent: "accent" | "accent-2" | "accent-3";
+  accent: "accent" | "accent-2" | "accent-3" | "accent-4" | "accent-5" | "accent-6" | "danger";
   body: string;
   tags: string[];
   proves: string;
@@ -39,7 +39,7 @@ const WORK: Work[] = [
   {
     title: "Retrieval-grounded analytics agent",
     domain: "applied AI",
-    accent: "accent-3",
+    accent: "accent-4",
     body: "Stakeholders needed answers faster than dashboards could serve them. I built a RAG analytics agent embedded in the CM platform (FastAPI, LangGraph, Gemini) that turns natural language into validated SQL over BigQuery, grounded by 18 intent playbooks with context caching, connected to 7 live data systems. Hardened with SELECT-only guards, dry-run validation and byte caps — with a streaming chat UI and exportable transcripts.",
     tags: ["FastAPI", "LangGraph", "Gemini", "NL→SQL", "context caching", "7 live integrations"],
     proves: "production LLM engineering: grounded, guarded, actually used",
@@ -55,7 +55,7 @@ const WORK: Work[] = [
   {
     title: "MCP toolchain & AI infrastructure",
     domain: "AI infrastructure",
-    accent: "accent-3",
+    accent: "accent-5",
     body: "Built the team's AI-analytics infrastructure: an 11-server MCP toolchain connecting LLMs to BigQuery, GA4, Google Ads (including a custom write-enabled campaign-management server), Search Console, Matomo, Klaviyo, Sentry, Supabase, Jira/Confluence and the internal admin API — with onboarding guides that made LLM-assisted analysis a team-wide workflow rather than a personal trick.",
     tags: ["MCP server development", "self-hosted infra", "Nginx", "team enablement"],
     proves: "building the tools that multiply everyone else's output",
@@ -63,7 +63,7 @@ const WORK: Work[] = [
   {
     title: "Pricing intelligence pipeline",
     domain: "pricing",
-    accent: "accent",
+    accent: "accent-6",
     body: "Took ownership of the company's pricing-intelligence platform and run it day-to-day: agentic competitor-price scraping across 9 regions, automated BigQuery pricing pipelines with daily orchestration, and the decision dashboard that feeds pricing calls — extending it alongside the rest of the analytics stack.",
     tags: ["agentic scraping", "BigQuery pipelines", "daily orchestration", "pricing analytics"],
     proves: "inheriting a production system and running it without drama",
@@ -71,7 +71,7 @@ const WORK: Work[] = [
   {
     title: "GA4 tracking forensics",
     domain: "analytics engineering",
-    accent: "accent-2",
+    accent: "danger",
     body: "Trustworthy automation needs trustworthy inputs. I root-caused critical GA4 tracking defects — item-level purchase revenue missing since a specific release, GTM double-firing inflating events, a dead checkout event — dated each break, and drove the fixes with Engineering; contributed to server-side tagging and consent-mode implementation across 7 regions.",
     tags: ["GA4", "GTM", "server-side tagging", "consent mode", "root-cause analysis"],
     proves: "diagnostic rigour — finding the breaks everyone else reported around",
@@ -197,6 +197,10 @@ const accentText: Record<Work["accent"], string> = {
   accent: "text-accent",
   "accent-2": "text-accent-2",
   "accent-3": "text-accent-3",
+  "accent-4": "text-accent-4",
+  "accent-5": "text-accent-5",
+  "accent-6": "text-accent-6",
+  danger: "text-danger",
 };
 
 function SectionHeading({
@@ -258,9 +262,10 @@ export default function Home() {
         {/* Hero */}
         <section className="grid items-center gap-12 pb-16 pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:pb-24 lg:pt-40">
           <Reveal>
-            <p className="font-mono text-sm text-muted">
-              Jaswant Jayacumaar · Data Analyst ·{" "}
-              <span className="text-faint">MSc, University of Manchester</span>
+            <p className="font-mono text-sm">
+              <span className="font-bold text-fg">Jaswant Jayacumaar</span>
+              <span className="text-fg"> · Data Analyst</span>
+              <span className="text-muted"> · MSc, University of Manchester</span>
             </p>
             <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.08] tracking-tight text-fg sm:text-5xl lg:text-[3.4rem]">
               I build the analytics and automation a real business{" "}
@@ -343,8 +348,19 @@ export default function Home() {
                     {w.tags.map((t) => (
                       <span
                         key={t}
-                        className="rounded-md border border-line bg-panel-2 px-2 py-0.5 font-mono text-[11px] text-muted"
+                        className="inline-flex items-center gap-1.5 rounded-md border border-line bg-panel-2 px-2 py-0.5 font-mono text-[11px] text-muted"
                       >
+                        {(STACK_ICONS[t] ?? []).map((ic) => (
+                          <svg
+                            key={ic.title}
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            className="h-3 w-3 shrink-0"
+                            fill={ic.color}
+                          >
+                            <path d={ic.path} />
+                          </svg>
+                        ))}
                         {t}
                       </span>
                     ))}

@@ -2,11 +2,67 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const STATS: { value: number; suffix: string; label: string }[] = [
-  { value: 9, suffix: "", label: "international markets automated" },
-  { value: 11, suffix: "", label: "SEM automation tools shipped" },
-  { value: 10000, suffix: "+", label: "campaign changes applied / month" },
-  { value: 27000, suffix: "+", label: "search terms classified / month" },
+const STATS: {
+  value: number;
+  suffix: string;
+  label: string;
+  accentClass: string;
+  icon: React.ReactNode;
+}[] = [
+  {
+    value: 9,
+    suffix: "",
+    label: "international markets automated",
+    accentClass: "text-accent",
+    icon: (
+      // globe
+      <>
+        <circle cx="12" cy="12" r="10" />
+        <path d="M2 12h20" />
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+      </>
+    ),
+  },
+  {
+    value: 11,
+    suffix: "",
+    label: "SEM automation tools shipped",
+    accentClass: "text-accent-2",
+    icon: (
+      // modules grid
+      <>
+        <rect x="3" y="3" width="7" height="7" rx="1" />
+        <rect x="14" y="3" width="7" height="7" rx="1" />
+        <rect x="3" y="14" width="7" height="7" rx="1" />
+        <rect x="14" y="14" width="7" height="7" rx="1" />
+      </>
+    ),
+  },
+  {
+    value: 10000,
+    suffix: "+",
+    label: "campaign changes applied / month",
+    accentClass: "text-accent-4",
+    icon: (
+      // refresh cycle
+      <>
+        <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+        <path d="M21 3v5h-5" />
+        <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+        <path d="M3 21v-5h5" />
+      </>
+    ),
+  },
+  {
+    value: 27000,
+    suffix: "+",
+    label: "search terms classified / month",
+    accentClass: "text-accent-3",
+    icon: (
+      // classification funnel
+      <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+    ),
+  },
 ];
 
 function easeOutCubic(t: number) {
@@ -53,9 +109,23 @@ export default function StatBand() {
     >
       {STATS.map((s) => (
         <div key={s.label} className="bg-panel px-6 py-7">
+          <div className={`mb-3 ${s.accentClass}`}>
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              className="h-5 w-5 opacity-80"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              {s.icon}
+            </svg>
+          </div>
           <div className="font-display text-4xl font-semibold tracking-tight text-fg">
             {Math.round(s.value * progress).toLocaleString("en-GB")}
-            <span className="text-accent">{s.suffix}</span>
+            <span className={s.accentClass}>{s.suffix}</span>
           </div>
           <div className="mt-2 text-sm text-muted">{s.label}</div>
         </div>
