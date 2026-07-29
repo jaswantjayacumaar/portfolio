@@ -11,9 +11,9 @@ const SCRIPT: { stage: number; text: string; tone: Tone }[] = [
   { stage: 0, text: "9 markets · 239 campaigns · ~9,000 ad groups", tone: "dim" },
   { stage: 1, text: "scoring 27,412 search terms against ROAS targets", tone: "default" },
   { stage: 2, text: "decision tree → 412 RED · 1,038 AMBER · 7,551 GREEN", tone: "default" },
-  { stage: 3, text: "preview built — 356 bid changes queued, zero writes", tone: "amber" },
+  { stage: 3, text: "preview built · 356 bid changes queued, zero writes", tone: "amber" },
   { stage: 4, text: "human approval ✓", tone: "green" },
-  { stage: 5, text: "applying via Google Ads API — 356/356 ok", tone: "cyan" },
+  { stage: 5, text: "applying via Google Ads API · 356/356 ok", tone: "cyan" },
   { stage: 5, text: "run complete · logged · next run 17:00 UTC", tone: "dim" },
 ];
 
@@ -107,7 +107,7 @@ export default function HeroSim() {
         </div>
       </div>
       <p className="mt-3 font-mono text-[11px] leading-5 text-faint">
-        # simulated run — the real console runs on Cloud Run schedulers, with
+        # simulated run · the real console runs on Cloud Run schedulers, with
         preview-first, human-approved writes
       </p>
     </div>

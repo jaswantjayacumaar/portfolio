@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const alt =
-  "Jaswant Jayacumaar — Data Analyst · Analytics platforms & marketing automation";
+  "Jaswant Jayacumaar · Data Analyst · Analytics platforms & marketing automation";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -62,7 +62,7 @@ export default function OpenGraphImage() {
           </div>
           <div style={{ fontSize: 30, color: MUTED, maxWidth: 900 }}>
             Analytics platforms · Google Ads automation · production LLM
-            tooling — across 9 international markets
+            tooling · across 9 international markets
           </div>
         </div>
 

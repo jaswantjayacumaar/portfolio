@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://jaswantj-portfolio.vercel.app"),
   title: "Jaswant Jayacumaar · Data Analyst · Analytics Platforms & Marketing Automation",
   description:
-    "Data analyst in London building the analytics platforms, automated bidding systems and AI agents behind a global e-commerce business — BigQuery, Google Ads API, LangGraph, Next.js.",
+    "Data analyst in London building the analytics platforms, automated bidding systems and AI agents behind a global e-commerce business: BigQuery, Google Ads API, LangGraph, Next.js.",
   openGraph: {
     title: "Jaswant Jayacumaar · Data Analyst",
     description:

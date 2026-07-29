@@ -87,3 +87,83 @@ export const STACK_ICONS: Record<string, StackIcon[]> = {
   "BigQuery pipelines": [iconOf(siGooglebigquery)],
   TEMPO2: [],
 };
+
+export type ChipPart = { text: string; icon?: StackIcon };
+
+/** Multi-brand chip labels broken into (icon, name) pairs so each logo sits
+ *  next to its own name, joined by the label's own separator. Labels not
+ *  listed here fall back to STACK_ICONS (single icon + full label). */
+export const STACK_PARTS: Record<string, { sep: string; parts: ChipPart[] }> = {
+  "Supabase / PostgreSQL": {
+    sep: "/",
+    parts: [
+      { text: "Supabase", icon: iconOf(siSupabase) },
+      { text: "PostgreSQL", icon: iconOf(siPostgresql) },
+    ],
+  },
+  "Gemini · Claude · GPT APIs": {
+    sep: "·",
+    parts: [
+      { text: "Gemini", icon: iconOf(siGooglegemini) },
+      { text: "Claude", icon: iconOf(siClaude) },
+      { text: "GPT APIs" },
+    ],
+  },
+  "Claude Code · Cursor": {
+    sep: "·",
+    parts: [
+      { text: "Claude Code", icon: iconOf(siClaude) },
+      { text: "Cursor", icon: iconOf(siCursor) },
+    ],
+  },
+  "FastAPI · Flask · Express": {
+    sep: "·",
+    parts: [
+      { text: "FastAPI", icon: iconOf(siFastapi) },
+      { text: "Flask", icon: iconOf(siFlask) },
+      { text: "Express", icon: iconOf(siExpress) },
+    ],
+  },
+  "Next.js / React": {
+    sep: "/",
+    parts: [
+      { text: "Next.js", icon: iconOf(siNextdotjs) },
+      { text: "React", icon: iconOf(siReact) },
+    ],
+  },
+  "Vercel · Railway": {
+    sep: "·",
+    parts: [
+      { text: "Vercel", icon: iconOf(siVercel) },
+      { text: "Railway", icon: iconOf(siRailway) },
+    ],
+  },
+  "Vercel / Railway": {
+    sep: "/",
+    parts: [
+      { text: "Vercel", icon: iconOf(siVercel) },
+      { text: "Railway", icon: iconOf(siRailway) },
+    ],
+  },
+  "Git / GitHub": {
+    sep: "/",
+    parts: [
+      { text: "Git", icon: iconOf(siGit) },
+      { text: "GitHub", icon: iconOf(siGithub) },
+    ],
+  },
+  "TensorFlow / Keras": {
+    sep: "/",
+    parts: [
+      { text: "TensorFlow", icon: iconOf(siTensorflow) },
+      { text: "Keras", icon: iconOf(siKeras) },
+    ],
+  },
+  "Python / Flask": {
+    sep: "/",
+    parts: [
+      { text: "Python", icon: iconOf(siPython) },
+      { text: "Flask", icon: iconOf(siFlask) },
+    ],
+  },
+};
