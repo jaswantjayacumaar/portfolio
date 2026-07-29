@@ -1,65 +1,499 @@
-import Image from "next/image";
+import HeroSim from "@/components/HeroSim";
+import Reveal from "@/components/Reveal";
+import StatBand from "@/components/StatBand";
+
+const LINKS = {
+  github: "https://github.com/jaswantjayacumaar",
+  linkedin: "https://linkedin.com/in/jaswantjayacumaar",
+  email: "mailto:jaswj6@gmail.com",
+};
+
+type Work = {
+  title: string;
+  domain: string;
+  accent: "accent" | "accent-2" | "accent-3";
+  body: string;
+  tags: string[];
+  proves: string;
+};
+
+const WORK: Work[] = [
+  {
+    title: "Contribution Margin reporting platform",
+    domain: "e-commerce analytics",
+    accent: "accent",
+    body: "Profitability decisions ran on lagging, patchwork dashboards. I built and own the company's CM reporting platform — a full-stack web app (Next.js/TypeScript, Express, BigQuery, Supabase; deployed on Vercel/Railway) replacing legacy Looker Studio with live daily and hourly profitability, marketing-cost and SEM analytics across 9 international markets, refreshed by scheduled queries timed around US trading waves.",
+    tags: ["Next.js", "TypeScript", "Express", "BigQuery", "Supabase", "Vercel / Railway"],
+    proves: "end-to-end platform ownership: warehouse → API → UI → adoption",
+  },
+  {
+    title: "SEM Automation Console",
+    domain: "paid media automation",
+    accent: "accent-2",
+    body: "Managing Search & Shopping campaigns across 16 products × 9 countries and 17 Google Ads accounts doesn't scale manually. I co-built an 11-tool automation console (Next.js, Python/Flask, Google Ads API) and led development of most of its systems — automated bidding, negative-keyword management, keyword farming, search-query expansion, ad-copy generation and pricing optimisation — 58 Python automation scripts applying 10,000+ campaign changes a month through preview-first, human-approved writes.",
+    tags: ["Python / Flask", "Google Ads API", "Cloud Run", "BigQuery", "Next.js", "58 automation scripts"],
+    proves: "automation at scale, designed to be safe by construction",
+  },
+  {
+    title: "Retrieval-grounded analytics agent",
+    domain: "applied AI",
+    accent: "accent-3",
+    body: "Stakeholders needed answers faster than dashboards could serve them. I built a RAG analytics agent embedded in the CM platform (FastAPI, LangGraph, Gemini) that turns natural language into validated SQL over BigQuery, grounded by 18 intent playbooks with context caching, connected to 7 live data systems. Hardened with SELECT-only guards, dry-run validation and byte caps — with a streaming chat UI and exportable transcripts.",
+    tags: ["FastAPI", "LangGraph", "Gemini", "NL→SQL", "context caching", "7 live integrations"],
+    proves: "production LLM engineering: grounded, guarded, actually used",
+  },
+  {
+    title: "Bidding decision systems",
+    domain: "paid media automation",
+    accent: "accent-2",
+    body: "Designed the profit- and growth-mode bidding decision trees behind the console — ROAS-band classification with RED/AMBER/GREEN logic executed autonomously via Cloud Run schedulers across two businesses — plus AI pipelines including a two-pass Gemini negative-keyword classifier and multi-model ad-copy generation using Claude, Gemini and GPT.",
+    tags: ["decision trees", "ROAS classification", "two-pass LLM classifier", "multi-model generation"],
+    proves: "algorithm design that moves real money, reviewably",
+  },
+  {
+    title: "MCP toolchain & AI infrastructure",
+    domain: "AI infrastructure",
+    accent: "accent-3",
+    body: "Built the team's AI-analytics infrastructure: an 11-server MCP toolchain connecting LLMs to BigQuery, GA4, Google Ads (including a custom write-enabled campaign-management server), Search Console, Matomo, Klaviyo, Sentry, Supabase, Jira/Confluence and the internal admin API — with onboarding guides that made LLM-assisted analysis a team-wide workflow rather than a personal trick.",
+    tags: ["MCP server development", "self-hosted infra", "Nginx", "team enablement"],
+    proves: "building the tools that multiply everyone else's output",
+  },
+  {
+    title: "Pricing intelligence pipeline",
+    domain: "pricing",
+    accent: "accent",
+    body: "Took ownership of the company's pricing-intelligence platform and run it day-to-day: agentic competitor-price scraping across 9 regions, automated BigQuery pricing pipelines with daily orchestration, and the decision dashboard that feeds pricing calls — extending it alongside the rest of the analytics stack.",
+    tags: ["agentic scraping", "BigQuery pipelines", "daily orchestration", "pricing analytics"],
+    proves: "inheriting a production system and running it without drama",
+  },
+  {
+    title: "GA4 tracking forensics",
+    domain: "analytics engineering",
+    accent: "accent-2",
+    body: "Trustworthy automation needs trustworthy inputs. I root-caused critical GA4 tracking defects — item-level purchase revenue missing since a specific release, GTM double-firing inflating events, a dead checkout event — dated each break, and drove the fixes with Engineering; contributed to server-side tagging and consent-mode implementation across 7 regions.",
+    tags: ["GA4", "GTM", "server-side tagging", "consent mode", "root-cause analysis"],
+    proves: "diagnostic rigour — finding the breaks everyone else reported around",
+  },
+  {
+    title: "Timing pulsars with MeerKAT",
+    domain: "research",
+    accent: "accent-3",
+    body: "MSc by Research at Jodrell Bank Centre for Astrophysics, University of Manchester: maintained Python ETL workflows processing large-scale time-series data from 500+ pulsars, applying Bayesian inference and MCMC to quantify timing irregularities — the statistical grounding under everything above.",
+    tags: ["Bayesian inference", "MCMC", "Python ETL", "time series", "500+ sources"],
+    proves: "statistical foundations, not just tooling",
+  },
+];
+
+const STANDARDS: {
+  kicker: string;
+  title: string;
+  question: string;
+  points: string[];
+}[] = [
+  {
+    kicker: "TRUSTWORTHY",
+    title: "Numbers that reconcile",
+    question: "“Would I bet a budget on this figure?”",
+    points: [
+      "Root-caused GA4 revenue defects — missing item revenue, double-fired events — instead of reporting around them",
+      "Warehouse metrics cross-checked against source systems before stakeholders ever see them",
+      "Pipeline DAGs, source mappings and calculation logic documented so numbers survive an audit",
+    ],
+  },
+  {
+    kicker: "SAFE",
+    title: "Automation with brakes",
+    question: "“What's the worst thing this could write?”",
+    points: [
+      "Preview-first, human-approved writes on 10,000+ monthly campaign changes",
+      "SELECT-only guards, dry-run validation and byte caps on the AI agent's SQL",
+      "RED/AMBER/GREEN decision trees — no bid moves without a classification trail",
+    ],
+  },
+  {
+    kicker: "UNATTENDED",
+    title: "Runs at 5AM without me",
+    question: "“Does it still work when I'm asleep?”",
+    points: [
+      "Cloud Run schedulers across two businesses, timed around regional trading waves",
+      "Scheduled BigQuery queries with a documented rescheduling plan — twice-daily refresh, deliberately sequenced",
+      "Execution logs and monitoring so failures announce themselves",
+    ],
+  },
+];
+
+const TOOLING: { group: string; blurb: string; items: string[] }[] = [
+  {
+    group: "DATA & CLOUD",
+    blurb: "The warehouse and the plumbing around it.",
+    items: ["SQL", "BigQuery", "GCP (Cloud Run · Scheduler · Storage)", "Supabase / PostgreSQL", "scheduled queries & DAG orchestration", "ETL pipelines"],
+  },
+  {
+    group: "MARKETING ANALYTICS",
+    blurb: "The channels the automation actually drives.",
+    items: ["Google Ads API", "GA4", "Search Console", "Merchant Center", "Matomo", "Klaviyo", "Bing Ads", "GTM & server-side tagging", "SEM / ROAS optimisation"],
+  },
+  {
+    group: "AI / LLM ENGINEERING",
+    blurb: "LLMs put to work, with guardrails.",
+    items: ["LangGraph", "RAG / retrieval-grounded agents", "NL→SQL", "Gemini · Claude · GPT APIs", "MCP server development", "context caching", "prompt engineering", "Claude Code · Cursor"],
+  },
+  {
+    group: "ENGINEERING",
+    blurb: "The services that carry it all.",
+    items: ["Python", "TypeScript", "FastAPI · Flask · Express", "Next.js / React", "Docker", "Vercel · Railway", "Git / GitHub"],
+  },
+  {
+    group: "ML & STATISTICS",
+    blurb: "The modelling underneath.",
+    items: ["scikit-learn", "TensorFlow / Keras", "Bayesian inference", "MCMC", "predictive modelling", "feature engineering", "Power BI (DAX)", "Looker Studio"],
+  },
+];
+
+const FACTS: { label: string; value: string }[] = [
+  {
+    label: "EDUCATION",
+    value: "MSc by Research, Astronomy & Astrophysics, University of Manchester",
+  },
+  {
+    label: "FOCUS",
+    value: "Analytics platforms · marketing automation · production LLM tooling",
+  },
+  {
+    label: "DOMAINS",
+    value: "E-commerce · paid media · pricing · consulting",
+  },
+  {
+    label: "OPEN TO",
+    value: "Data Analyst · Analytics Engineer · Applied AI roles",
+  },
+  {
+    label: "BASED IN",
+    value: "London, United Kingdom",
+  },
+];
+
+const accentText: Record<Work["accent"], string> = {
+  accent: "text-accent",
+  "accent-2": "text-accent-2",
+  "accent-3": "text-accent-3",
+};
+
+function SectionHeading({
+  kicker,
+  title,
+  lede,
+}: {
+  kicker: string;
+  title: string;
+  lede?: string;
+}) {
+  return (
+    <Reveal className="max-w-2xl">
+      <p className="kicker font-mono text-xs text-accent">{kicker}</p>
+      <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
+        {title}
+      </h2>
+      {lede && <p className="mt-4 text-base leading-7 text-muted">{lede}</p>}
+    </Reveal>
+  );
+}
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
+    <div className="min-h-screen">
+      {/* Nav */}
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-line/70 bg-bg/75 backdrop-blur">
+        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
+          <a href="#top" className="font-mono text-sm text-fg">
+            jaswant<span className="text-accent">.j</span>
           </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+          <div className="flex items-center gap-5 font-mono text-xs text-muted sm:gap-7">
+            <a href="#work" className="transition-colors hover:text-fg">
+              work
+            </a>
+            <a href="#standards" className="transition-colors hover:text-fg">
+              standards
+            </a>
+            <a href="#tooling" className="hidden transition-colors hover:text-fg sm:block">
+              tooling
+            </a>
+            <a href="#about" className="transition-colors hover:text-fg">
+              about
+            </a>
+            <a
+              href={LINKS.email}
+              className="rounded-md border border-accent/50 px-3 py-1.5 text-accent transition-colors hover:bg-accent/10"
+            >
+              contact
+            </a>
+          </div>
+        </nav>
+      </header>
+
+      <main id="top" className="mx-auto max-w-6xl px-6">
+        {/* Hero */}
+        <section className="grid items-center gap-12 pb-16 pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:pb-24 lg:pt-40">
+          <Reveal>
+            <p className="font-mono text-sm text-muted">
+              Jaswant Jayacumaar · Data Analyst ·{" "}
+              <span className="text-faint">MSc, University of Manchester</span>
+            </p>
+            <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.08] tracking-tight text-fg sm:text-5xl lg:text-[3.4rem]">
+              I build the analytics and automation a real business{" "}
+              <span className="text-accent">runs on every day.</span>
+            </h1>
+            <p className="mt-6 max-w-xl text-base leading-7 text-muted">
+              Full-stack analytics platforms, automated Google Ads bidding, and
+              retrieval-grounded AI agents — plus the BigQuery warehouse
+              underneath — for a global photo-gifting e-commerce company trading
+              across 9 international markets. Once it ships, my job is keeping
+              the numbers trustworthy, the automation safe, and the pipelines
+              running unattended.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <a
+                href="#work"
+                className="rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-bg transition-opacity hover:opacity-90"
+              >
+                See the work →
+              </a>
+              <a
+                href={LINKS.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-md border border-line px-4 py-2.5 text-sm text-muted transition-colors hover:border-faint hover:text-fg"
+              >
+                GitHub
+              </a>
+              <a
+                href={LINKS.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-md border border-line px-4 py-2.5 text-sm text-muted transition-colors hover:border-faint hover:text-fg"
+              >
+                LinkedIn
+              </a>
+              <a
+                href={LINKS.email}
+                className="rounded-md border border-line px-4 py-2.5 text-sm text-muted transition-colors hover:border-faint hover:text-fg"
+              >
+                Email
+              </a>
+            </div>
+          </Reveal>
+          <Reveal delay={150}>
+            <HeroSim />
+          </Reveal>
+        </section>
+
+        {/* Stat band */}
+        <section className="pb-24">
+          <Reveal>
+            <StatBand />
+          </Reveal>
+        </section>
+
+        {/* Work */}
+        <section id="work" className="pb-28">
+          <SectionHeading
+            kicker="SELECTED WORK"
+            title="Systems a business depends on, not demos."
+            lede="Each entry says what problem it solved, what I built, and what it proves. Everything here runs in production today — the counts are real, the revenue figures deliberately absent."
+          />
+          <div className="mt-12 grid gap-5 md:grid-cols-2">
+            {WORK.map((w, i) => (
+              <Reveal key={w.title} delay={(i % 2) * 90}>
+                <article className="group flex h-full flex-col rounded-xl border border-line bg-panel p-6 transition-colors duration-300 hover:border-faint/60 hover:bg-panel-2">
+                  <div className="flex items-baseline justify-between gap-4">
+                    <h3 className="font-display text-xl font-semibold tracking-tight text-fg">
+                      {w.title}
+                    </h3>
+                    <span
+                      className={`shrink-0 font-mono text-[11px] ${accentText[w.accent]}`}
+                    >
+                      {w.domain}
+                    </span>
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-muted">{w.body}</p>
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {w.tags.map((t) => (
+                      <span
+                        key={t}
+                        className="rounded-md border border-line bg-panel-2 px-2 py-0.5 font-mono text-[11px] text-muted"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="mt-4 border-t border-line pt-3 font-mono text-[11px] leading-5 text-faint">
+                    proves: <span className="text-muted">{w.proves}</span>
+                  </p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        {/* Standards */}
+        <section id="standards" className="pb-28">
+          <SectionHeading
+            kicker="ENGINEERING STANDARDS"
+            title="Three questions every system has to answer"
+            lede="How I judge my own work before anyone else does. Every point below is drawn from a system in the section above."
+          />
+          <div className="mt-12 grid gap-5 lg:grid-cols-3">
+            {STANDARDS.map((s, i) => (
+              <Reveal key={s.kicker} delay={i * 90}>
+                <div className="flex h-full flex-col rounded-xl border border-line bg-panel p-6">
+                  <p className="kicker font-mono text-[11px] text-accent-2">
+                    {s.kicker}
+                  </p>
+                  <h3 className="mt-2 font-display text-xl font-semibold tracking-tight text-fg">
+                    {s.title}
+                  </h3>
+                  <p className="mt-1 text-sm italic text-faint">{s.question}</p>
+                  <ul className="mt-4 space-y-3">
+                    {s.points.map((p) => (
+                      <li
+                        key={p}
+                        className="border-l-2 border-line pl-3 text-sm leading-6 text-muted"
+                      >
+                        {p}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        {/* Tooling */}
+        <section id="tooling" className="pb-28">
+          <SectionHeading
+            kicker="TOOLING"
+            title="What I build with"
+            lede="Grouped the way the work actually divides — every item here appears in a shipped system above."
+          />
+          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {TOOLING.map((g, i) => (
+              <Reveal key={g.group} delay={(i % 3) * 80}>
+                <div className="h-full rounded-xl border border-line bg-panel p-6">
+                  <p className="kicker font-mono text-[11px] text-accent-3">
+                    {g.group}
+                  </p>
+                  <p className="mt-2 text-sm text-faint">{g.blurb}</p>
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {g.items.map((t) => (
+                      <span
+                        key={t}
+                        className="rounded-md border border-line bg-panel-2 px-2 py-1 font-mono text-[11px] text-muted"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        {/* About */}
+        <section id="about" className="pb-28">
+          <SectionHeading kicker="ABOUT" title="From pulsars to profit margins" />
+          <div className="mt-10 grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+            <Reveal>
+              <div className="space-y-5 text-base leading-7 text-muted">
+                <p>
+                  I&apos;m Jaswant, a data analyst in London with a research
+                  spine: an MSc by Research in astrophysics at Manchester, where
+                  I spent two years timing pulsars — Bayesian inference and MCMC
+                  over noisy time series from 500+ sources, where being wrong
+                  quietly wasn&apos;t an option. That habit of distrusting my
+                  own numbers until they reconcile is the most useful thing I
+                  brought into industry.
+                </p>
+                <p>
+                  Since then: consulting analytics at 3i Infotech — process
+                  mining, SQL and Power BI for commercial teams — and now the
+                  analytics stack at Printerpix, a photo-gifting e-commerce
+                  company trading in 9 markets, where I own the
+                  contribution-margin platform, co-built the SEM automation
+                  console, and put LLMs to work where they earn their keep:
+                  classification, NL→SQL, ad-copy generation — always with a
+                  human gate in front of anything that writes.
+                </p>
+                <p>
+                  The fastest way to see how I think is the work above — or
+                  email me and I&apos;ll walk you through an architecture.
+                </p>
+              </div>
+            </Reveal>
+            <Reveal delay={120}>
+              <dl className="space-y-5 rounded-xl border border-line bg-panel p-6">
+                {FACTS.map((f) => (
+                  <div key={f.label}>
+                    <dt className="kicker font-mono text-[11px] text-faint">
+                      {f.label}
+                    </dt>
+                    <dd className="mt-1 text-sm leading-6 text-fg">{f.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* Contact */}
+        <section id="contact" className="pb-24">
+          <Reveal>
+            <div className="rounded-xl border border-line bg-panel px-8 py-12 text-center">
+              <p className="kicker font-mono text-xs text-accent">CONTACT</p>
+              <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-fg">
+                Let&apos;s talk numbers.
+              </h2>
+              <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-muted">
+                Open to conversations about data, analytics engineering and
+                applied-AI roles — or just to compare notes on making LLMs
+                behave in production.
+              </p>
+              <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
+                <a
+                  href={LINKS.email}
+                  className="rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-bg transition-opacity hover:opacity-90"
+                >
+                  jaswj6@gmail.com
+                </a>
+                <a
+                  href={LINKS.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-md border border-line px-4 py-2.5 text-sm text-muted transition-colors hover:border-faint hover:text-fg"
+                >
+                  GitHub
+                </a>
+                <a
+                  href={LINKS.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-md border border-line px-4 py-2.5 text-sm text-muted transition-colors hover:border-faint hover:text-fg"
+                >
+                  LinkedIn
+                </a>
+              </div>
+            </div>
+          </Reveal>
+        </section>
       </main>
+
+      <footer className="border-t border-line/70">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-6 py-8 font-mono text-[11px] text-faint sm:flex-row">
+          <span>© {new Date().getFullYear()} Jaswant Jayacumaar</span>
+          <span>Next.js · Tailwind · deployed on Vercel</span>
+        </div>
+      </footer>
     </div>
   );
 }
