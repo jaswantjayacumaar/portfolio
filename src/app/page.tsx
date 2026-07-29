@@ -77,7 +77,7 @@ const WORK: Work[] = [
     proves: "diagnostic rigour — finding the breaks everyone else reported around",
   },
   {
-    title: "Timing pulsars with MeerKAT",
+    title: "Timing pulsars with MeerKAT & Jodrell Bank",
     domain: "research",
     accent: "accent-3",
     body: "MSc by Research at Jodrell Bank Centre for Astrophysics, University of Manchester: produced updated timing solutions for 179 pulsars from Lovell and MeerKAT telescope data with TEMPO2, then benchmarked two ways of measuring spin-down-rate variations — Bayesian Gaussian-process red-noise modelling with ensemble MCMC versus harmonic-whitening fitwaves — across three datasets per pulsar, showing where the Bayesian approach stays robust as irregular sampling breaks the alternative. The statistical grounding under everything above.",
@@ -454,119 +454,127 @@ export default function Home() {
         <section id="research" className="pb-28">
           <SectionHeading
             kicker="RESEARCH"
-            title="Timing pulsars with MeerKAT"
-            lede="Before dashboards and bidding systems: two years at the Jodrell Bank Centre for Astrophysics measuring how cosmic clocks drift — an MSc by Research in the statistics I still use every day."
+            title="From gravitational waves to cosmic clocks"
+            lede="Before dashboards and bidding systems: two research chapters — pulsar timing at Jodrell Bank and deep-learning gravitational-wave classification — where the statistical habits under everything above were formed."
           />
-          <div className="mt-12 grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="mt-12 grid items-start gap-5 lg:grid-cols-2 xl:-mx-16">
+            {/* Pulsar timing */}
             <Reveal>
-              <div className="space-y-5 text-base leading-7 text-muted">
-                <p>
-                  Pulsars are rotating neutron stars whose radio beams sweep
-                  past Earth with clock-like regularity — regular enough that
-                  microsecond deviations carry physics. Timing one means
-                  recording pulse arrival times, comparing them against a
-                  rotational model, and studying the residuals: the part the
-                  model can&apos;t explain.
-                </p>
-                <p>
-                  Starting from 515 pulsars in the MeerTime
-                  Thousand-Pulsar-Array programme, I produced updated timing
-                  solutions (ephemerides) for <strong className="text-fg">179 of them</strong>{" "}
-                  with TEMPO2 — fitting spin frequency and spin-down rate, and
-                  merging observations from the 76-m Lovell telescope with the
-                  64-dish MeerKAT interferometer into combined datasets, with
-                  the cross-instrument clock offsets fitted explicitly.
-                </p>
-                <p>
-                  For eight pulsars I then measured variations in the spin-down
-                  rate (ν̇) two independent ways, on three datasets each. The
-                  point wasn&apos;t just the measurements — it was knowing when
-                  each method can be trusted, and when adding more data makes an
-                  estimate worse.
-                </p>
-              </div>
-            </Reveal>
-            <Reveal delay={120}>
-              <div className="flex h-full flex-col rounded-xl border border-line bg-panel p-6">
+              <article className="rounded-xl border border-line bg-panel p-6 sm:p-8">
                 <p className="kicker font-mono text-[11px] text-accent-3">
-                  THE MACHINERY
+                  MSc BY RESEARCH · UNIVERSITY OF MANCHESTER · 2021–2023
                 </p>
-                <ul className="mt-4 space-y-3">
-                  {[
-                    "Timing noise modelled as a stationary red-noise process with a power-law spectrum, with a spectral-index floor (γ ≥ 4) to keep spurious periodicity out of the ν̇ series",
-                    "Posteriors sampled with emcee ensemble MCMC — 32 walkers exploring Fourier-domain Gaussian-process parameters via run_enterprise",
-                    "Cross-checked with fitwaves harmonic whitening: fit harmonically related sinusoids to the residuals, double-differentiate to estimate ν̇",
-                    "The two methods agree for six of eight pulsars; fitwaves degrades on irregular sampling and near-white residuals — the Bayesian approach doesn't",
-                    "Combining telescopes only helps when the added data has low uncertainty; high-σ observations are worth excluding entirely",
-                  ].map((p) => (
-                    <li
-                      key={p}
-                      className="border-l-2 border-line pl-3 text-sm leading-6 text-muted"
-                    >
-                      {p}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-          </div>
-          <div className="mt-10 space-y-5">
-            <Reveal>
-              <figure className="rounded-xl border border-line bg-panel p-4">
-                <div className="overflow-hidden rounded-lg">
-                  <Image
-                    src="/thesis/fig4-1_aitoff_sky_map_dark.png"
-                    alt="Aitoff projection sky map showing the 515-pulsar Thousand-Pulsar-Array sample and the pulsars selected for timing analysis"
-                    width={1560}
-                    height={810}
-                    className="h-auto w-full"
-                  />
+                <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight text-fg">
+                  Timing pulsars with MeerKAT &amp; Jodrell Bank
+                </h3>
+                <div className="mt-4 space-y-4 text-sm leading-6 text-muted">
+                  <p>
+                    Pulsars are rotating neutron stars whose radio beams sweep
+                    past Earth with clock-like regularity — regular enough that
+                    microsecond deviations carry physics. From 515 pulsars in
+                    the MeerTime Thousand-Pulsar-Array programme, I produced
+                    updated timing solutions for{" "}
+                    <strong className="text-fg">179 of them</strong> with
+                    TEMPO2, merging data from the 76-m Lovell telescope at
+                    Jodrell Bank with the 64-dish MeerKAT interferometer and
+                    fitting the cross-instrument clock offsets explicitly.
+                  </p>
+                  <p>
+                    For eight pulsars I measured spin-down-rate (ν̇) variations
+                    two independent ways — Bayesian Gaussian-process red-noise
+                    modelling sampled with emcee MCMC (32 walkers),
+                    cross-checked against fitwaves harmonic whitening — across
+                    three datasets each. The methods agree for six of eight;
+                    the Bayesian approach survives irregular sampling, and a
+                    second telescope only helps when its data is
+                    low-uncertainty.
+                  </p>
                 </div>
-                <figcaption className="mt-3 font-mono text-[11px] leading-5 text-faint">
-                  Sky coverage: the Thousand-Pulsar-Array sample (red ×) and
-                  the pulsars selected for analysis (blue ●) — thesis fig. 4.1.
-                </figcaption>
-              </figure>
+                <div className="mt-5 space-y-4">
+                  <figure>
+                    <div className="overflow-hidden rounded-lg border border-line">
+                      <Image
+                        src="/thesis/fig4-1_aitoff_sky_map_dark.png"
+                        alt="Aitoff projection sky map showing the 515-pulsar Thousand-Pulsar-Array sample and the pulsars selected for timing analysis"
+                        width={1560}
+                        height={810}
+                        className="h-auto w-full"
+                      />
+                    </div>
+                    <figcaption className="mt-2 font-mono text-[11px] leading-5 text-faint">
+                      Sky coverage: the TPA sample (red ×) and the pulsars
+                      selected for analysis (blue ●) — thesis fig. 4.1.
+                    </figcaption>
+                  </figure>
+                  <figure>
+                    <div className="overflow-hidden rounded-lg border border-line">
+                      <Image
+                        src="/thesis/fig4-3_J1833-0338_nudot_dark.png"
+                        alt="Timing residuals and spin-down-rate variations of PSR J1833-0338 measured with Bayesian and fitwaves analysis across JBO, MeerKAT and combined datasets"
+                        width={1440}
+                        height={990}
+                        className="h-auto w-full"
+                      />
+                    </div>
+                    <figcaption className="mt-2 font-mono text-[11px] leading-5 text-faint">
+                      PSR J1833-0338 — ν̇ oscillating every ~200 days, resolved
+                      consistently by both methods; combining JBO + MeerKAT
+                      genuinely tightens the constraint (fig. 4.3).
+                    </figcaption>
+                  </figure>
+                </div>
+                <a
+                  href="https://github.com/jaswantjayacumaar/Pulsar-Timing-MeerKAT"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 inline-block font-mono text-xs text-accent-3 transition-opacity hover:opacity-80"
+                >
+                  code, data &amp; thesis on GitHub →
+                </a>
+              </article>
             </Reveal>
-            <div className="grid items-start gap-5 md:grid-cols-2">
-              <Reveal>
-                <figure className="rounded-xl border border-line bg-panel p-4">
-                  <div className="overflow-hidden rounded-lg">
-                    <Image
-                      src="/thesis/fig4-3_J1833-0338_nudot_dark.png"
-                      alt="Timing residuals and spin-down-rate variations of PSR J1833-0338 measured with Bayesian and fitwaves analysis across JBO, MeerKAT and combined datasets"
-                      width={1440}
-                      height={990}
-                      className="h-auto w-full"
-                    />
-                  </div>
-                  <figcaption className="mt-3 font-mono text-[11px] leading-5 text-faint">
-                    PSR J1833-0338 — ν̇ oscillating every ~200 days, resolved
-                    consistently by both methods; one of the cases where
-                    combining JBO + MeerKAT genuinely tightens the constraint
-                    (fig. 4.3).
-                  </figcaption>
-                </figure>
-              </Reveal>
-              <Reveal delay={120}>
-                <figure className="rounded-xl border border-line bg-panel p-4">
-                  <div className="overflow-hidden rounded-lg">
-                    <Image
-                      src="/thesis/fig4-2_J1801-2920_nudot_dark.png"
-                      alt="Timing residuals and spin-down-rate variations of PSR J1801-2920, where a dip is visible only in the high-cadence MeerKAT data"
-                      width={1440}
-                      height={1008}
-                      className="h-auto w-full"
-                    />
-                  </div>
-                  <figcaption className="mt-3 font-mono text-[11px] leading-5 text-faint">
-                    PSR J1801-2920 — a ν̇ dip near MJD 59150 that only the
-                    high-cadence MeerKAT data can recover; sparse JBO coverage
-                    misses it (fig. 4.2).
-                  </figcaption>
-                </figure>
-              </Reveal>
-            </div>
+            {/* Gravitational waves */}
+            <Reveal delay={120}>
+              <article className="rounded-xl border border-line bg-panel p-6 sm:p-8">
+                <p className="kicker font-mono text-[11px] text-accent-4">
+                  RESEARCH INTERNSHIP · BOSE.X CENTER FOR ASTROPHYSICAL
+                  RESEARCH, NIT SURAT · 2021–2022
+                </p>
+                <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight text-fg">
+                  Classifying gravitational waves with deep learning
+                </h3>
+                <div className="mt-4 space-y-4 text-sm leading-6 text-muted">
+                  <p>
+                    When massive objects merge, they ripple spacetime — and
+                    when a galaxy sits between the merger and Earth,
+                    gravitational lensing can distort the signal on its way
+                    here. My work was telling the two apart: deep-learning
+                    classifiers separating{" "}
+                    <strong className="text-fg">
+                      lensed from unlensed gravitational-wave signals
+                    </strong>{" "}
+                    in simulated detector data.
+                  </p>
+                  <p>
+                    Python and TensorFlow end to end — preprocessing and
+                    organising the waveform time-series data for training and
+                    testing, then developing and tuning the classification
+                    models; the analysis contributed to a research manuscript.
+                  </p>
+                </div>
+                <div className="mt-5 rounded-lg border border-dashed border-line px-4 py-10 text-center font-mono text-[11px] text-faint">
+                  waveform &amp; classification figures — coming soon
+                </div>
+                <a
+                  href="https://github.com/jaswantjayacumaar/Classyfying-LensGW-DL"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 inline-block font-mono text-xs text-accent-4 transition-opacity hover:opacity-80"
+                >
+                  code on GitHub →
+                </a>
+              </article>
+            </Reveal>
           </div>
         </section>
 
