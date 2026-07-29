@@ -206,7 +206,7 @@ export default function Home() {
       <header className="fixed inset-x-0 top-0 z-50 border-b border-line/70 bg-bg/75 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
           <a href="#top" className="font-mono text-sm text-fg">
-            jaswant<span className="text-accent">.j</span>
+            jaswant<span className="text-accent">.jayacumaar</span>
           </a>
           <div className="flex items-center gap-5 font-mono text-xs text-muted sm:gap-7">
             <a href="#work" className="transition-colors hover:text-fg">

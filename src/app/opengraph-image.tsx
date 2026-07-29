@@ -35,7 +35,7 @@ export default function OpenGraphImage() {
           }}
         >
           <span style={{ color: "#e8ecf2" }}>
-            jaswant<span style={{ color: ACCENT }}>.j</span>
+            jaswant<span style={{ color: ACCENT }}>.jayacumaar</span>
           </span>
           <span>data analyst · london</span>
         </div>
