@@ -2,6 +2,8 @@ import Image from "next/image";
 import HeroSim from "@/components/HeroSim";
 import Reveal from "@/components/Reveal";
 import StatBand from "@/components/StatBand";
+import qtH1 from "../../public/research/qtransform-h1.png";
+import qtL1 from "../../public/research/qtransform-l1.png";
 import { STACK_ICONS } from "@/lib/stack-icons";
 
 const LINKS = {
@@ -609,6 +611,32 @@ export default function Home() {
                   email me and I&apos;ll walk you through an architecture.
                 </p>
               </div>
+              <figure className="mt-8 rounded-xl border border-line bg-panel p-5">
+                <Image
+                  src={qtH1}
+                  alt="Q-transform spectrogram of gravitational-wave event GW150914 in the LIGO Hanford (H1) detector"
+                  className="w-full"
+                />
+                <Image
+                  src={qtL1}
+                  alt="Q-transform spectrogram of gravitational-wave event GW150914 in the LIGO Livingston (L1) detector"
+                  className="mt-3 w-full rounded-md"
+                />
+                <figcaption className="mt-4 font-mono text-[11px] leading-5 text-faint">
+                  the chirp of two black holes colliding — Q-transform
+                  spectrograms of GW150914 in the LIGO Hanford (H1) and
+                  Livingston (L1) detectors, from my gravitational-wave
+                  classification research ·{" "}
+                  <a
+                    href="https://github.com/jaswantjayacumaar/Classyfying-LensGW-DL"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted underline decoration-line underline-offset-2 transition-colors hover:text-fg"
+                  >
+                    code on GitHub
+                  </a>
+                </figcaption>
+              </figure>
             </Reveal>
             <Reveal delay={120}>
               <dl className="space-y-5 rounded-xl border border-line bg-panel p-6">
