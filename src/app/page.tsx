@@ -41,7 +41,7 @@ const WORK: Work[] = [
       title: "Bidding decision systems",
       body: "Designed the profit- and growth-mode bidding decision trees behind the console: ROAS-band classification with RED/AMBER/GREEN logic executed autonomously via Cloud Run schedulers across two businesses, plus AI pipelines including a two-pass Gemini negative-keyword classifier and multi-model ad-copy generation using Claude, Gemini and GPT.",
     },
-    tags: ["Python / Flask", "Google Ads API", "Cloud Run", "BigQuery", "Next.js", "58 automation scripts", "decision trees", "ROAS classification", "two-pass LLM classifier", "multi-model generation"],
+    tags: ["Python / Flask", "Google Ads API", "Cloud Run", "BigQuery", "Next.js", "58 Python scripts", "decision trees", "ROAS classification", "two-pass LLM classifier", "multi-model generation"],
     proves: "automation at scale and algorithm design that moves real money, safe by construction",
   },
   {
@@ -386,19 +386,23 @@ export default function Home() {
                 className="dot-pulse h-2.5 w-2.5 shrink-0 rounded-full bg-accent-2"
                 aria-hidden="true"
               />
-              <span>
+              <span className="whitespace-nowrap text-[13px] sm:text-sm">
                 <span className="font-bold text-fg">Jaswant Jayacumaar</span>
                 <span className="text-fg"> · Data Analyst</span>
                 <span className="text-muted">
                   {" "}
-                  · MSc, University of Manchester
+                  · MSc Astronomy &amp; Astrophysics
                 </span>
               </span>
             </p>
             <h1 className="mt-5 font-display text-4xl font-bold leading-[1.08] tracking-tight text-fg sm:text-5xl lg:text-[3.4rem]">
-              I build the <span className="italic text-accent">analytics</span>{" "}
-              and <span className="italic text-accent-2">automation</span> a
-              real business runs on every day.
+              I build the{" "}
+              <span className="font-cursive italic text-accent">analytics</span>
+              , <span className="font-cursive italic text-accent-2">
+                automation
+              </span>{" "}
+              and <span className="font-cursive italic text-accent-4">AI</span>{" "}
+              a real business runs on every day.
             </h1>
             <p className="mt-6 max-w-xl text-base leading-7 text-muted">
               Full-stack analytics platforms, automated Google Ads bidding, and
@@ -443,7 +447,7 @@ export default function Home() {
               {/* TODO: point at the CV PDF once Jaswant provides it */}
               <a
                 href="#"
-                className="rounded-md border border-line px-4 py-2.5 text-sm text-muted transition-colors hover:border-faint hover:text-fg"
+                className="rounded-md border border-accent-3/50 px-4 py-2.5 text-sm text-accent-3 transition-colors hover:bg-accent-3/10"
               >
                 Résumé
               </a>
@@ -590,7 +594,7 @@ export default function Home() {
             {/* Pulsar timing */}
             <Reveal>
               <article className="rounded-xl border border-line bg-panel p-6 sm:p-8">
-                <p className="kicker font-mono text-[11px]">
+                <p className="kicker font-mono text-[11px] font-bold">
                   <span className="text-accent-3">MSc BY RESEARCH</span>
                   <span className="text-faint"> · </span>
                   <span className="text-accent">UNIVERSITY OF MANCHESTER</span>
@@ -670,7 +674,7 @@ export default function Home() {
             {/* Gravitational waves */}
             <Reveal delay={120}>
               <article className="rounded-xl border border-line bg-panel p-6 sm:p-8">
-                <p className="kicker font-mono text-[11px]">
+                <p className="kicker font-mono text-[11px] font-bold">
                   <span className="text-accent-4">RESEARCH INTERNSHIP</span>
                   <span className="text-faint"> · </span>
                   <span className="text-accent-5">

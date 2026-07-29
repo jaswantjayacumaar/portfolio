@@ -85,6 +85,7 @@ export const STACK_ICONS: Record<string, StackIcon[]> = {
   GTM: [iconOf(siGoogletagmanager)],
   Nginx: [iconOf(siNginx)],
   "BigQuery pipelines": [iconOf(siGooglebigquery)],
+  "58 Python scripts": [iconOf(siPython)],
   TEMPO2: [],
 };
 
