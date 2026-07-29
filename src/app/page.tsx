@@ -565,17 +565,30 @@ export default function Home() {
                     models; the analysis contributed to a research manuscript.
                   </p>
                 </div>
-                <div className="mt-5 rounded-lg border border-dashed border-line px-4 py-10 text-center font-mono text-[11px] text-faint">
-                  waveform &amp; classification figures — coming soon
-                </div>
-                <a
-                  href="https://github.com/jaswantjayacumaar/Classyfying-LensGW-DL"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-5 inline-block font-mono text-xs text-accent-4 transition-opacity hover:opacity-80"
-                >
-                  code on GitHub →
-                </a>
+                <figure className="mt-5">
+                  <div className="overflow-hidden rounded-lg border border-line p-3">
+                    <Image
+                      src={gwStrain}
+                      alt="Whitened strain time series of gravitational-wave event GW150914 in the LIGO H1 and L1 detectors"
+                      className="h-auto w-full"
+                    />
+                    <Image
+                      src={qtH1}
+                      alt="Q-transform spectrogram of gravitational-wave event GW150914 in the LIGO Hanford (H1) detector"
+                      className="mt-3 h-auto w-full"
+                    />
+                    <Image
+                      src={qtL1}
+                      alt="Q-transform spectrogram of gravitational-wave event GW150914 in the LIGO Livingston (L1) detector"
+                      className="mt-3 h-auto w-full"
+                    />
+                  </div>
+                  <figcaption className="mt-2 font-mono text-[11px] leading-5 text-faint">
+                    the chirp of two black holes colliding — whitened strain
+                    and Q-transform spectrograms of GW150914 in the LIGO
+                    Hanford (H1) and Livingston (L1) detectors.
+                  </figcaption>
+                </figure>
               </article>
             </Reveal>
           </div>
@@ -612,38 +625,6 @@ export default function Home() {
                   email me and I&apos;ll walk you through an architecture.
                 </p>
               </div>
-              <figure className="mt-8 rounded-xl border border-line bg-panel p-5">
-                <Image
-                  src={gwStrain}
-                  alt="Whitened strain time series of gravitational-wave event GW150914 in the LIGO H1 and L1 detectors"
-                  className="w-full"
-                />
-                <Image
-                  src={qtH1}
-                  alt="Q-transform spectrogram of gravitational-wave event GW150914 in the LIGO Hanford (H1) detector"
-                  className="mt-3 w-full"
-                />
-                <Image
-                  src={qtL1}
-                  alt="Q-transform spectrogram of gravitational-wave event GW150914 in the LIGO Livingston (L1) detector"
-                  className="mt-3 w-full"
-                />
-                <figcaption className="mt-4 font-mono text-[11px] leading-5 text-faint">
-                  the chirp of two black holes colliding — whitened strain and
-                  Q-transform spectrograms of GW150914 in the LIGO Hanford (H1)
-                  and Livingston (L1) detectors, from my gravitational-wave
-                  classification research at the Bose.X Center for
-                  Astrophysical Research ·{" "}
-                  <a
-                    href="https://github.com/jaswantjayacumaar/Classyfying-LensGW-DL"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted underline decoration-line underline-offset-2 transition-colors hover:text-fg"
-                  >
-                    code on GitHub
-                  </a>
-                </figcaption>
-              </figure>
             </Reveal>
             <Reveal delay={120}>
               <dl className="space-y-5 rounded-xl border border-line bg-panel p-6">
