@@ -153,7 +153,8 @@ const TOOLING: { group: string; blurb: string; items: string[] }[] = [
 const FACTS: { label: string; value: string }[] = [
   {
     label: "EDUCATION",
-    value: "MSc by Research, Astronomy & Astrophysics, University of Manchester",
+    value:
+      "MSc by Research, Astronomy & Astrophysics, University of Manchester\nBTech in Mechanical Engineering, Vellore Institute of Technology",
   },
   {
     label: "FOCUS",
@@ -169,7 +170,7 @@ const FACTS: { label: string; value: string }[] = [
   },
   {
     label: "BASED IN",
-    value: "London, United Kingdom",
+    value: "London, UK",
   },
 ];
 
@@ -438,7 +439,9 @@ export default function Home() {
                     <dt className="kicker font-mono text-[11px] text-faint">
                       {f.label}
                     </dt>
-                    <dd className="mt-1 text-sm leading-6 text-fg">{f.value}</dd>
+                    <dd className="mt-1 whitespace-pre-line text-sm leading-6 text-fg">
+                      {f.value}
+                    </dd>
                   </div>
                 ))}
               </dl>
@@ -489,9 +492,8 @@ export default function Home() {
       </main>
 
       <footer className="border-t border-line/70">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-6 py-8 font-mono text-[11px] text-faint sm:flex-row">
+        <div className="mx-auto flex max-w-6xl items-center justify-center px-6 py-8 font-mono text-[11px] text-faint">
           <span>© {new Date().getFullYear()} Jaswant Jayacumaar</span>
-          <span>Next.js · Tailwind · deployed on Vercel</span>
         </div>
       </footer>
     </div>
