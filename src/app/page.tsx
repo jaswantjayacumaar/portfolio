@@ -18,6 +18,7 @@ type Work = {
   domain: string;
   accent: "accent" | "accent-2" | "accent-3" | "accent-4" | "accent-5" | "accent-6" | "danger";
   body: string;
+  sub?: { title: string; body: string };
   tags: string[];
   proves: string;
 };
@@ -36,8 +37,12 @@ const WORK: Work[] = [
     domain: "paid media automation",
     accent: "accent-2",
     body: "Managing Search & Shopping campaigns across 16 products × 9 countries and 17 Google Ads accounts doesn't scale manually. I co-built an 11-tool automation console (Next.js, Python/Flask, Google Ads API) and led development of most of its systems: automated bidding, negative-keyword management, keyword farming, search-query expansion, ad-copy generation and pricing optimisation. 58 Python automation scripts apply 10,000+ campaign changes a month through preview-first, human-approved writes.",
-    tags: ["Python / Flask", "Google Ads API", "Cloud Run", "BigQuery", "Next.js", "58 automation scripts"],
-    proves: "automation at scale, designed to be safe by construction",
+    sub: {
+      title: "Bidding decision systems",
+      body: "Designed the profit- and growth-mode bidding decision trees behind the console: ROAS-band classification with RED/AMBER/GREEN logic executed autonomously via Cloud Run schedulers across two businesses, plus AI pipelines including a two-pass Gemini negative-keyword classifier and multi-model ad-copy generation using Claude, Gemini and GPT.",
+    },
+    tags: ["Python / Flask", "Google Ads API", "Cloud Run", "BigQuery", "Next.js", "58 automation scripts", "decision trees", "ROAS classification", "two-pass LLM classifier", "multi-model generation"],
+    proves: "automation at scale and algorithm design that moves real money, safe by construction",
   },
   {
     title: "Retrieval-grounded analytics agent",
@@ -46,14 +51,6 @@ const WORK: Work[] = [
     body: "Stakeholders needed answers faster than dashboards could serve them. I built a RAG analytics agent embedded in the CM platform (FastAPI, LangGraph, Gemini) that turns natural language into validated SQL over BigQuery, grounded by 18 intent playbooks with context caching, connected to 7 live data systems. Hardened with SELECT-only guards, dry-run validation and byte caps, with a streaming chat UI and exportable transcripts.",
     tags: ["FastAPI", "LangGraph", "Gemini", "NL→SQL", "context caching", "7 live integrations"],
     proves: "production LLM engineering: grounded, guarded, actually used",
-  },
-  {
-    title: "Bidding decision systems",
-    domain: "paid media automation",
-    accent: "accent-2",
-    body: "Designed the profit- and growth-mode bidding decision trees behind the console: ROAS-band classification with RED/AMBER/GREEN logic executed autonomously via Cloud Run schedulers across two businesses, plus AI pipelines including a two-pass Gemini negative-keyword classifier and multi-model ad-copy generation using Claude, Gemini and GPT.",
-    tags: ["decision trees", "ROAS classification", "two-pass LLM classifier", "multi-model generation"],
-    proves: "algorithm design that moves real money, reviewably",
   },
   {
     title: "MCP toolchain & AI infrastructure",
@@ -79,25 +76,19 @@ const WORK: Work[] = [
     tags: ["GA4", "GTM", "server-side tagging", "consent mode", "root-cause analysis"],
     proves: "diagnostic rigour: finding the breaks everyone else reported around",
   },
-  {
-    title: "Timing pulsars with MeerKAT & Jodrell Bank",
-    domain: "research",
-    accent: "accent-3",
-    body: "MSc by Research at Jodrell Bank Centre for Astrophysics, University of Manchester: produced updated timing solutions for 179 pulsars from Lovell and MeerKAT telescope data with TEMPO2, then benchmarked two ways of measuring spin-down-rate variations, Bayesian Gaussian-process red-noise modelling with ensemble MCMC versus harmonic-whitening fitwaves, across three datasets per pulsar, showing where the Bayesian approach stays robust as irregular sampling breaks the alternative. The statistical grounding under everything above.",
-    tags: ["Bayesian inference", "MCMC (emcee)", "Gaussian processes", "TEMPO2", "179 pulsars", "time series"],
-    proves: "statistical foundations, not just tooling",
-  },
 ];
 
 const STANDARDS: {
   kicker: string;
   title: string;
   question: string;
+  accentClass: string;
   points: string[];
 }[] = [
   {
     kicker: "TRUSTWORTHY",
     title: "Numbers that reconcile",
+    accentClass: "text-accent",
     question: "“Would I bet a budget on this figure?”",
     points: [
       "Root-caused GA4 revenue defects (missing item revenue, double-fired events) instead of reporting around them",
@@ -108,6 +99,7 @@ const STANDARDS: {
   {
     kicker: "SAFE",
     title: "Automation with brakes",
+    accentClass: "text-accent-2",
     question: "“What's the worst thing this could write?”",
     points: [
       "Preview-first, human-approved writes on 10,000+ monthly campaign changes",
@@ -118,6 +110,7 @@ const STANDARDS: {
   {
     kicker: "UNATTENDED",
     title: "Runs at 5AM without me",
+    accentClass: "text-accent-3",
     question: "“Does it still work when I'm asleep?”",
     points: [
       "Cloud Run schedulers across two businesses, timed around regional trading waves",
@@ -251,6 +244,42 @@ const accentText: Record<Work["accent"], string> = {
   danger: "text-danger",
 };
 
+const GITHUB_PATH =
+  "M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12";
+
+const LINKEDIN_PATH =
+  "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z";
+
+function BrandIcon({ path }: { path: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className="h-4 w-4 shrink-0 fill-current"
+    >
+      <path d={path} />
+    </svg>
+  );
+}
+
+function MailIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className="h-4 w-4 shrink-0"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+    </svg>
+  );
+}
+
 function ChipIcon({ icon }: { icon: StackIcon }) {
   return (
     <svg
@@ -301,7 +330,7 @@ function SectionHeading({
   return (
     <Reveal className="max-w-2xl">
       <p className="kicker font-mono text-xs text-accent">{kicker}</p>
-      <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
+      <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-fg sm:text-4xl">
         {title}
       </h2>
       {lede && <p className="mt-4 text-base leading-7 text-muted">{lede}</p>}
@@ -353,7 +382,7 @@ export default function Home() {
               <span className="text-fg"> · Data Analyst</span>
               <span className="text-muted"> · MSc, University of Manchester</span>
             </p>
-            <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.08] tracking-tight text-fg sm:text-5xl lg:text-[3.4rem]">
+            <h1 className="mt-5 font-display text-4xl font-bold leading-[1.08] tracking-tight text-fg sm:text-5xl lg:text-[3.4rem]">
               I build the analytics and automation a real business{" "}
               <span className="text-accent">runs on every day.</span>
             </h1>
@@ -376,22 +405,25 @@ export default function Home() {
                 href={LINKS.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-md border border-line px-4 py-2.5 text-sm text-muted transition-colors hover:border-faint hover:text-fg"
+                className="inline-flex items-center gap-2 rounded-md border border-line px-4 py-2.5 text-sm text-muted transition-colors hover:border-faint hover:text-fg"
               >
+                <BrandIcon path={GITHUB_PATH} />
                 GitHub
               </a>
               <a
                 href={LINKS.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-md border border-line px-4 py-2.5 text-sm text-muted transition-colors hover:border-faint hover:text-fg"
+                className="inline-flex items-center gap-2 rounded-md border border-line px-4 py-2.5 text-sm text-muted transition-colors hover:border-faint hover:text-fg"
               >
+                <BrandIcon path={LINKEDIN_PATH} />
                 LinkedIn
               </a>
               <a
                 href={LINKS.email}
-                className="rounded-md border border-line px-4 py-2.5 text-sm text-muted transition-colors hover:border-faint hover:text-fg"
+                className="inline-flex items-center gap-2 rounded-md border border-line px-4 py-2.5 text-sm text-muted transition-colors hover:border-faint hover:text-fg"
               >
+                <MailIcon />
                 Email
               </a>
             </div>
@@ -420,16 +452,26 @@ export default function Home() {
               <Reveal key={w.title} delay={(i % 2) * 90}>
                 <article className="group flex h-full flex-col rounded-xl border border-line bg-panel p-6 transition-colors duration-300 hover:border-faint/60 hover:bg-panel-2">
                   <div className="flex items-baseline justify-between gap-4">
-                    <h3 className="font-display text-xl font-semibold tracking-tight text-fg">
+                    <h3 className="font-display text-xl font-bold tracking-tight text-fg">
                       {w.title}
                     </h3>
                     <span
-                      className={`shrink-0 font-mono text-[11px] ${accentText[w.accent]}`}
+                      className={`shrink-0 font-mono text-[11px] font-bold ${accentText[w.accent]}`}
                     >
                       {w.domain}
                     </span>
                   </div>
                   <p className="mt-3 text-sm leading-6 text-muted">{w.body}</p>
+                  {w.sub && (
+                    <>
+                      <h4 className="mt-4 font-display text-base font-bold tracking-tight text-fg">
+                        {w.sub.title}
+                      </h4>
+                      <p className="mt-2 text-sm leading-6 text-muted">
+                        {w.sub.body}
+                      </p>
+                    </>
+                  )}
                   <div className="mt-4 flex flex-wrap gap-1.5">
                     {w.tags.map((t) => (
                       <span
@@ -460,10 +502,12 @@ export default function Home() {
             {STANDARDS.map((s, i) => (
               <Reveal key={s.kicker} delay={i * 90}>
                 <div className="flex h-full flex-col rounded-xl border border-line bg-panel p-6">
-                  <p className="kicker font-mono text-[11px] text-accent-2">
+                  <p className={`kicker font-mono text-[11px] ${s.accentClass}`}>
                     {s.kicker}
                   </p>
-                  <h3 className="mt-2 font-display text-xl font-semibold tracking-tight text-fg">
+                  <h3
+                    className={`mt-2 font-display text-xl font-bold tracking-tight ${s.accentClass}`}
+                  >
                     {s.title}
                   </h3>
                   <p className="mt-1 text-sm italic text-faint">{s.question}</p>
@@ -525,10 +569,14 @@ export default function Home() {
             {/* Pulsar timing */}
             <Reveal>
               <article className="rounded-xl border border-line bg-panel p-6 sm:p-8">
-                <p className="kicker font-mono text-[11px] text-accent-3">
-                  MSc BY RESEARCH · UNIVERSITY OF MANCHESTER · 2021–2023
+                <p className="kicker font-mono text-[11px]">
+                  <span className="text-accent-3">MSc BY RESEARCH</span>
+                  <span className="text-faint"> · </span>
+                  <span className="text-accent">UNIVERSITY OF MANCHESTER</span>
+                  <span className="text-faint"> · </span>
+                  <span className="text-accent-2">2021–2023</span>
                 </p>
-                <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight text-fg">
+                <h3 className="mt-2 font-display text-2xl font-bold tracking-tight text-fg">
                   Timing pulsars with MeerKAT &amp; Jodrell Bank
                 </h3>
                 <div className="mt-4 space-y-4 text-sm leading-6 text-muted">
@@ -601,11 +649,16 @@ export default function Home() {
             {/* Gravitational waves */}
             <Reveal delay={120}>
               <article className="rounded-xl border border-line bg-panel p-6 sm:p-8">
-                <p className="kicker font-mono text-[11px] text-accent-4">
-                  RESEARCH INTERNSHIP · BOSE.X CENTER FOR ASTROPHYSICAL
-                  RESEARCH, NIT SURAT · 2021–2022
+                <p className="kicker font-mono text-[11px]">
+                  <span className="text-accent-4">RESEARCH INTERNSHIP</span>
+                  <span className="text-faint"> · </span>
+                  <span className="text-accent-5">
+                    BOSE.X CENTER FOR ASTROPHYSICAL RESEARCH
+                  </span>
+                  <span className="text-faint"> · </span>
+                  <span className="text-accent-6">2021–2022</span>
                 </p>
-                <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight text-fg">
+                <h3 className="mt-2 font-display text-2xl font-bold tracking-tight text-fg">
                   Classifying gravitational waves with deep learning
                 </h3>
                 <div className="mt-4 space-y-4 text-sm leading-6 text-muted">
@@ -692,7 +745,7 @@ export default function Home() {
                 </p>
                 <p>
                   The fastest way to see how I think is the work above, or
-                  email me and I&apos;ll walk you through an architecture.
+                  email me and I&apos;ll walk you through it.
                 </p>
               </div>
             </Reveal>
@@ -745,13 +798,13 @@ export default function Home() {
           <Reveal>
             <div className="rounded-xl border border-line bg-panel px-8 py-12 text-center">
               <p className="kicker font-mono text-xs text-accent">CONTACT</p>
-              <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-fg">
+              <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-fg">
                 Let&apos;s talk numbers.
               </h2>
               <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-muted">
-                Open to conversations about data, analytics engineering and
-                applied-AI roles, or just to compare notes on making LLMs
-                behave in production.
+                Open to conversations about data analytics, analytics
+                engineering and applied AI, or just to compare notes on
+                making LLMs behave in production.
               </p>
               <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
                 <a
@@ -766,13 +819,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-md border border-line px-4 py-2.5 text-sm text-muted transition-colors hover:border-faint hover:text-fg"
                 >
-                  <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    className="h-4 w-4 shrink-0 fill-current"
-                  >
-                    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-                  </svg>
+                  <BrandIcon path={GITHUB_PATH} />
                   GitHub
                 </a>
                 <a
@@ -781,13 +828,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-md border border-line px-4 py-2.5 text-sm text-muted transition-colors hover:border-faint hover:text-fg"
                 >
-                  <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    className="h-4 w-4 shrink-0 fill-current"
-                  >
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z" />
-                  </svg>
+                  <BrandIcon path={LINKEDIN_PATH} />
                   LinkedIn
                 </a>
               </div>

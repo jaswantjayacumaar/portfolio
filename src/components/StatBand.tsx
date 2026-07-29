@@ -12,7 +12,7 @@ const STATS: {
   {
     value: 9,
     suffix: "",
-    label: "international markets automated",
+    label: "International markets automated",
     accentClass: "text-accent",
     icon: (
       // globe
@@ -41,7 +41,7 @@ const STATS: {
   {
     value: 10000,
     suffix: "+",
-    label: "campaign changes applied / month",
+    label: "Campaign changes applied / month",
     accentClass: "text-accent-4",
     icon: (
       // refresh cycle
@@ -56,7 +56,7 @@ const STATS: {
   {
     value: 27000,
     suffix: "+",
-    label: "search terms classified / month",
+    label: "Search terms classified / month",
     accentClass: "text-accent-3",
     icon: (
       // classification funnel
