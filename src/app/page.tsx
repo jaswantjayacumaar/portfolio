@@ -150,11 +150,23 @@ const TOOLING: { group: string; blurb: string; items: string[] }[] = [
   },
 ];
 
-const FACTS: { label: string; value: string }[] = [
+const FACTS: {
+  label: string;
+  value?: string;
+  entries?: { main: string; sub: string }[];
+}[] = [
   {
     label: "EDUCATION",
-    value:
-      "MSc by Research, Astronomy & Astrophysics, University of Manchester\nBTech in Mechanical Engineering, Vellore Institute of Technology",
+    entries: [
+      {
+        main: "MSc by Research, Astronomy & Astrophysics",
+        sub: "University of Manchester",
+      },
+      {
+        main: "BTech, Mechanical Engineering",
+        sub: "Vellore Institute of Technology",
+      },
+    ],
   },
   {
     label: "FOCUS",
@@ -206,7 +218,7 @@ export default function Home() {
       {/* Nav */}
       <header className="fixed inset-x-0 top-0 z-50 border-b border-line/70 bg-bg/75 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
-          <a href="#top" className="font-mono text-sm text-fg">
+          <a href="#top" className="font-mono text-sm font-bold text-fg">
             jaswant<span className="text-accent">.jayacumaar</span>
           </a>
           <div className="flex items-center gap-5 font-mono text-xs text-muted sm:gap-7">
@@ -439,8 +451,21 @@ export default function Home() {
                     <dt className="kicker font-mono text-[11px] text-faint">
                       {f.label}
                     </dt>
-                    <dd className="mt-1 whitespace-pre-line text-sm leading-6 text-fg">
-                      {f.value}
+                    <dd className="mt-1 text-sm leading-6 text-fg">
+                      {f.entries ? (
+                        <div className="space-y-2.5">
+                          {f.entries.map((e) => (
+                            <div key={e.main}>
+                              <div>{e.main}</div>
+                              <div className="text-[12.5px] text-muted">
+                                {e.sub}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        f.value
+                      )}
                     </dd>
                   </div>
                 ))}
@@ -492,8 +517,11 @@ export default function Home() {
       </main>
 
       <footer className="border-t border-line/70">
-        <div className="mx-auto flex max-w-6xl items-center justify-center px-6 py-8 font-mono text-[11px] text-faint">
-          <span>© {new Date().getFullYear()} Jaswant Jayacumaar</span>
+        <div className="mx-auto flex max-w-6xl items-center justify-center px-6 py-8 font-mono text-xs text-muted">
+          <span>
+            © {new Date().getFullYear()}{" "}
+            <span className="font-bold text-fg">Jaswant Jayacumaar</span>
+          </span>
         </div>
       </footer>
     </div>
