@@ -1,3 +1,4 @@
+import Image from "next/image";
 import HeroSim from "@/components/HeroSim";
 import Reveal from "@/components/Reveal";
 import StatBand from "@/components/StatBand";
@@ -78,8 +79,8 @@ const WORK: Work[] = [
     title: "Timing pulsars with MeerKAT",
     domain: "research",
     accent: "accent-3",
-    body: "MSc by Research at Jodrell Bank Centre for Astrophysics, University of Manchester: maintained Python ETL workflows processing large-scale time-series data from 500+ pulsars, applying Bayesian inference and MCMC to quantify timing irregularities — the statistical grounding under everything above.",
-    tags: ["Bayesian inference", "MCMC", "Python ETL", "time series", "500+ sources"],
+    body: "MSc by Research at Jodrell Bank Centre for Astrophysics, University of Manchester: produced updated timing solutions for 179 pulsars from Lovell and MeerKAT telescope data with TEMPO2, then benchmarked two ways of measuring spin-down-rate variations — Bayesian Gaussian-process red-noise modelling with ensemble MCMC versus harmonic-whitening fitwaves — across three datasets per pulsar, showing where the Bayesian approach stays robust as irregular sampling breaks the alternative. The statistical grounding under everything above.",
+    tags: ["Bayesian inference", "MCMC (emcee)", "Gaussian processes", "TEMPO2", "179 pulsars", "time series"],
     proves: "statistical foundations, not just tooling",
   },
 ];
@@ -422,8 +423,9 @@ export default function Home() {
                 <p>
                   I&apos;m Jaswant, a data analyst in London with a research
                   spine: an MSc by Research in astrophysics at Manchester, where
-                  I spent two years timing pulsars — Bayesian inference and MCMC
-                  over noisy time series from 500+ sources, where being wrong
+                  I spent two years timing pulsars — producing timing solutions
+                  for 179 of them and running Bayesian inference and MCMC over
+                  noisy, irregularly sampled time series, where being wrong
                   quietly wasn&apos;t an option. That habit of distrusting my
                   own numbers until they reconcile is the most useful thing I
                   brought into industry.
@@ -470,6 +472,45 @@ export default function Home() {
                   </div>
                 ))}
               </dl>
+            </Reveal>
+          </div>
+
+          {/* Thesis figures */}
+          <div className="mt-10 grid items-start gap-5 md:grid-cols-2">
+            <Reveal>
+              <figure className="rounded-xl border border-line bg-panel p-4">
+                <div className="overflow-hidden rounded-lg bg-white p-2">
+                  <Image
+                    src="/thesis/fig4-1_aitoff_sky_map.png"
+                    alt="Aitoff projection sky map showing the 515-pulsar Thousand-Pulsar-Array sample and the pulsars selected for timing analysis"
+                    width={1560}
+                    height={810}
+                    className="h-auto w-full"
+                  />
+                </div>
+                <figcaption className="mt-3 font-mono text-[11px] leading-5 text-faint">
+                  Sky coverage of the Thousand-Pulsar-Array sample (red ×) and
+                  the pulsars selected for analysis (blue ●) — thesis fig. 4.1.
+                </figcaption>
+              </figure>
+            </Reveal>
+            <Reveal delay={120}>
+              <figure className="rounded-xl border border-line bg-panel p-4">
+                <div className="overflow-hidden rounded-lg bg-white p-2">
+                  <Image
+                    src="/thesis/fig4-3_J1833-0338_nudot.png"
+                    alt="Timing residuals and spin-down-rate variations of PSR J1833-0338 measured with Bayesian and fitwaves analysis across JBO, MeerKAT and combined datasets"
+                    width={1440}
+                    height={990}
+                    className="h-auto w-full"
+                  />
+                </div>
+                <figcaption className="mt-3 font-mono text-[11px] leading-5 text-faint">
+                  PSR J1833-0338: spin-down-rate variations resolved by
+                  Bayesian inference across JBO / MeerKAT / combined data,
+                  cross-checked with fitwaves — thesis fig. 4.3.
+                </figcaption>
+              </figure>
             </Reveal>
           </div>
         </section>
