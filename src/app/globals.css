@@ -11,6 +11,8 @@
   --accent: #53d8fb;
   --accent-2: #4ade9d;
   --accent-3: #ffb46b;
+  --accent-4: #b48cff;
+  --accent-5: #ff8fa3;
   --danger: #ff7d6b;
 }
 
@@ -25,6 +27,8 @@
   --color-accent: var(--accent);
   --color-accent-2: var(--accent-2);
   --color-accent-3: var(--accent-3);
+  --color-accent-4: var(--accent-4);
+  --color-accent-5: var(--accent-5);
   --color-danger: var(--danger);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-jbmono);

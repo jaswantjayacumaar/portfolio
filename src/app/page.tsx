@@ -2,6 +2,7 @@ import Image from "next/image";
 import HeroSim from "@/components/HeroSim";
 import Reveal from "@/components/Reveal";
 import StatBand from "@/components/StatBand";
+import { STACK_ICONS } from "@/lib/stack-icons";
 
 const LINKS = {
   github: "https://github.com/jaswantjayacumaar",
@@ -123,30 +124,35 @@ const STANDARDS: {
   },
 ];
 
-const TOOLING: { group: string; blurb: string; items: string[] }[] = [
+const TOOLING: { group: string; blurb: string; accentClass: string; items: string[] }[] = [
   {
     group: "DATA & CLOUD",
     blurb: "The warehouse and the plumbing around it.",
+    accentClass: "text-accent",
     items: ["SQL", "BigQuery", "GCP (Cloud Run · Scheduler · Storage)", "Supabase / PostgreSQL", "scheduled queries & DAG orchestration", "ETL pipelines"],
   },
   {
     group: "MARKETING ANALYTICS",
     blurb: "The channels the automation actually drives.",
+    accentClass: "text-accent-2",
     items: ["Google Ads API", "GA4", "Search Console", "Merchant Center", "Matomo", "Klaviyo", "Bing Ads", "GTM & server-side tagging", "SEM / ROAS optimisation"],
   },
   {
     group: "AI / LLM ENGINEERING",
     blurb: "LLMs put to work, with guardrails.",
+    accentClass: "text-accent-4",
     items: ["LangGraph", "RAG / retrieval-grounded agents", "NL→SQL", "Gemini · Claude · GPT APIs", "MCP server development", "context caching", "prompt engineering", "Claude Code · Cursor"],
   },
   {
     group: "ENGINEERING",
     blurb: "The services that carry it all.",
+    accentClass: "text-accent-3",
     items: ["Python", "TypeScript", "FastAPI · Flask · Express", "Next.js / React", "Docker", "Vercel · Railway", "Git / GitHub"],
   },
   {
     group: "ML & STATISTICS",
     blurb: "The modelling underneath.",
+    accentClass: "text-accent-5",
     items: ["scikit-learn", "TensorFlow / Keras", "Bayesian inference", "MCMC", "predictive modelling", "feature engineering", "Power BI (DAX)", "Looker Studio"],
   },
 ];
@@ -397,7 +403,7 @@ export default function Home() {
             {TOOLING.map((g, i) => (
               <Reveal key={g.group} delay={(i % 3) * 80}>
                 <div className="h-full rounded-xl border border-line bg-panel p-6">
-                  <p className="kicker font-mono text-[11px] text-accent-3">
+                  <p className={`kicker font-mono text-[11px] ${g.accentClass}`}>
                     {g.group}
                   </p>
                   <p className="mt-2 text-sm text-faint">{g.blurb}</p>
@@ -405,8 +411,19 @@ export default function Home() {
                     {g.items.map((t) => (
                       <span
                         key={t}
-                        className="rounded-md border border-line bg-panel-2 px-2 py-1 font-mono text-[11px] text-muted"
+                        className="inline-flex items-center gap-1.5 rounded-md border border-line bg-panel-2 px-2 py-1 font-mono text-[11px] text-muted"
                       >
+                        {(STACK_ICONS[t] ?? []).map((ic) => (
+                          <svg
+                            key={ic.title}
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            className="h-3 w-3 shrink-0"
+                            fill={ic.color}
+                          >
+                            <path d={ic.path} />
+                          </svg>
+                        ))}
                         {t}
                       </span>
                     ))}
