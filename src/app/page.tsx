@@ -53,20 +53,20 @@ const WORK: Work[] = [
     proves: "production LLM engineering: grounded, guarded, actually used",
   },
   {
-    title: "MCP toolchain & AI infrastructure",
-    domain: "AI infrastructure",
-    accent: "accent-5",
-    body: "Built the team's AI-analytics infrastructure: an 11-server MCP toolchain connecting LLMs to BigQuery, GA4, Google Ads (including a custom write-enabled campaign-management server), Search Console, Matomo, Klaviyo, Sentry, Supabase, Jira/Confluence and the internal admin API, with onboarding guides that made LLM-assisted analysis a team-wide workflow rather than a personal trick.",
-    tags: ["MCP server development", "self-hosted infra", "Nginx", "team enablement"],
-    proves: "building the tools that multiply everyone else's output",
-  },
-  {
     title: "Pricing intelligence pipeline",
     domain: "pricing",
     accent: "accent-6",
     body: "Took ownership of the company's pricing-intelligence platform and run it day-to-day: agentic competitor-price scraping across 9 regions, automated BigQuery pricing pipelines with daily orchestration, and the decision dashboard that feeds pricing calls, extending it alongside the rest of the analytics stack.",
     tags: ["agentic scraping", "BigQuery pipelines", "daily orchestration", "pricing analytics"],
     proves: "production ops: inheriting, hardening and extending a live pipeline",
+  },
+  {
+    title: "MCP toolchain & AI infrastructure",
+    domain: "AI infrastructure",
+    accent: "accent-5",
+    body: "Built the team's AI-analytics infrastructure: an 11-server MCP toolchain connecting LLMs to BigQuery, GA4, Google Ads (including a custom write-enabled campaign-management server), Search Console, Matomo, Klaviyo, Sentry, Supabase, Jira/Confluence and the internal admin API, with onboarding guides that made LLM-assisted analysis a team-wide workflow rather than a personal trick.",
+    tags: ["MCP server development", "self-hosted infra", "Nginx", "team enablement"],
+    proves: "building the tools that multiply everyone else's output",
   },
   {
     title: "GA4 tracking forensics",
@@ -83,12 +83,14 @@ const STANDARDS: {
   title: string;
   question: string;
   accentClass: string;
+  borderClass: string;
   points: string[];
 }[] = [
   {
     kicker: "TRUSTWORTHY",
     title: "Numbers that reconcile",
     accentClass: "text-accent",
+    borderClass: "border-l-accent",
     question: "“Would I bet a budget on this figure?”",
     points: [
       "Root-caused GA4 revenue defects (missing item revenue, double-fired events) instead of reporting around them",
@@ -100,6 +102,7 @@ const STANDARDS: {
     kicker: "SAFE",
     title: "Automation with brakes",
     accentClass: "text-accent-2",
+    borderClass: "border-l-accent-2",
     question: "“What's the worst thing this could write?”",
     points: [
       "Preview-first, human-approved writes on 10,000+ monthly campaign changes",
@@ -111,6 +114,7 @@ const STANDARDS: {
     kicker: "UNATTENDED",
     title: "Runs at 5AM without me",
     accentClass: "text-accent-3",
+    borderClass: "border-l-accent-3",
     question: "“Does it still work when I'm asleep?”",
     points: [
       "Cloud Run schedulers across two businesses, timed around regional trading waves",
@@ -329,7 +333,7 @@ function SectionHeading({
 }) {
   return (
     <Reveal className="max-w-2xl">
-      <p className="kicker font-mono text-xs text-accent">{kicker}</p>
+      <p className="kicker font-mono text-xs font-bold text-accent">{kicker}</p>
       <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-fg sm:text-4xl">
         {title}
       </h2>
@@ -377,14 +381,24 @@ export default function Home() {
         {/* Hero */}
         <section className="grid items-center gap-12 pb-16 pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:pb-24 lg:pt-40">
           <Reveal>
-            <p className="font-mono text-sm">
-              <span className="font-bold text-fg">Jaswant Jayacumaar</span>
-              <span className="text-fg"> · Data Analyst</span>
-              <span className="text-muted"> · MSc, University of Manchester</span>
+            <p className="flex items-center gap-2.5 font-mono text-sm">
+              <span
+                className="dot-pulse h-2.5 w-2.5 shrink-0 rounded-full bg-accent-2"
+                aria-hidden="true"
+              />
+              <span>
+                <span className="font-bold text-fg">Jaswant Jayacumaar</span>
+                <span className="text-fg"> · Data Analyst</span>
+                <span className="text-muted">
+                  {" "}
+                  · MSc, University of Manchester
+                </span>
+              </span>
             </p>
             <h1 className="mt-5 font-display text-4xl font-bold leading-[1.08] tracking-tight text-fg sm:text-5xl lg:text-[3.4rem]">
-              I build the analytics and automation a real business{" "}
-              <span className="text-accent">runs on every day.</span>
+              I build the <span className="italic text-accent">analytics</span>{" "}
+              and <span className="italic text-accent-2">automation</span> a
+              real business runs on every day.
             </h1>
             <p className="mt-6 max-w-xl text-base leading-7 text-muted">
               Full-stack analytics platforms, automated Google Ads bidding, and
@@ -425,6 +439,13 @@ export default function Home() {
               >
                 <MailIcon />
                 Email
+              </a>
+              {/* TODO: point at the CV PDF once Jaswant provides it */}
+              <a
+                href="#"
+                className="rounded-md border border-line px-4 py-2.5 text-sm text-muted transition-colors hover:border-faint hover:text-fg"
+              >
+                Résumé
               </a>
             </div>
           </Reveal>
@@ -501,13 +522,13 @@ export default function Home() {
           <div className="mt-12 grid gap-5 lg:grid-cols-3">
             {STANDARDS.map((s, i) => (
               <Reveal key={s.kicker} delay={i * 90}>
-                <div className="flex h-full flex-col rounded-xl border border-line bg-panel p-6">
-                  <p className={`kicker font-mono text-[11px] ${s.accentClass}`}>
+                <div
+                  className={`flex h-full flex-col rounded-xl border border-line border-l-4 bg-panel p-6 ${s.borderClass}`}
+                >
+                  <p className={`kicker font-mono text-[11px] font-bold ${s.accentClass}`}>
                     {s.kicker}
                   </p>
-                  <h3
-                    className={`mt-2 font-display text-xl font-bold tracking-tight ${s.accentClass}`}
-                  >
+                  <h3 className="mt-2 font-display text-xl font-bold tracking-tight text-fg">
                     {s.title}
                   </h3>
                   <p className="mt-1 text-sm italic text-faint">{s.question}</p>
@@ -809,9 +830,10 @@ export default function Home() {
               <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
                 <a
                   href={LINKS.email}
-                  className="rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-bg transition-opacity hover:opacity-90"
+                  className="inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-bg transition-opacity hover:opacity-90"
                 >
-                  Email me
+                  <MailIcon />
+                  Email
                 </a>
                 <a
                   href={LINKS.github}

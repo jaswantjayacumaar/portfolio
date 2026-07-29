@@ -108,7 +108,15 @@ export default function StatBand() {
       className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line lg:grid-cols-4"
     >
       {STATS.map((s) => (
-        <div key={s.label} className="bg-panel px-6 py-7">
+        <div
+          key={s.label}
+          className="spot bg-panel px-6 py-7"
+          onMouseMove={(e) => {
+            const r = e.currentTarget.getBoundingClientRect();
+            e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
+            e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+          }}
+        >
           <div className={`mb-3 ${s.accentClass}`}>
             <svg
               viewBox="0 0 24 24"
