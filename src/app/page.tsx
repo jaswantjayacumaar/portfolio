@@ -2,6 +2,7 @@ import Image from "next/image";
 import HeroSim from "@/components/HeroSim";
 import Reveal from "@/components/Reveal";
 import StatBand from "@/components/StatBand";
+import gwStrain from "../../public/research/gw-strain.png";
 import qtH1 from "../../public/research/qtransform-h1.png";
 import qtL1 from "../../public/research/qtransform-l1.png";
 import { STACK_ICONS } from "@/lib/stack-icons";
@@ -613,20 +614,26 @@ export default function Home() {
               </div>
               <figure className="mt-8 rounded-xl border border-line bg-panel p-5">
                 <Image
+                  src={gwStrain}
+                  alt="Whitened strain time series of gravitational-wave event GW150914 in the LIGO H1 and L1 detectors"
+                  className="w-full"
+                />
+                <Image
                   src={qtH1}
                   alt="Q-transform spectrogram of gravitational-wave event GW150914 in the LIGO Hanford (H1) detector"
-                  className="w-full"
+                  className="mt-3 w-full"
                 />
                 <Image
                   src={qtL1}
                   alt="Q-transform spectrogram of gravitational-wave event GW150914 in the LIGO Livingston (L1) detector"
-                  className="mt-3 w-full rounded-md"
+                  className="mt-3 w-full"
                 />
                 <figcaption className="mt-4 font-mono text-[11px] leading-5 text-faint">
-                  the chirp of two black holes colliding — Q-transform
-                  spectrograms of GW150914 in the LIGO Hanford (H1) and
-                  Livingston (L1) detectors, from my gravitational-wave
-                  classification research ·{" "}
+                  the chirp of two black holes colliding — whitened strain and
+                  Q-transform spectrograms of GW150914 in the LIGO Hanford (H1)
+                  and Livingston (L1) detectors, from my gravitational-wave
+                  classification research at the Bose.X Center for
+                  Astrophysical Research ·{" "}
                   <a
                     href="https://github.com/jaswantjayacumaar/Classyfying-LensGW-DL"
                     target="_blank"
