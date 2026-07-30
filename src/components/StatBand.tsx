@@ -63,6 +63,19 @@ const STATS: {
       <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
     ),
   },
+  {
+    value: 25,
+    suffix: "+",
+    label: "Operational hours saved weekly",
+    accentClass: "text-accent-5",
+    icon: (
+      // clock
+      <>
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12 6 12 12 16 14" />
+      </>
+    ),
+  },
 ];
 
 function easeOutCubic(t: number) {
@@ -105,7 +118,7 @@ export default function StatBand() {
   return (
     <div
       ref={ref}
-      className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line lg:grid-cols-4"
+      className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line lg:grid-cols-5"
     >
       {STATS.map((s) => (
         <div

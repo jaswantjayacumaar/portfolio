@@ -239,8 +239,8 @@ body::before {
   transition: opacity 0.35s ease;
   background: radial-gradient(
     150px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(232, 236, 242, 0.14),
-    rgba(232, 236, 242, 0.04) 45%,
+    rgba(232, 236, 242, 0.06),
+    rgba(232, 236, 242, 0.018) 45%,
     transparent 68%
   );
   pointer-events: none;
@@ -251,8 +251,8 @@ body::before {
 :root[data-theme="light"] .spot::after {
   background: radial-gradient(
     150px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(20, 32, 44, 0.08),
-    rgba(20, 32, 44, 0.02) 45%,
+    rgba(20, 32, 44, 0.04),
+    rgba(20, 32, 44, 0.012) 45%,
     transparent 68%
   );
 }

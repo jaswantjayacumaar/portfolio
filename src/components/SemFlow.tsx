@@ -109,7 +109,7 @@ const toneClass: Record<string, string> = {
   green: "text-accent-2",
 };
 
-export default function SemFlow() {
+export default function SemFlow({ embedded = false }: { embedded?: boolean }) {
   const [run, setRun] = useState(37);
   const [step, setStep] = useState(0);
   const [reduced, setReduced] = useState(false);
@@ -182,7 +182,7 @@ export default function SemFlow() {
   };
 
   return (
-    <div className="rounded-xl border border-line bg-panel/70 p-4 backdrop-blur sm:p-6">
+    <div className={embedded ? "" : "rounded-xl border border-line bg-panel/70 p-4 backdrop-blur sm:p-6"}>
       <div className="mb-3 flex items-center justify-between gap-4 font-mono text-[11px] sm:text-xs">
         <span className="text-muted">sem console · cloud run</span>
         <span className="flex items-center gap-3 text-faint">

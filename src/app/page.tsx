@@ -1,6 +1,8 @@
 import Image from "next/image";
 import AgentFlow from "@/components/AgentFlow";
+import CmFlow from "@/components/CmFlow";
 import HeroSim from "@/components/HeroSim";
+import PriceFlow from "@/components/PriceFlow";
 import SemFlow from "@/components/SemFlow";
 import Reveal from "@/components/Reveal";
 import SpotCard from "@/components/SpotCard";
@@ -173,7 +175,7 @@ const FACTS: {
   accentClass: string;
   icon: React.ReactNode;
   value?: string;
-  entries?: { main: string; sub: string }[];
+  entries?: { main: string; field: string; institution: string }[];
 }[] = [
   {
     label: "EDUCATION",
@@ -189,11 +191,13 @@ const FACTS: {
     entries: [
       {
         main: "Master of Science by Research (MSc)",
-        sub: "Astronomy & Astrophysics · University of Manchester",
+        field: "Astronomy & Astrophysics",
+        institution: "University of Manchester",
       },
       {
         main: "Bachelor of Technology (BTech)",
-        sub: "Mechanical Engineering · Vellore Institute of Technology",
+        field: "Mechanical Engineering",
+        institution: "Vellore Institute of Technology",
       },
     ],
   },
@@ -360,10 +364,85 @@ function SectionHeading({
       <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-fg sm:text-4xl">
         {title}
       </h2>
-      {lede && <p className="mt-4 text-base leading-7 text-muted">{lede}</p>}
+      {lede && <p className="mt-4 text-lg leading-8 text-muted">{lede}</p>}
     </Reveal>
   );
 }
+
+function CardHead({ w }: { w: Work }) {
+  return (
+    <div className="flex items-baseline justify-between gap-4">
+      <h3 className="font-display text-xl font-bold tracking-tight text-fg">
+        {w.title}
+      </h3>
+      <span className={`shrink-0 font-mono text-[11px] font-bold ${accentText[w.accent]}`}>
+        {w.domain}
+      </span>
+    </div>
+  );
+}
+
+function StackChips({ items }: { items: string[] }) {
+  return (
+    <div className="mt-4 flex flex-wrap gap-1.5">
+      {items.map((t) => {
+        const c = brandColor(t);
+        return (
+          <span
+            key={t}
+            style={c ? { borderColor: `${c}80` } : undefined}
+            className="inline-flex items-center gap-1.5 rounded-md border border-line bg-panel-2 px-2 py-0.5 font-mono text-[11px] text-muted"
+          >
+            <ChipLabel label={t} />
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
+function ApproachChips({ items }: { items: string[] }) {
+  if (!items.length) return null;
+  return (
+    <div className="mt-2 flex flex-wrap gap-1.5">
+      {items.map((t) => (
+        <span
+          key={t}
+          className="inline-flex items-center gap-1.5 rounded-md border border-dashed border-faint/40 px-2 py-0.5 font-mono text-[11px] text-faint"
+        >
+          <ChipLabel label={t} />
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function ProvesLine({ w }: { w: Work }) {
+  return (
+    <p className={`mt-4 border-t border-line pt-3 font-mono text-[11px] leading-5 ${accentText[w.accent]}`}>
+      proves: {w.proves}
+    </p>
+  );
+}
+
+function CardInner({ w, bodyMax }: { w: Work; bodyMax?: boolean }) {
+  return (
+    <>
+      <CardHead w={w} />
+      <p className={`mt-3 text-sm leading-6 text-muted${bodyMax ? " max-w-3xl" : ""}`}>
+        {w.body}
+      </p>
+      <StackChips items={w.stack} />
+      <ApproachChips items={w.approaches} />
+      <ProvesLine w={w} />
+    </>
+  );
+}
+
+const FULL_CARD =
+  "rounded-xl border border-line bg-panel p-6 transition-colors duration-300 hover:border-faint/60 sm:p-8";
+const GRID_CARD =
+  "group flex h-full flex-col rounded-xl border border-line bg-panel p-6 transition-colors duration-300 hover:border-faint/60";
 
 export default function Home() {
   return (
@@ -407,9 +486,13 @@ export default function Home() {
           <Reveal>
             <p className="flex items-center gap-2.5 font-mono text-sm">
               <span
-                className="dot-pulse h-2.5 w-2.5 shrink-0 rounded-full bg-accent-2"
+                className="relative flex h-3.5 w-3.5 shrink-0 items-center justify-center"
                 aria-hidden="true"
-              />
+              >
+                <span className="absolute h-full w-full rounded-full bg-accent-2/25" />
+                <span className="absolute h-full w-full animate-ping rounded-full bg-accent-2/60 motion-reduce:animate-none" />
+                <span className="relative h-2 w-2 rounded-full bg-accent-2" />
+              </span>
               <span className="whitespace-nowrap text-[13px] sm:text-sm">
                 <span className="font-bold text-fg">Jaswant Jayacumaar</span>
                 <span className="text-fg"> · Data Analyst</span>
@@ -428,7 +511,7 @@ export default function Home() {
               and <span className="font-cursive italic text-accent-3">AI</span>{" "}
               a real business runs on every day.
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-7 text-muted">
+            <p className="mt-6 max-w-xl text-lg leading-8 text-muted">
               Full-stack analytics platforms, automated Google Ads bidding, and
               retrieval-grounded AI agents, plus the BigQuery warehouse
               underneath, for a global photo-gifting e-commerce company trading
@@ -475,16 +558,6 @@ export default function Home() {
           </Reveal>
         </section>
 
-        {/* Flow diagrams */}
-        <section className="space-y-6 pb-16">
-          <Reveal>
-            <AgentFlow />
-          </Reveal>
-          <Reveal delay={120}>
-            <SemFlow />
-          </Reveal>
-        </section>
-
         {/* Stat band */}
         <section className="pb-24">
           <Reveal>
@@ -499,68 +572,80 @@ export default function Home() {
             title="Systems a business depends on, not demos."
             lede="Each entry says what problem it solved, what I built, and what it proves. Everything here runs in production today; the counts are real, the revenue figures deliberately absent."
           />
-          <div className="mt-12 grid gap-5 md:grid-cols-2">
-            {WORK.map((w, i) => (
-              <Reveal key={w.title} delay={(i % 2) * 90}>
-                <SpotCard
-                  as="article"
-                  className="group flex h-full flex-col rounded-xl border border-line bg-panel p-6 transition-colors duration-300 hover:border-faint/60 hover:bg-panel-2"
-                >
-                  <div className="flex items-baseline justify-between gap-4">
-                    <h3 className="font-display text-xl font-bold tracking-tight text-fg">
-                      {w.title}
-                    </h3>
-                    <span
-                      className={`shrink-0 font-mono text-[11px] font-bold ${accentText[w.accent]}`}
-                    >
-                      {w.domain}
-                    </span>
-                  </div>
-                  <p className="mt-3 text-sm leading-6 text-muted">{w.body}</p>
-                  {w.sub && (
-                    <>
-                      <h4 className="mt-4 font-display text-base font-bold tracking-tight text-fg">
-                        {w.sub.title}
+          <div className="mt-12 space-y-8">
+            {/* CM Report — content + flow in one box */}
+            <Reveal>
+              <SpotCard as="article" className={FULL_CARD}>
+                <CardInner w={WORK[0]} bodyMax />
+                <div className="mt-6 border-t border-line pt-6">
+                  <CmFlow embedded />
+                </div>
+              </SpotCard>
+            </Reveal>
+
+            {/* SEM Automation Console — two-part + flow in one box */}
+            <Reveal>
+              <SpotCard as="article" className={FULL_CARD}>
+                <CardHead w={WORK[1]} />
+                {WORK[1].sub && (
+                  <div className="mt-4 grid gap-6 md:grid-cols-2">
+                    <div className="md:pr-6">
+                      <p className="text-sm leading-6 text-muted">
+                        {WORK[1].body}
+                      </p>
+                      <StackChips items={WORK[1].stack} />
+                    </div>
+                    <div className="md:border-l md:border-line md:pl-6">
+                      <h4 className="font-display text-base font-bold tracking-tight text-fg">
+                        {WORK[1].sub.title}
                       </h4>
                       <p className="mt-2 text-sm leading-6 text-muted">
-                        {w.sub.body}
+                        {WORK[1].sub.body}
                       </p>
-                    </>
-                  )}
-                  <div className="mt-4 flex flex-wrap gap-1.5">
-                    {w.stack.map((t) => {
-                      const c = brandColor(t);
-                      return (
-                        <span
-                          key={t}
-                          style={c ? { borderColor: `${c}80` } : undefined}
-                          className="inline-flex items-center gap-1.5 rounded-md border border-line bg-panel-2 px-2 py-0.5 font-mono text-[11px] text-muted"
-                        >
-                          <ChipLabel label={t} />
-                        </span>
-                      );
-                    })}
-                  </div>
-                  {w.approaches.length > 0 && (
-                    <div className="mt-2 flex flex-wrap gap-1.5">
-                      {w.approaches.map((t) => (
-                        <span
-                          key={t}
-                          className="inline-flex items-center gap-1.5 rounded-md border border-dashed border-faint/40 px-2 py-0.5 font-mono text-[11px] text-faint"
-                        >
-                          <ChipLabel label={t} />
-                        </span>
-                      ))}
+                      <ApproachChips items={WORK[1].approaches} />
                     </div>
-                  )}
-                  <p
-                    className={`mt-4 border-t border-line pt-3 font-mono text-[11px] leading-5 ${accentText[w.accent]}`}
-                  >
-                    proves: {w.proves}
-                  </p>
+                  </div>
+                )}
+                <ProvesLine w={WORK[1]} />
+                <div className="mt-6 border-t border-line pt-6">
+                  <SemFlow embedded />
+                </div>
+              </SpotCard>
+            </Reveal>
+
+            {/* RAG analytics agent — content + flow in one box */}
+            <Reveal>
+              <SpotCard as="article" className={FULL_CARD}>
+                <CardInner w={WORK[2]} bodyMax />
+                <div className="mt-6 border-t border-line pt-6">
+                  <AgentFlow embedded />
+                </div>
+              </SpotCard>
+            </Reveal>
+
+            {/* Pricing — content + flow in one box */}
+            <Reveal>
+              <SpotCard as="article" className={FULL_CARD}>
+                <CardInner w={WORK[3]} bodyMax />
+                <div className="mt-6 border-t border-line pt-6">
+                  <PriceFlow embedded />
+                </div>
+              </SpotCard>
+            </Reveal>
+
+            {/* Remaining two — unchanged 2-up grid */}
+            <div className="grid gap-5 md:grid-cols-2">
+              <Reveal>
+                <SpotCard as="article" className={GRID_CARD}>
+                  <CardInner w={WORK[4]} />
                 </SpotCard>
               </Reveal>
-            ))}
+              <Reveal delay={90}>
+                <SpotCard as="article" className={GRID_CARD}>
+                  <CardInner w={WORK[5]} />
+                </SpotCard>
+              </Reveal>
+            </div>
           </div>
         </section>
 
@@ -642,7 +727,7 @@ export default function Home() {
             title="From gravitational waves to cosmic clocks"
             lede="Before dashboards and bidding systems: two research chapters, pulsar timing at Jodrell Bank and deep-learning gravitational-wave classification, where the statistical habits under everything above were formed."
           />
-          <div className="mt-12 grid items-start gap-5 lg:grid-cols-2 xl:-mx-16">
+          <div className="mt-12 grid items-start gap-5 lg:grid-cols-2">
             {/* Pulsar timing */}
             <Reveal>
               <SpotCard
@@ -805,7 +890,7 @@ export default function Home() {
           <SectionHeading kicker="ABOUT" title="From pulsars to profit margins" />
           <div className="mt-10 grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
             <Reveal>
-              <div className="space-y-5 text-base leading-7 text-muted">
+              <div className="space-y-5 text-lg leading-8 text-muted">
                 <p>
                   I&apos;m Jaswant, a data analyst in London with a research
                   spine: an MSc by Research in astrophysics at Manchester, where
@@ -859,8 +944,14 @@ export default function Home() {
                           {f.entries.map((e) => (
                             <div key={e.main}>
                               <div>{e.main}</div>
-                              <div className="text-[12.5px] text-muted">
-                                {e.sub}
+                              <div className="text-[12.5px]">
+                                <span className="font-semibold text-fg">
+                                  {e.field}
+                                </span>
+                                <span className="text-muted">
+                                  {" "}
+                                  · {e.institution}
+                                </span>
                               </div>
                             </div>
                           ))}
