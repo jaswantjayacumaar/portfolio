@@ -509,7 +509,7 @@ export default function Home() {
                 automation
               </span>{" "}
               and <span className="font-cursive italic text-accent-3">AI</span>{" "}
-              a real business runs on every day.
+              a real business depends on.
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-8 text-muted">
               Full-stack analytics platforms, automated Google Ads bidding, and
