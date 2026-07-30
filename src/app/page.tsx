@@ -1,6 +1,7 @@
 import Image from "next/image";
 import HeroSim from "@/components/HeroSim";
 import Reveal from "@/components/Reveal";
+import SpotCard from "@/components/SpotCard";
 import StatBand from "@/components/StatBand";
 import ThemeToggle from "@/components/ThemeToggle";
 import gwStrain from "../../public/research/gw-strain.png";
@@ -20,7 +21,8 @@ type Work = {
   accent: "accent" | "accent-2" | "accent-3" | "accent-4" | "accent-5" | "accent-6" | "danger";
   body: string;
   sub?: { title: string; body: string };
-  tags: string[];
+  stack: string[];
+  approaches: string[];
   proves: string;
 };
 
@@ -30,7 +32,8 @@ const WORK: Work[] = [
     domain: "e-commerce analytics",
     accent: "accent",
     body: "Profitability decisions ran on lagging, patchwork dashboards. I built and own the company's CM reporting platform: a full-stack web app (Next.js/TypeScript, Express, BigQuery, Supabase; deployed on Vercel/Railway) replacing legacy Looker Studio with live daily and hourly profitability, marketing-cost and SEM analytics across 9 international markets, refreshed by scheduled queries timed around US trading waves.",
-    tags: ["Next.js", "TypeScript", "Express", "BigQuery", "Supabase", "Vercel / Railway"],
+    stack: ["Next.js", "TypeScript", "Express", "BigQuery", "Supabase", "Vercel / Railway"],
+    approaches: [],
     proves: "end-to-end platform ownership: warehouse → API → UI → adoption",
   },
   {
@@ -42,7 +45,8 @@ const WORK: Work[] = [
       title: "Bidding decision systems",
       body: "Designed the profit- and growth-mode bidding decision trees behind the console: ROAS-band classification with RED/AMBER/GREEN logic executed autonomously via Cloud Run schedulers across two businesses, plus AI pipelines including a two-pass Gemini negative-keyword classifier and multi-model ad-copy generation using Claude, Gemini and GPT.",
     },
-    tags: ["Python / Flask", "Google Ads API", "Cloud Run", "BigQuery", "Next.js", "Python - Automation", "decision trees", "ROAS classification", "two-pass LLM classifier", "multi-model generation"],
+    stack: ["Python / Flask", "Google Ads API", "Cloud Run", "BigQuery", "Next.js", "Python - Automation"],
+    approaches: ["decision trees", "ROAS classification", "two-pass LLM classifier", "multi-model generation"],
     proves: "automation at scale and algorithm design that moves real money, safe by construction",
   },
   {
@@ -50,7 +54,8 @@ const WORK: Work[] = [
     domain: "applied AI",
     accent: "accent-4",
     body: "Stakeholders needed answers faster than dashboards could serve them. I built a RAG analytics agent embedded in the CM platform (FastAPI, LangGraph, Gemini) that turns natural language into validated SQL over BigQuery, grounded by 18 intent playbooks with context caching, connected to 7 live data systems. Hardened with SELECT-only guards, dry-run validation and byte caps, with a streaming chat UI and exportable transcripts.",
-    tags: ["FastAPI", "LangGraph", "Gemini", "NL→SQL", "context caching", "7 live integrations"],
+    stack: ["FastAPI", "LangGraph", "Gemini"],
+    approaches: ["NL→SQL", "context caching", "7 live integrations"],
     proves: "production LLM engineering: grounded, guarded, actually used",
   },
   {
@@ -58,7 +63,8 @@ const WORK: Work[] = [
     domain: "pricing",
     accent: "accent-6",
     body: "Took ownership of the company's pricing-intelligence platform and run it day-to-day: agentic competitor-price scraping across 9 regions, automated BigQuery pricing pipelines with daily orchestration, and the decision dashboard that feeds pricing calls, extending it alongside the rest of the analytics stack.",
-    tags: ["agentic scraping", "BigQuery pipelines", "daily orchestration", "pricing analytics"],
+    stack: ["BigQuery pipelines"],
+    approaches: ["agentic scraping", "daily orchestration", "pricing analytics"],
     proves: "production ops: inheriting, hardening and extending a live pipeline",
   },
   {
@@ -66,7 +72,8 @@ const WORK: Work[] = [
     domain: "AI infrastructure",
     accent: "accent-5",
     body: "Built the team's AI-analytics infrastructure: an 11-server MCP toolchain connecting LLMs to BigQuery, GA4, Google Ads (including a custom write-enabled campaign-management server), Search Console, Matomo, Klaviyo, Sentry, Supabase, Jira/Confluence and the internal admin API, with onboarding guides that made LLM-assisted analysis a team-wide workflow rather than a personal trick.",
-    tags: ["MCP server development", "self-hosted infra", "Nginx", "team enablement"],
+    stack: ["MCP server development", "Nginx"],
+    approaches: ["self-hosted infra", "team enablement"],
     proves: "building the tools that multiply everyone else's output",
   },
   {
@@ -74,7 +81,8 @@ const WORK: Work[] = [
     domain: "analytics engineering",
     accent: "danger",
     body: "Trustworthy automation needs trustworthy inputs. I root-caused critical GA4 tracking defects (item-level purchase revenue missing since a specific release, GTM double-firing inflating events, a dead checkout event), dated each break, and drove the fixes with Engineering; contributed to server-side tagging and consent-mode implementation across 7 regions.",
-    tags: ["GA4", "GTM", "server-side tagging", "consent mode", "root-cause analysis"],
+    stack: ["GA4", "GTM"],
+    approaches: ["server-side tagging", "consent mode", "root-cause analysis"],
     proves: "diagnostic rigour: finding the breaks everyone else reported around",
   },
 ];
@@ -470,7 +478,10 @@ export default function Home() {
           <div className="mt-12 grid gap-5 md:grid-cols-2">
             {WORK.map((w, i) => (
               <Reveal key={w.title} delay={(i % 2) * 90}>
-                <article className="group flex h-full flex-col rounded-xl border border-line bg-panel p-6 transition-colors duration-300 hover:border-faint/60 hover:bg-panel-2">
+                <SpotCard
+                  as="article"
+                  className="group flex h-full flex-col rounded-xl border border-line bg-panel p-6 transition-colors duration-300 hover:border-faint/60 hover:bg-panel-2"
+                >
                   <div className="flex items-baseline justify-between gap-4">
                     <h3 className="font-display text-xl font-bold tracking-tight text-fg">
                       {w.title}
@@ -493,7 +504,7 @@ export default function Home() {
                     </>
                   )}
                   <div className="mt-4 flex flex-wrap gap-1.5">
-                    {w.tags.map((t) => (
+                    {w.stack.map((t) => (
                       <span
                         key={t}
                         className="inline-flex items-center gap-1.5 rounded-md border border-line bg-panel-2 px-2 py-0.5 font-mono text-[11px] text-muted"
@@ -502,10 +513,25 @@ export default function Home() {
                       </span>
                     ))}
                   </div>
+                  {w.approaches.length > 0 && (
+                    <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-faint">
+                        approach
+                      </span>
+                      {w.approaches.map((t) => (
+                        <span
+                          key={t}
+                          className="inline-flex items-center gap-1.5 rounded-md border border-dashed border-faint/40 px-2 py-0.5 font-mono text-[11px] text-faint"
+                        >
+                          <ChipLabel label={t} />
+                        </span>
+                      ))}
+                    </div>
+                  )}
                   <p className="mt-4 border-t border-line pt-3 font-mono text-[11px] leading-5 text-faint">
                     proves: <span className="text-muted">{w.proves}</span>
                   </p>
-                </article>
+                </SpotCard>
               </Reveal>
             ))}
           </div>
@@ -521,7 +547,7 @@ export default function Home() {
           <div className="mt-12 grid gap-5 lg:grid-cols-3">
             {STANDARDS.map((s, i) => (
               <Reveal key={s.kicker} delay={i * 90}>
-                <div
+                <SpotCard
                   className={`flex h-full flex-col rounded-xl border border-line border-l-4 bg-panel p-6 ${s.borderClass}`}
                 >
                   <p className={`kicker font-mono text-[11px] font-bold ${s.accentClass}`}>
@@ -541,7 +567,7 @@ export default function Home() {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </SpotCard>
               </Reveal>
             ))}
           </div>

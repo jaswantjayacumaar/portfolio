@@ -8,7 +8,7 @@
   --line: #1d2634;
   --fg: #e8ecf2;
   --muted: #96a1b1;
-  --faint: #5f6c7e;
+  --faint: #76839a;
   --accent: #53d8fb;
   --accent-2: #4ade9d;
   --accent-3: #ffb46b;
@@ -27,7 +27,7 @@
   --line: #d7dfe9;
   --fg: #14202c;
   --muted: #465364;
-  --faint: #8592a4;
+  --faint: #66717f;
   --accent: #0891b2;
   --accent-2: #059669;
   --accent-3: #d97706;
@@ -63,6 +63,18 @@ html {
   scroll-padding-top: 5rem;
 }
 
+/* Visible keyboard focus (mouse clicks don't trigger :focus-visible).
+   Zero-specificity :where() so component styles can still override. */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: var(--accent);
+  outline-offset: 3px;
+  border-radius: 5px;
+}
+
 body {
   background: var(--bg);
   color: var(--fg);
@@ -78,33 +90,37 @@ body::before {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(900px 600px at 50% 32%, rgba(180, 140, 255, 0.09), transparent 65%),
-    radial-gradient(750px 500px at 68% 12%, rgba(83, 216, 251, 0.06), transparent 60%),
-    radial-gradient(700px 480px at 20% 65%, rgba(74, 222, 157, 0.04), transparent 60%),
-    linear-gradient(to right, rgba(232, 236, 242, 0.022) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(232, 236, 242, 0.022) 1px, transparent 1px);
+    radial-gradient(820px 560px at 50% 24%, rgba(180, 140, 255, 0.18), transparent 62%),
+    radial-gradient(720px 500px at 74% 8%, rgba(83, 216, 251, 0.14), transparent 58%),
+    radial-gradient(680px 520px at 16% 58%, rgba(74, 222, 157, 0.11), transparent 60%),
+    radial-gradient(700px 520px at 88% 46%, rgba(255, 143, 163, 0.1), transparent 60%),
+    linear-gradient(to right, rgba(232, 236, 242, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(232, 236, 242, 0.05) 1px, transparent 1px);
   background-size:
     auto,
     auto,
     auto,
-    48px 48px,
-    48px 48px;
+    auto,
+    54px 54px,
+    54px 54px;
 }
 
 /* Light-theme backdrop: same haze hues, dark grid lines. */
 :root[data-theme="light"] body::before {
   background:
-    radial-gradient(900px 600px at 50% 32%, rgba(124, 58, 237, 0.07), transparent 65%),
-    radial-gradient(750px 500px at 68% 12%, rgba(8, 145, 178, 0.06), transparent 60%),
-    radial-gradient(700px 480px at 20% 65%, rgba(5, 150, 105, 0.05), transparent 60%),
-    linear-gradient(to right, rgba(20, 32, 44, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(20, 32, 44, 0.035) 1px, transparent 1px);
+    radial-gradient(820px 560px at 50% 24%, rgba(124, 58, 237, 0.12), transparent 62%),
+    radial-gradient(720px 500px at 74% 8%, rgba(8, 145, 178, 0.11), transparent 58%),
+    radial-gradient(680px 520px at 16% 58%, rgba(5, 150, 105, 0.09), transparent 60%),
+    radial-gradient(700px 520px at 88% 46%, rgba(219, 39, 119, 0.08), transparent 60%),
+    linear-gradient(to right, rgba(20, 32, 44, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20, 32, 44, 0.06) 1px, transparent 1px);
   background-size:
     auto,
     auto,
     auto,
-    48px 48px,
-    48px 48px;
+    auto,
+    54px 54px,
+    54px 54px;
 }
 
 ::selection {
@@ -184,6 +200,7 @@ body::before {
   content: "";
   position: absolute;
   inset: 0;
+  border-radius: inherit;
   opacity: 0;
   transition: opacity 0.35s ease;
   background: radial-gradient(
