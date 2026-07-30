@@ -2,6 +2,7 @@ import Image from "next/image";
 import HeroSim from "@/components/HeroSim";
 import Reveal from "@/components/Reveal";
 import StatBand from "@/components/StatBand";
+import ThemeToggle from "@/components/ThemeToggle";
 import gwStrain from "../../public/research/gw-strain.png";
 import qtH1 from "../../public/research/qtransform-h1.png";
 import qtL1 from "../../public/research/qtransform-l1.png";
@@ -41,7 +42,7 @@ const WORK: Work[] = [
       title: "Bidding decision systems",
       body: "Designed the profit- and growth-mode bidding decision trees behind the console: ROAS-band classification with RED/AMBER/GREEN logic executed autonomously via Cloud Run schedulers across two businesses, plus AI pipelines including a two-pass Gemini negative-keyword classifier and multi-model ad-copy generation using Claude, Gemini and GPT.",
     },
-    tags: ["Python / Flask", "Google Ads API", "Cloud Run", "BigQuery", "Next.js", "58 Python scripts", "decision trees", "ROAS classification", "two-pass LLM classifier", "multi-model generation"],
+    tags: ["Python / Flask", "Google Ads API", "Cloud Run", "BigQuery", "Next.js", "Python - Automation", "decision trees", "ROAS classification", "two-pass LLM classifier", "multi-model generation"],
     proves: "automation at scale and algorithm design that moves real money, safe by construction",
   },
   {
@@ -129,7 +130,7 @@ const TOOLING: { group: string; blurb: string; accentClass: string; items: strin
     group: "DATA & CLOUD",
     blurb: "The warehouse and the plumbing around it.",
     accentClass: "text-accent",
-    items: ["SQL", "BigQuery", "GCP (Cloud Run · Scheduler · Storage)", "Supabase / PostgreSQL", "scheduled queries & DAG orchestration", "ETL pipelines"],
+    items: ["SQL", "BigQuery", "GCP (Cloud Run · Scheduler · Storage)", "PostgreSQL", "Supabase", "scheduled queries & DAG orchestration", "ETL pipelines"],
   },
   {
     group: "MARKETING ANALYTICS",
@@ -373,6 +374,7 @@ export default function Home() {
             >
               contact
             </a>
+            <ThemeToggle />
           </div>
         </nav>
       </header>
@@ -401,7 +403,7 @@ export default function Home() {
               , <span className="font-cursive italic text-accent-2">
                 automation
               </span>{" "}
-              and <span className="font-cursive italic text-accent-4">AI</span>{" "}
+              and <span className="font-cursive italic text-accent-3">AI</span>{" "}
               a real business runs on every day.
             </h1>
             <p className="mt-6 max-w-xl text-base leading-7 text-muted">
@@ -436,13 +438,6 @@ export default function Home() {
               >
                 <BrandIcon path={LINKEDIN_PATH} />
                 LinkedIn
-              </a>
-              <a
-                href={LINKS.email}
-                className="inline-flex items-center gap-2 rounded-md border border-line px-4 py-2.5 text-sm text-muted transition-colors hover:border-faint hover:text-fg"
-              >
-                <MailIcon />
-                Email
               </a>
               {/* TODO: point at the CV PDF once Jaswant provides it */}
               <a
@@ -611,7 +606,7 @@ export default function Home() {
                     microsecond deviations carry physics. From 515 pulsars in
                     the MeerTime Thousand-Pulsar-Array programme,{" "}
                     <strong className="text-fg">
-                      I produced updated timing solutions for 179 of them with
+                      I&nbsp;produced updated timing solutions for 179 of them with
                       TEMPO2, merging data from the 76-m Lovell telescope at
                       Jodrell Bank with the 64-dish MeerKAT interferometer and
                       fitting the cross-instrument clock offsets explicitly.
@@ -630,7 +625,7 @@ export default function Home() {
                 </div>
                 <div className="mt-5 space-y-4">
                   <figure>
-                    <div className="overflow-hidden rounded-lg border border-line">
+                    <div className="figure-dark overflow-hidden rounded-lg border border-line">
                       <Image
                         src="/thesis/fig4-1_aitoff_sky_map_dark.png"
                         alt="Aitoff projection sky map showing the 515-pulsar Thousand-Pulsar-Array sample and the pulsars selected for timing analysis"
@@ -645,7 +640,7 @@ export default function Home() {
                     </figcaption>
                   </figure>
                   <figure>
-                    <div className="overflow-hidden rounded-lg border border-line">
+                    <div className="figure-dark overflow-hidden rounded-lg border border-line">
                       <Image
                         src="/thesis/fig4-3_J1833-0338_nudot_dark.png"
                         alt="Timing residuals and spin-down-rate variations of PSR J1833-0338 measured with Bayesian and fitwaves analysis across JBO, MeerKAT and combined datasets"
@@ -706,7 +701,7 @@ export default function Home() {
                   </p>
                 </div>
                 <figure className="mt-5">
-                  <div className="overflow-hidden rounded-lg border border-line p-3">
+                  <div className="figure-dark overflow-hidden rounded-lg border border-line p-3">
                     <Image
                       src={gwStrain}
                       alt="Whitened strain time series of gravitational-wave event GW150914 in the LIGO H1 and L1 detectors"
@@ -733,7 +728,7 @@ export default function Home() {
                   href="https://github.com/jaswantjayacumaar/Classyfying-LensGW-DL"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-5 inline-block font-mono text-xs text-accent-4 transition-opacity hover:opacity-80"
+                  className="mt-5 inline-block font-mono text-xs text-accent-3 transition-opacity hover:opacity-80"
                 >
                   code on GitHub →
                 </a>

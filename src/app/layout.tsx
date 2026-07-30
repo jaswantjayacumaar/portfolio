@@ -61,8 +61,18 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${inter.variable} ${bricolage.variable} ${jbMono.variable} ${fraunces.variable} h-full antialiased`}
     >
+      <head>
+        {/* Apply saved light theme before paint; dark is the default. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(localStorage.getItem('theme')==='light')document.documentElement.dataset.theme='light'}catch(e){}",
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

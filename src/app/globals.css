@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  color-scheme: dark;
   --bg: #0a0d12;
   --panel: #0f141b;
   --panel-2: #131a24;
@@ -15,6 +16,25 @@
   --accent-5: #ff8fa3;
   --accent-6: #ffd166;
   --danger: #ff7d6b;
+}
+
+/* Light theme: same hues, darkened for contrast on light surfaces. */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f4f6f9;
+  --panel: #ffffff;
+  --panel-2: #eaeff5;
+  --line: #d7dfe9;
+  --fg: #14202c;
+  --muted: #465364;
+  --faint: #8592a4;
+  --accent: #0891b2;
+  --accent-2: #059669;
+  --accent-3: #d97706;
+  --accent-4: #7c3aed;
+  --accent-5: #db2777;
+  --accent-6: #b45309;
+  --danger: #dc2626;
 }
 
 @theme inline {
@@ -63,6 +83,22 @@ body::before {
     radial-gradient(700px 480px at 20% 65%, rgba(74, 222, 157, 0.04), transparent 60%),
     linear-gradient(to right, rgba(232, 236, 242, 0.022) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(232, 236, 242, 0.022) 1px, transparent 1px);
+  background-size:
+    auto,
+    auto,
+    auto,
+    48px 48px,
+    48px 48px;
+}
+
+/* Light-theme backdrop: same haze hues, dark grid lines. */
+:root[data-theme="light"] body::before {
+  background:
+    radial-gradient(900px 600px at 50% 32%, rgba(124, 58, 237, 0.07), transparent 65%),
+    radial-gradient(750px 500px at 68% 12%, rgba(8, 145, 178, 0.06), transparent 60%),
+    radial-gradient(700px 480px at 20% 65%, rgba(5, 150, 105, 0.05), transparent 60%),
+    linear-gradient(to right, rgba(20, 32, 44, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20, 32, 44, 0.035) 1px, transparent 1px);
   background-size:
     auto,
     auto,
@@ -161,8 +197,23 @@ body::before {
 .spot:hover::after {
   opacity: 1;
 }
+:root[data-theme="light"] .spot::after {
+  background: radial-gradient(
+    150px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(20, 32, 44, 0.08),
+    rgba(20, 32, 44, 0.02) 45%,
+    transparent 68%
+  );
+}
 @media (prefers-reduced-motion: reduce) {
   .spot::after {
     display: none;
   }
+}
+
+/* Research figures carry light-coloured axis labels baked into the PNGs,
+   so their containers stay dark in both themes. */
+.figure-dark {
+  background: #0f141b;
+  border-color: #1d2634;
 }

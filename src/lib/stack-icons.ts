@@ -35,8 +35,8 @@ import {
 
 export type StackIcon = { path: string; color: string; title: string };
 
-/** Brand marks that are near-black get a light fill so they stay visible
- *  on the dark theme. */
+/** Brand marks that are near-black follow the chip's text colour
+ *  (currentColor) so they stay visible on both themes. */
 function iconOf(si: SimpleIcon): StackIcon {
   const r = parseInt(si.hex.slice(0, 2), 16) / 255;
   const g = parseInt(si.hex.slice(2, 4), 16) / 255;
@@ -44,7 +44,7 @@ function iconOf(si: SimpleIcon): StackIcon {
   const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
   return {
     path: si.path,
-    color: luminance < 0.18 ? "#c8d2de" : `#${si.hex}`,
+    color: luminance < 0.18 ? "currentColor" : `#${si.hex}`,
     title: si.title,
   };
 }
@@ -53,7 +53,7 @@ function iconOf(si: SimpleIcon): StackIcon {
 export const STACK_ICONS: Record<string, StackIcon[]> = {
   BigQuery: [iconOf(siGooglebigquery)],
   "GCP (Cloud Run · Scheduler · Storage)": [iconOf(siGooglecloud)],
-  "Supabase / PostgreSQL": [iconOf(siSupabase), iconOf(siPostgresql)],
+  PostgreSQL: [iconOf(siPostgresql)],
   "Google Ads API": [iconOf(siGoogleads)],
   GA4: [iconOf(siGoogleanalytics)],
   "Search Console": [iconOf(siGooglesearchconsole)],
@@ -85,7 +85,17 @@ export const STACK_ICONS: Record<string, StackIcon[]> = {
   GTM: [iconOf(siGoogletagmanager)],
   Nginx: [iconOf(siNginx)],
   "BigQuery pipelines": [iconOf(siGooglebigquery)],
-  "58 Python scripts": [iconOf(siPython)],
+  "Python - Automation": [iconOf(siPython)],
+  // Non-brand concepts: generic marks that follow the chip text colour.
+  "decision trees": [
+    {
+      // Material Symbols "account_tree" (Apache 2.0)
+      path: "M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3z",
+      color: "currentColor",
+      title: "Decision trees",
+    },
+  ],
+  "two-pass LLM classifier": [iconOf(siGooglegemini)],
   TEMPO2: [],
 };
 
@@ -95,13 +105,6 @@ export type ChipPart = { text: string; icon?: StackIcon };
  *  next to its own name, joined by the label's own separator. Labels not
  *  listed here fall back to STACK_ICONS (single icon + full label). */
 export const STACK_PARTS: Record<string, { sep: string; parts: ChipPart[] }> = {
-  "Supabase / PostgreSQL": {
-    sep: "/",
-    parts: [
-      { text: "Supabase", icon: iconOf(siSupabase) },
-      { text: "PostgreSQL", icon: iconOf(siPostgresql) },
-    ],
-  },
   "Gemini · Claude · GPT APIs": {
     sep: "·",
     parts: [
