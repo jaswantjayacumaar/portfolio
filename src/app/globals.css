@@ -170,6 +170,40 @@ body::before {
   }
 }
 
+/* Agent flow diagram: energy flowing along the wires */
+@keyframes wireflow {
+  to {
+    stroke-dashoffset: -160;
+  }
+}
+.wire-flow {
+  stroke-dasharray: 3 11;
+  animation: wireflow 1.7s linear infinite;
+}
+@keyframes nodebreathe {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.node-aura {
+  animation: nodebreathe 3.2s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wire-flow {
+    animation: none;
+    stroke-dasharray: none;
+    opacity: 0.5;
+  }
+  .node-aura {
+    animation: none;
+    opacity: 0.7;
+  }
+}
+
 /* Gently pulsing status dot (hero eyebrow) */
 @keyframes dot-pulse {
   0%,

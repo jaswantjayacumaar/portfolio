@@ -1,5 +1,7 @@
 import Image from "next/image";
+import AgentFlow from "@/components/AgentFlow";
 import HeroSim from "@/components/HeroSim";
+import SemFlow from "@/components/SemFlow";
 import Reveal from "@/components/Reveal";
 import SpotCard from "@/components/SpotCard";
 import StatBand from "@/components/StatBand";
@@ -470,6 +472,16 @@ export default function Home() {
           </Reveal>
           <Reveal delay={150}>
             <HeroSim />
+          </Reveal>
+        </section>
+
+        {/* Flow diagrams */}
+        <section className="space-y-6 pb-16">
+          <Reveal>
+            <AgentFlow />
+          </Reveal>
+          <Reveal delay={120}>
+            <SemFlow />
           </Reveal>
         </section>
 
