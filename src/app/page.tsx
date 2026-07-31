@@ -1,7 +1,6 @@
 import Image from "next/image";
 import AgentFlow from "@/components/AgentFlow";
 import CmFlow from "@/components/CmFlow";
-import HeroSim from "@/components/HeroSim";
 import MobileNav from "@/components/MobileNav";
 import PriceFlow from "@/components/PriceFlow";
 import SemFlow from "@/components/SemFlow";
@@ -496,8 +495,8 @@ export default function Home() {
 
       <main id="top" className="mx-auto max-w-6xl px-6">
         {/* Hero */}
-        <section className="grid items-center gap-12 pb-16 pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:pb-24 lg:pt-40">
-          <Reveal>
+        <section className="pb-16 pt-32 lg:pb-24 lg:pt-40">
+          <Reveal className="max-w-4xl">
             <p className="flex items-start gap-2.5 font-mono text-sm sm:items-center">
               <span
                 className="relative mt-0.5 flex h-3.5 w-3.5 shrink-0 items-center justify-center sm:mt-0"
@@ -515,14 +514,12 @@ export default function Home() {
                 </span>
               </span>
             </p>
-            <h1 className="mt-5 font-display text-4xl font-bold leading-[1.08] tracking-tight text-fg sm:text-5xl lg:text-[3.4rem]">
+            <h1 className="mt-5 font-cursive text-[2.6rem] font-medium leading-[1.08] tracking-tight text-fg sm:text-6xl lg:text-[3.8rem]">
               I build the{" "}
-              <span className="font-cursive italic text-accent">analytics</span>
-              , <span className="font-cursive italic text-accent-2">
-                automation
-              </span>{" "}
-              and <span className="font-cursive italic text-accent-3">AI</span>{" "}
-              a real business depends on.
+              <span className="italic text-accent">analytics</span>,{" "}
+              <span className="italic text-accent-2">automation</span> and{" "}
+              <span className="italic text-accent-3">AI</span> a real business
+              depends on.
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-8 text-muted">
               Full-stack analytics platforms, automated Google Ads bidding, and
@@ -565,9 +562,6 @@ export default function Home() {
                 Résumé
               </a>
             </div>
-          </Reveal>
-          <Reveal delay={150}>
-            <HeroSim />
           </Reveal>
         </section>
 
