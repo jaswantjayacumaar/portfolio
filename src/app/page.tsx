@@ -226,7 +226,7 @@ const FACTS: {
         <circle cx="12" cy="12" r="2" />
       </>
     ),
-    value: "Analytics platforms · automation · production LLM tooling",
+    value: "Analytics platforms · Automation · Production LLM tooling",
   },
   {
     label: "DOMAINS",
@@ -239,7 +239,7 @@ const FACTS: {
         <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65" />
       </>
     ),
-    value: "E-commerce · marketing analytics · pricing · consulting",
+    value: "E-commerce · Marketing analytics · Pricing · Consulting",
   },
   {
     label: "OPEN TO",
