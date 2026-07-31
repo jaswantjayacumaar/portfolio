@@ -899,8 +899,9 @@ export default function Home() {
             <Reveal>
               <div className="space-y-5 text-lg leading-8 text-muted">
                 <p>
-                  I&apos;m Jaswant, a data analyst in London with a research
-                  spine: an MSc by Research in astrophysics at Manchester, where
+                  I&apos;m Jaswant, a data analyst in London, originally from
+                  Chennai, with a research spine: an MSc by Research in
+                  astrophysics at Manchester, where
                   I spent two years timing pulsars, producing timing solutions
                   for 179 of them and running Bayesian inference and MCMC over
                   noisy, irregularly sampled time series, where being wrong
