@@ -57,8 +57,8 @@ export default function OpenGraphImage() {
               maxWidth: 980,
             }}
           >
-            I build the analytics and automation a real business runs on every
-            day.
+            I build the analytics, automation and AI a real business depends
+            on.
           </div>
           <div style={{ fontSize: 30, color: MUTED, maxWidth: 900 }}>
             Analytics platforms · Google Ads automation · production LLM
