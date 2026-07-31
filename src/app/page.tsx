@@ -177,6 +177,12 @@ const TOOLING: { group: string; blurb: string; accentClass: string; items: strin
     accentClass: "text-accent-5",
     items: ["scikit-learn", "TensorFlow / Keras", "Bayesian inference", "MCMC", "predictive modelling", "feature engineering", "Power BI (DAX)", "Looker Studio"],
   },
+  {
+    group: "MONITORING & RELIABILITY",
+    blurb: "Catching breaks before anyone reports them.",
+    accentClass: "text-accent-6",
+    items: ["Sentry", "execution logging", "alerting & monitoring", "data-quality checks", "scheduler health checks"],
+  },
 ];
 
 const FACTS: {
@@ -912,7 +918,8 @@ export default function Home() {
                   Since then: consulting analytics at 3i Infotech (process
                   mining, SQL and Power BI for commercial teams), and now the
                   analytics stack at Printerpix, a photo-gifting e-commerce
-                  company trading in 9 markets, where I own the
+                  company trading in 9 markets (USA, UK, FR, IT, ES, DE, NL, AE,
+                  IN), where I own the
                   contribution-margin platform, co-built the SEM automation
                   console, and put LLMs to work where they earn their keep:
                   classification, NL→SQL, ad-copy generation, always with a
