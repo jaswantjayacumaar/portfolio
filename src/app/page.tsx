@@ -508,7 +508,7 @@ export default function Home() {
               </span>
               <span className="text-[13px] sm:text-sm">
                 <span className="font-bold text-fg">Jaswant Jayacumaar</span>
-                <span className="text-fg"> · Data Analyst</span>
+                <span className="text-fg"> · Data Analyst · London</span>
                 <span className="block whitespace-nowrap text-muted">
                   MSc Astronomy &amp; Astrophysics
                 </span>
