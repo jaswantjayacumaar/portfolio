@@ -226,7 +226,7 @@ const FACTS: {
         <circle cx="12" cy="12" r="2" />
       </>
     ),
-    value: "Analytics platforms · marketing automation · production LLM tooling",
+    value: "Analytics platforms · automation · production LLM tooling",
   },
   {
     label: "DOMAINS",
