@@ -43,7 +43,7 @@ const WORK: Work[] = [
     title: "Contribution Margin reporting platform",
     domain: "e-commerce analytics",
     accent: "accent",
-    body: "Profitability decisions ran on lagging, patchwork dashboards. I built and own the company's CM reporting platform: a full-stack web app (Next.js/TypeScript, Express, BigQuery, Supabase; deployed on Vercel/Railway) replacing legacy Looker Studio with live daily and hourly profitability, marketing-cost and SEM analytics across 9 international markets (US, UK, Germany, France, Italy, Spain, Netherlands, UAE and India), refreshed by scheduled queries timed around US trading waves.",
+    body: "Profitability decisions ran on lagging, patchwork dashboards. I built and own the company's CM reporting platform: a full-stack web app (Next.js/TypeScript, Express, BigQuery, Supabase; deployed on Vercel/Railway) replacing legacy Looker Studio with live daily and hourly profitability, marketing-cost and SEM analytics across 9 international markets (USA, UK, FR, IT, ES, DE, NL, AE, IN), refreshed by scheduled queries timed around US trading waves.",
     stack: ["Next.js", "TypeScript", "Express", "BigQuery", "Supabase", "Vercel / Railway"],
     approaches: [],
     proves: "end-to-end platform ownership: warehouse → API → UI → adoption",
@@ -703,7 +703,7 @@ export default function Home() {
             {TOOLING.map((g, i) => (
               <Reveal key={g.group} delay={(i % 3) * 80}>
                 <SpotCard className="h-full rounded-xl border border-line bg-panel p-6">
-                  <p className={`kicker font-mono text-[11px] ${g.accentClass}`}>
+                  <p className={`kicker font-mono text-[13px] font-bold ${g.accentClass}`}>
                     {g.group}
                   </p>
                   <p className="mt-2 text-sm text-faint">{g.blurb}</p>

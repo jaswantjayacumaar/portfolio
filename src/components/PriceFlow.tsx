@@ -257,7 +257,7 @@ export default function PriceFlow({ embedded = false }: { embedded?: boolean }) 
       </div>
       <p className="mt-1 font-mono text-[11px] leading-5 text-faint">
         # pricing-intelligence platform · agentic scrape → model → apply,
-        daily across 9 markets
+        daily across 9 markets (USA, UK, FR, IT, ES, DE, NL, AE, IN)
       </p>
     </div>
   );
