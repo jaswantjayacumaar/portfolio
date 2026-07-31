@@ -66,8 +66,8 @@ const WORK: Work[] = [
     domain: "applied AI",
     accent: "accent-4",
     body: "Stakeholders needed answers faster than dashboards could serve them. I built a RAG analytics agent embedded in the CM platform (FastAPI, LangGraph, Gemini) that turns natural language into validated SQL over BigQuery, grounded by 18 intent playbooks with context caching, connected to 7 live data systems. Hardened with SELECT-only guards, dry-run validation and byte caps, with a streaming chat UI and exportable transcripts.",
-    stack: ["FastAPI", "LangGraph", "Gemini"],
-    approaches: ["NL→SQL", "context caching", "7 live integrations"],
+    stack: ["Python", "FastAPI", "LangGraph", "Gemini"],
+    approaches: ["Natural Language → SQL", "context caching", "live integrations", "Model Context Protocol (MCP)"],
     proves: "production LLM engineering: grounded, guarded, actually used",
   },
   {
