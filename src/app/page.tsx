@@ -521,7 +521,7 @@ export default function Home() {
               <span className="italic text-accent-3">AI</span> a real business
               depends on.
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-8 text-muted">
+            <p className="mt-6 max-w-3xl text-lg leading-8 text-muted">
               Full-stack analytics platforms, automated Google Ads bidding, and
               retrieval-grounded AI agents, plus the BigQuery warehouse
               underneath, for a global photo-gifting e-commerce company trading
