@@ -1,10 +1,10 @@
 import { ImageResponse } from "next/og";
 import {
-  bricolage as bricolageB64,
   inter as interB64,
   jb400 as jb400B64,
   jb700 as jb700B64,
-  fraunces as frauncesB64,
+  frauncesRoman as frauncesRomanB64,
+  frauncesItalic as frauncesItalicB64,
 } from "./og-fonts-data";
 
 const b64 = (s: string) => Buffer.from(s, "base64");
@@ -21,7 +21,6 @@ const FG = "#e8ecf2";
 const MUTED = "#96a1b1";
 const FAINT = "#5f6c7e";
 const LINE = "#1d2634";
-const PANEL = "rgba(15,20,27,0.72)";
 
 type Word = { t: string; c?: string; i?: boolean };
 
@@ -40,20 +39,12 @@ const HEAD: Word[] = [
   { t: "on." },
 ];
 
-const CHIPS = ["pull", "classify", "decide", "preview", "approve", "apply"];
-
-const LOG: Word[] = [
-  { t: "› pulling hourly CM + spend from BigQuery", c: ACCENT },
-  { t: "› 9 markets · 239 campaigns · ~9,000 ad groups", c: MUTED },
-  { t: "› scoring 27,412 search terms against ROAS targets", c: MUTED },
-];
-
 export default function OpenGraphImage() {
-  const bricolage = b64(bricolageB64);
   const inter = b64(interB64);
   const jb400 = b64(jb400B64);
   const jb700 = b64(jb700B64);
-  const fraunces = b64(frauncesB64);
+  const frauncesRoman = b64(frauncesRomanB64);
+  const frauncesItalic = b64(frauncesItalicB64);
 
   return new ImageResponse(
     (
@@ -63,10 +54,11 @@ export default function OpenGraphImage() {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          padding: "54px 64px",
+          padding: "56px 68px",
+          justifyContent: "space-between",
           backgroundColor: "#0a0d12",
           backgroundImage:
-            "radial-gradient(1000px 520px at 12% -5%, rgba(83,216,251,0.10), transparent 60%), radial-gradient(900px 560px at 102% 105%, rgba(180,140,255,0.13), transparent 60%)",
+            "radial-gradient(1100px 560px at 18% -10%, rgba(83,216,251,0.10), transparent 60%), radial-gradient(1000px 620px at 105% 115%, rgba(180,140,255,0.14), transparent 60%)",
           fontFamily: "Inter",
         }}
       >
@@ -92,198 +84,128 @@ export default function OpenGraphImage() {
         <div
           style={{
             display: "flex",
-            flex: 1,
-            alignItems: "center",
-            gap: 40,
-            marginTop: 6,
+            flexDirection: "column",
           }}
         >
-          {/* left column */}
-          <div style={{ display: "flex", flexDirection: "column", width: 648 }}>
-            {/* eyebrow */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "flex-start",
-                gap: 13,
-                fontFamily: "JetBrains Mono",
-                fontSize: 22,
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  width: 13,
-                  height: 13,
-                  borderRadius: 99,
-                  backgroundColor: ACCENT2,
-                  marginTop: 6,
-                }}
-              />
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <div style={{ display: "flex", color: FG }}>
-                  <span style={{ fontWeight: 700 }}>Jaswant Jayacumaar</span>
-                  <span>{" · Data Analyst"}</span>
-                </div>
-                <div style={{ display: "flex", color: MUTED, marginTop: 5 }}>
-                  MSc Astronomy &amp; Astrophysics
-                </div>
-              </div>
-            </div>
-
-            {/* headline */}
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                alignItems: "baseline",
-                columnGap: 15,
-                rowGap: 4,
-                marginTop: 24,
-                maxWidth: 648,
-                letterSpacing: -1,
-              }}
-            >
-              {HEAD.map((w, idx) => (
-                <div
-                  key={idx}
-                  style={{
-                    display: "flex",
-                    fontFamily: w.i ? "Fraunces" : "Bricolage",
-                    fontStyle: w.i ? "italic" : "normal",
-                    fontWeight: w.i ? 400 : 700,
-                    fontSize: 62,
-                    lineHeight: 1.04,
-                    color: w.c || FG,
-                  }}
-                >
-                  {w.t}
-                </div>
-              ))}
-            </div>
-
-            {/* subtitle */}
-            <div
-              style={{
-                display: "flex",
-                color: MUTED,
-                fontSize: 23,
-                marginTop: 24,
-                maxWidth: 600,
-                lineHeight: 1.4,
-              }}
-            >
-              Full-stack analytics platforms, automated Google Ads bidding &amp;
-              retrieval-grounded AI — across 9 international markets.
-            </div>
-          </div>
-
-          {/* right column: terminal */}
+          {/* eyebrow */}
           <div
             style={{
               display: "flex",
-              flexDirection: "column",
-              flex: 1,
-              borderRadius: 16,
-              border: `1px solid ${LINE}`,
-              backgroundColor: PANEL,
-              padding: 24,
+              alignItems: "flex-start",
+              gap: 14,
               fontFamily: "JetBrains Mono",
+              fontSize: 23,
             }}
           >
             <div
               style={{
                 display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                fontSize: 15,
+                width: 14,
+                height: 14,
+                borderRadius: 99,
+                backgroundColor: ACCENT2,
+                marginTop: 7,
               }}
-            >
-              <span style={{ color: MUTED }}>sem-console · bidding run 71</span>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                  color: ACCENT2,
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    width: 9,
-                    height: 9,
-                    borderRadius: 99,
-                    backgroundColor: ACCENT2,
-                  }}
-                />
-                idle
+            />
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <div style={{ display: "flex", color: FG }}>
+                <span style={{ fontWeight: 700 }}>Jaswant Jayacumaar</span>
+                <span style={{ marginLeft: 9 }}>· Data Analyst</span>
+              </div>
+              <div style={{ display: "flex", color: MUTED, marginTop: 5 }}>
+                MSc Astronomy &amp; Astrophysics
               </div>
             </div>
-
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: 8,
-                marginTop: 18,
-              }}
-            >
-              {CHIPS.map((c, i) => (
-                <div
-                  key={c}
-                  style={{
-                    display: "flex",
-                    padding: "5px 12px",
-                    borderRadius: 8,
-                    border: `1px solid ${i === 1 ? ACCENT : LINE}`,
-                    color: i === 1 ? ACCENT : MUTED,
-                    fontSize: 16,
-                  }}
-                >
-                  {c}
-                </div>
-              ))}
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 13,
-                marginTop: 22,
-                fontSize: 17,
-              }}
-            >
-              {LOG.map((l, i) => (
-                <div key={i} style={{ display: "flex", color: l.c }}>
-                  {l.t}
-                </div>
-              ))}
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                color: FAINT,
-                fontSize: 14,
-                marginTop: 26,
-              }}
-            >
-              # simulated · preview-first, human-approved writes
-            </div>
           </div>
+
+          {/* headline */}
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "baseline",
+              columnGap: 18,
+              rowGap: 2,
+              marginTop: 26,
+              maxWidth: 1040,
+              letterSpacing: -1,
+            }}
+          >
+            {HEAD.map((w, idx) => (
+              <div
+                key={idx}
+                style={{
+                  display: "flex",
+                  fontFamily: "Fraunces",
+                  fontStyle: w.i ? "italic" : "normal",
+                  fontWeight: 500,
+                  fontSize: 64,
+                  lineHeight: 1.08,
+                  color: w.c || FG,
+                }}
+              >
+                {w.t}
+              </div>
+            ))}
+          </div>
+
+          {/* subtitle */}
+          <div
+            style={{
+              display: "flex",
+              color: MUTED,
+              fontSize: 25,
+              marginTop: 28,
+              maxWidth: 720,
+              lineHeight: 1.45,
+            }}
+          >
+            Full-stack analytics platforms, automated Google Ads bidding &amp;
+            retrieval-grounded AI — across 9 international markets.
+          </div>
+        </div>
+
+        {/* buttons */}
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          <div
+            style={{
+              display: "flex",
+              backgroundColor: ACCENT,
+              color: "#0a0d12",
+              fontSize: 22,
+              fontWeight: 600,
+              padding: "12px 22px",
+              borderRadius: 10,
+            }}
+          >
+            See the work →
+          </div>
+          {["GitHub", "LinkedIn", "Résumé"].map((t, i) => (
+            <div
+              key={t}
+              style={{
+                display: "flex",
+                border: `1px solid ${i === 2 ? "rgba(255,180,107,0.5)" : LINE}`,
+                color: i === 2 ? ACCENT3 : MUTED,
+                fontSize: 22,
+                padding: "12px 22px",
+                borderRadius: 10,
+              }}
+            >
+              {t}
+            </div>
+          ))}
         </div>
       </div>
     ),
     {
       ...size,
       fonts: [
-        { name: "Bricolage", data: bricolage, weight: 700, style: "normal" },
         { name: "Inter", data: inter, weight: 400, style: "normal" },
         { name: "JetBrains Mono", data: jb400, weight: 400, style: "normal" },
         { name: "JetBrains Mono", data: jb700, weight: 700, style: "normal" },
-        { name: "Fraunces", data: fraunces, weight: 400, style: "italic" },
+        { name: "Fraunces", data: frauncesRoman, weight: 500, style: "normal" },
+        { name: "Fraunces", data: frauncesItalic, weight: 500, style: "italic" },
       ],
     },
   );
