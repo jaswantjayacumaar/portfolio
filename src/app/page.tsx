@@ -239,7 +239,7 @@ const FACTS: {
         <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65" />
       </>
     ),
-    value: "E-commerce · paid media · pricing · consulting",
+    value: "E-commerce · marketing analytics · pricing · profitability · consulting",
   },
   {
     label: "OPEN TO",
@@ -251,7 +251,7 @@ const FACTS: {
         <rect x="2" y="6" width="20" height="14" rx="2" />
       </>
     ),
-    value: "Data Analyst · Analytics Engineer · Applied AI roles",
+    value: "Data Analyst · Applied AI · Analytics Engineer roles",
   },
   {
     label: "BASED IN",
