@@ -10,7 +10,7 @@ import {
 const b64 = (s: string) => Buffer.from(s, "base64");
 
 export const alt =
-  "Jaswant Jayacumaar · Data Analyst · Analytics platforms & automation";
+  "Jaswant Jayacumaar · Data Analyst · Analytics platforms & marketing automation";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

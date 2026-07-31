@@ -31,13 +31,13 @@ const fraunces = Fraunces({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://jaswantj-portfolio.vercel.app"),
-  title: "Jaswant Jayacumaar · Data Analyst · Analytics Platforms & Automation",
+  title: "Jaswant Jayacumaar · Data Analyst · Analytics Platforms & Marketing Automation",
   description:
     "Data analyst in London building the analytics platforms, automated bidding systems and AI agents behind a global e-commerce business: BigQuery, Google Ads API, LangGraph, Next.js.",
   openGraph: {
     title: "Jaswant Jayacumaar · Data Analyst",
     description:
-      "Analytics platforms, automation and production LLM tooling for global e-commerce.",
+      "Analytics platforms, marketing automation and production LLM tooling for global e-commerce.",
     url: "/",
     siteName: "Jaswant Jayacumaar",
     type: "website",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Jaswant Jayacumaar · Data Analyst",
     description:
-      "Analytics platforms, automation and production LLM tooling for global e-commerce.",
+      "Analytics platforms, marketing automation and production LLM tooling for global e-commerce.",
   },
 };
 
