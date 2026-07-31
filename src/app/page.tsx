@@ -2,6 +2,7 @@ import Image from "next/image";
 import AgentFlow from "@/components/AgentFlow";
 import CmFlow from "@/components/CmFlow";
 import HeroSim from "@/components/HeroSim";
+import MobileNav from "@/components/MobileNav";
 import PriceFlow from "@/components/PriceFlow";
 import SemFlow from "@/components/SemFlow";
 import Reveal from "@/components/Reveal";
@@ -19,6 +20,14 @@ const LINKS = {
   email: "mailto:jaswj6@gmail.com",
 };
 
+const NAV = [
+  { href: "#work", label: "work" },
+  { href: "#standards", label: "standards" },
+  { href: "#tooling", label: "tooling" },
+  { href: "#research", label: "research" },
+  { href: "#about", label: "about" },
+];
+
 type Work = {
   title: string;
   domain: string;
@@ -35,7 +44,7 @@ const WORK: Work[] = [
     title: "Contribution Margin reporting platform",
     domain: "e-commerce analytics",
     accent: "accent",
-    body: "Profitability decisions ran on lagging, patchwork dashboards. I built and own the company's CM reporting platform: a full-stack web app (Next.js/TypeScript, Express, BigQuery, Supabase; deployed on Vercel/Railway) replacing legacy Looker Studio with live daily and hourly profitability, marketing-cost and SEM analytics across 9 international markets, refreshed by scheduled queries timed around US trading waves.",
+    body: "Profitability decisions ran on lagging, patchwork dashboards. I built and own the company's CM reporting platform: a full-stack web app (Next.js/TypeScript, Express, BigQuery, Supabase; deployed on Vercel/Railway) replacing legacy Looker Studio with live daily and hourly profitability, marketing-cost and SEM analytics across 9 international markets (US, UK, Germany, France, Italy, Spain, Netherlands, UAE and India), refreshed by scheduled queries timed around US trading waves.",
     stack: ["Next.js", "TypeScript", "Express", "BigQuery", "Supabase", "Vercel / Railway"],
     approaches: [],
     proves: "end-to-end platform ownership: warehouse → API → UI → adoption",
@@ -66,9 +75,9 @@ const WORK: Work[] = [
     title: "Pricing intelligence pipeline",
     domain: "pricing",
     accent: "accent-6",
-    body: "Took ownership of the company's pricing-intelligence platform and run it day-to-day: agentic competitor-price scraping across 9 regions, automated BigQuery pricing pipelines with daily orchestration, and the decision dashboard that feeds pricing calls, extending it alongside the rest of the analytics stack.",
-    stack: ["BigQuery pipelines"],
-    approaches: ["agentic scraping", "daily orchestration", "pricing analytics"],
+    body: "Took ownership of the company's pricing-intelligence platform and run it day-to-day: agentic competitor-price scraping across 9 markets (US, UK, Germany, France, Italy, Spain, Netherlands, UAE and India), automated BigQuery pricing pipelines with daily orchestration, Monte Carlo simulation for price-scenario modelling, and the decision dashboard that feeds pricing calls, extending it alongside the rest of the analytics stack.",
+    stack: ["Python", "BigQuery pipelines"],
+    approaches: ["agentic scraping", "daily orchestration", "Monte Carlo simulation", "pricing analytics"],
     proves: "production ops: inheriting, hardening and extending a live pipeline",
   },
   {
@@ -375,7 +384,7 @@ function CardHead({ w }: { w: Work }) {
       <h3 className="font-display text-xl font-bold tracking-tight text-fg">
         {w.title}
       </h3>
-      <span className={`shrink-0 font-mono text-[11px] font-bold ${accentText[w.accent]}`}>
+      <span className={`shrink-0 font-mono text-[13px] font-bold ${accentText[w.accent]}`}>
         {w.domain}
       </span>
     </div>
@@ -419,7 +428,7 @@ function ApproachChips({ items }: { items: string[] }) {
 
 function ProvesLine({ w }: { w: Work }) {
   return (
-    <p className={`mt-4 border-t border-line pt-3 font-mono text-[11px] leading-5 ${accentText[w.accent]}`}>
+    <p className={`mt-4 border-t border-line pt-3 font-mono text-[13px] font-bold leading-6 ${accentText[w.accent]}`}>
       proves: {w.proves}
     </p>
   );
@@ -449,33 +458,32 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Nav */}
       <header className="fixed inset-x-0 top-0 z-50 border-b border-line/70 bg-bg/75 backdrop-blur">
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
-          <a href="#top" className="font-mono text-sm font-bold text-fg">
-            jaswant<span className="text-accent">.jayacumaar</span>
-          </a>
-          <div className="flex items-center gap-5 font-mono text-xs text-muted sm:gap-7">
-            <a href="#work" className="transition-colors hover:text-fg">
-              work
+        <nav className="mx-auto max-w-6xl px-6">
+          <div className="flex items-center justify-between py-3.5">
+            <a href="#top" className="font-mono text-sm font-bold text-fg">
+              jaswant<span className="text-accent">.jayacumaar</span>
             </a>
-            <a href="#standards" className="transition-colors hover:text-fg">
-              standards
-            </a>
-            <a href="#tooling" className="hidden transition-colors hover:text-fg sm:block">
-              tooling
-            </a>
-            <a href="#research" className="transition-colors hover:text-fg">
-              research
-            </a>
-            <a href="#about" className="transition-colors hover:text-fg">
-              about
-            </a>
-            <a
-              href={LINKS.email}
-              className="rounded-md border border-accent/50 px-3 py-1.5 text-accent transition-colors hover:bg-accent/10"
-            >
-              contact
-            </a>
-            <ThemeToggle />
+            <div className="flex items-center gap-4 font-mono text-xs text-muted sm:gap-6 md:gap-7">
+              <div className="hidden items-center gap-5 md:flex lg:gap-7">
+                {NAV.map((n) => (
+                  <a
+                    key={n.href}
+                    href={n.href}
+                    className="transition-colors hover:text-fg"
+                  >
+                    {n.label}
+                  </a>
+                ))}
+              </div>
+              <a
+                href={LINKS.email}
+                className="rounded-md border border-accent/50 px-3 py-1.5 text-accent transition-colors hover:bg-accent/10"
+              >
+                contact
+              </a>
+              <ThemeToggle />
+              <MobileNav items={NAV} />
+            </div>
           </div>
         </nav>
       </header>
@@ -484,21 +492,20 @@ export default function Home() {
         {/* Hero */}
         <section className="grid items-center gap-12 pb-16 pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:pb-24 lg:pt-40">
           <Reveal>
-            <p className="flex items-center gap-2.5 font-mono text-sm">
+            <p className="flex items-start gap-2.5 font-mono text-sm sm:items-center">
               <span
-                className="relative flex h-3.5 w-3.5 shrink-0 items-center justify-center"
+                className="relative mt-0.5 flex h-3.5 w-3.5 shrink-0 items-center justify-center sm:mt-0"
                 aria-hidden="true"
               >
                 <span className="absolute h-full w-full rounded-full bg-accent-2/25" />
                 <span className="absolute h-full w-full animate-ping rounded-full bg-accent-2/60 motion-reduce:animate-none" />
                 <span className="relative h-2 w-2 rounded-full bg-accent-2" />
               </span>
-              <span className="whitespace-nowrap text-[13px] sm:text-sm">
+              <span className="text-[13px] sm:text-sm">
                 <span className="font-bold text-fg">Jaswant Jayacumaar</span>
                 <span className="text-fg"> · Data Analyst</span>
-                <span className="text-muted">
-                  {" "}
-                  · MSc Astronomy &amp; Astrophysics
+                <span className="block whitespace-nowrap text-muted">
+                  MSc Astronomy &amp; Astrophysics
                 </span>
               </span>
             </p>
@@ -824,7 +831,7 @@ export default function Home() {
                     BOSE.X CENTER FOR ASTROPHYSICAL RESEARCH
                   </span>
                   <span className="text-faint"> · </span>
-                  <span className="text-accent-6">2021–2022</span>
+                  <span className="text-accent-6">2020–2021</span>
                 </p>
                 <h3 className="mt-2 font-display text-2xl font-bold tracking-tight text-fg">
                   Classifying gravitational waves with deep learning

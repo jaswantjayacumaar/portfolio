@@ -296,7 +296,7 @@ export default function SemFlow({ embedded = false }: { embedded?: boolean }) {
       </div>
       <p className="mt-1 font-mono text-[11px] leading-5 text-faint">
         # simulated · preview-first, human-approved writes on Cloud Run
-        schedulers across Printerpix + Printerinks
+        schedulers
       </p>
     </div>
   );

@@ -148,7 +148,7 @@ export default function StatBand() {
             {Math.round(s.value * progress).toLocaleString("en-GB")}
             <span className={s.accentClass}>{s.suffix}</span>
           </div>
-          <div className="mt-2 text-sm text-muted">{s.label}</div>
+          <div className={`mt-2 text-sm font-semibold ${s.accentClass}`}>{s.label}</div>
         </div>
       ))}
     </div>

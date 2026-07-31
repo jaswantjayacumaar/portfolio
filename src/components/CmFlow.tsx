@@ -259,7 +259,7 @@ export default function CmFlow({ embedded = false }: { embedded?: boolean }) {
       </div>
       <p className="mt-1 font-mono text-[11px] leading-5 text-faint">
         # the contribution-margin platform · replaced legacy Looker Studio ·
-        live across 9 markets
+        live across 9 markets (USA, UK, FR, IT, ES, DE, NL, AE, IN)
       </p>
     </div>
   );
