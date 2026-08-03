@@ -526,8 +526,14 @@ export default function Home() {
               retrieval-grounded AI agents, plus the BigQuery warehouse
               underneath, for a global photo-gifting e-commerce company trading
               across 9 international markets. Once it ships, my job is keeping
-              the numbers trustworthy, the automation safe, and the pipelines
-              running unattended.
+              the numbers{" "}
+              <strong className="font-bold text-fg">trustworthy</strong>, the{" "}
+              <strong className="font-bold text-fg">automation safe</strong>,
+              and the{" "}
+              <strong className="font-bold text-fg">
+                pipelines running unattended
+              </strong>
+              .
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
