@@ -7,10 +7,12 @@ import type { MouseEvent, ReactNode } from "react";
 export default function SpotCard({
   as: Tag = "div",
   className = "",
+  id,
   children,
 }: {
   as?: "div" | "article";
   className?: string;
+  id?: string;
   children: ReactNode;
 }) {
   const handleMove = (e: MouseEvent<HTMLElement>) => {
@@ -20,7 +22,7 @@ export default function SpotCard({
   };
 
   return (
-    <Tag className={`spot ${className}`} onMouseMove={handleMove}>
+    <Tag id={id} className={`spot ${className}`} onMouseMove={handleMove}>
       {children}
     </Tag>
   );

@@ -1,19 +1,14 @@
 import Image from "next/image";
-import AgentFlow from "@/components/AgentFlow";
-import CmFlow from "@/components/CmFlow";
-import MigrationFlow from "@/components/MigrationFlow";
 import MobileNav from "@/components/MobileNav";
-import PredictFlow from "@/components/PredictFlow";
-import PriceFlow from "@/components/PriceFlow";
-import SemFlow from "@/components/SemFlow";
 import Reveal from "@/components/Reveal";
 import SpotCard from "@/components/SpotCard";
 import StatBand from "@/components/StatBand";
 import ThemeToggle from "@/components/ThemeToggle";
+import WorkGrid from "@/components/WorkGrid";
+import { ChipLabel, brandColor, type Work } from "@/components/work-cards";
 import gwStrain from "../../public/research/gw-strain.png";
 import qtH1 from "../../public/research/qtransform-h1.png";
 import qtL1 from "../../public/research/qtransform-l1.png";
-import { STACK_ICONS, STACK_PARTS, type StackIcon } from "@/lib/stack-icons";
 
 const LINKS = {
   github: "https://github.com/jaswantjayacumaar",
@@ -29,40 +24,38 @@ const NAV = [
   { href: "#about", label: "about" },
 ];
 
-type Work = {
-  title: string;
-  domain: string;
-  accent: "accent" | "accent-2" | "accent-3" | "accent-4" | "accent-5" | "accent-6" | "danger";
-  body: string;
-  sub?: { title: string; body: string };
-  stack: string[];
-  approaches: string[];
-  proves: string;
-};
-
 const WORK: Work[] = [
   {
+    id: "cm-platform",
     title: "Contribution Margin reporting platform",
     domain: "e-commerce analytics",
     accent: "accent",
+    flow: "cm",
+    summary: "Replaced lagging, patchwork profitability dashboards with a full-stack CM platform I built and own: 9 live analytical pages across 9 markets.",
     body: "Profitability decisions ran on lagging, patchwork dashboards. I built and own the company's CM reporting platform: a full-stack web app (Next.js/TypeScript, Express, BigQuery, Supabase; deployed on Vercel/Railway) replacing legacy Looker Studio with 9 analytical pages of live daily and hourly profitability, marketing-cost, SEM, auction-insight and conversion-maturation analytics across 9 international markets (USA, UK, FR, IT, ES, DE, NL, AE, IN), refreshed by scheduled queries timed around US trading waves.",
     stack: ["Next.js", "TypeScript", "Express", "BigQuery", "Supabase", "Vercel / Railway"],
     approaches: [],
     proves: "end-to-end platform ownership: warehouse → API → UI → adoption",
   },
   {
+    id: "warehouse-migration",
     title: "Warehouse migration: MS SQL → PostgreSQL",
     domain: "data platform",
     accent: "accent-3",
+    flow: "migration",
+    summary: "Moved the CM Report's entire ingestion layer from MS SQL Server to PostgreSQL → BigQuery: 29 pipelines, reconciliation-gated, one rollback, no silent breaks left behind.",
     body: "The company moved its data warehouse from MS SQL Server to PostgreSQL, and every feed under the CM Report ran on legacy cron scripts against the old database. I owned migrating the whole ingestion layer: audited the legacy feeds and root-caused three silent data defects (one had been overstating contribution margin for months), built a PostgreSQL-to-BigQuery sync pipeline into a new dataset, backfilled order history to 2018 within BigQuery load quotas using a metered backfill driver, and repointed 29 scheduled queries through a phased, reconciliation-gated cutover. The Day-1 exit test failed once; I rolled it back fully, fixed the causes, and re-ran it until every destination reconciled to the decimal. HealthGuard alerting now watches the result.",
     stack: ["PostgreSQL", "BigQuery", "Python", "Cloud Run"],
     approaches: ["reconciliation gates", "metered backfill", "rollback discipline", "root-cause analysis"],
     proves: "data-platform migration under load: forensics, cutover, rollback, monitoring",
   },
   {
+    id: "sem-console",
     title: "SEM Automation Console",
     domain: "paid media automation",
     accent: "accent-2",
+    flow: "sem",
+    summary: "Co-built a 16-tool console that applies 10,000+ human-approved Google Ads changes a month across 17 accounts and 9 countries, and designed the bidding decision trees behind it.",
     body: "Managing Search & Shopping campaigns across 16 products × 9 countries and 17 Google Ads accounts doesn't scale manually. I co-built a 16-tool automation console (Next.js, Python/Flask, Google Ads API) and led development of most of its systems: automated bidding, negative-keyword management, keyword farming, search-query expansion, ad-copy generation, pricing optimisation, keyword performance and product-demand analysis. 58 Python automation scripts apply 10,000+ campaign changes a month through preview-first, human-approved writes.",
     sub: {
       title: "Bidding decision systems",
@@ -73,45 +66,58 @@ const WORK: Work[] = [
     proves: "automation at scale and algorithm design that moves real money, safe by construction",
   },
   {
+    id: "cm-prediction",
     title: "Same-day CM prediction",
     domain: "predictive analytics",
     accent: "accent",
+    flow: "predict",
+    summary: "Forecasts today's contribution margin from still-maturing Day-1 data, typically within 5–7% of what eventually settles, and publishes its own error rate.",
     body: "Google Ads conversions take weeks to settle, so yesterday's profit is unknowable when bid decisions are made. I built a same-day contribution-margin prediction system inside the console: immature Day-1 data is pushed through measured conversion-maturation and tracking-loss curves to forecast settled CM per campaign, ad group and search term across Search, Shopping and PMax. Nightly BigQuery materialisers feed the tab, a validation view tracks predicted against settled CM (typically within 5–7%), and a query rework cut the filter scans from 51.5 GB to 1.2 MB, 41,000× cheaper.",
     stack: ["Python", "BigQuery", "Next.js"],
     approaches: ["maturation curves", "tracking-loss modelling", "nightly materialisers", "prediction validation"],
     proves: "predictive modelling in production, with its own error rate on display",
   },
   {
+    id: "analytics-agent",
     title: "Retrieval-grounded analytics agent",
     domain: "applied AI",
     accent: "accent-4",
+    flow: "agent",
+    summary: "A retrieval-grounded NL→SQL agent over 7 live data systems, so stakeholders self-serve the answers dashboards can't give them, with guards on everything it runs.",
     body: "Stakeholders needed answers faster than dashboards could serve them. I built a RAG analytics agent embedded in the CM platform (FastAPI, LangGraph, Gemini) that turns natural language into validated SQL over BigQuery, grounded by 18 intent playbooks with context caching, connected to 7 live data systems. Hardened with SELECT-only guards, dry-run validation and byte caps, with a streaming chat UI and exportable transcripts.",
     stack: ["Python", "FastAPI", "LangGraph", "Gemini"],
     approaches: ["Natural Language → SQL", "context caching", "live integrations", "Model Context Protocol (MCP)"],
     proves: "production LLM engineering: grounded, guarded, actually used",
   },
   {
+    id: "pricing-pipeline",
     title: "Pricing intelligence pipeline",
     domain: "pricing",
     accent: "accent-6",
+    flow: "price",
+    summary: "Inherited and now run the agentic competitor-price scraper, daily BigQuery pricing pipelines and Monte Carlo price model across 9 markets.",
     body: "Took ownership of the company's pricing-intelligence platform and run it day-to-day: agentic competitor-price scraping across 9 markets (US, UK, Germany, France, Italy, Spain, Netherlands, UAE and India), automated BigQuery pricing pipelines with daily orchestration, Monte Carlo simulation for price-scenario modelling, and the decision dashboard that feeds pricing calls, extending it alongside the rest of the analytics stack.",
     stack: ["Python", "BigQuery pipelines"],
     approaches: ["agentic scraping", "daily orchestration", "Monte Carlo simulation", "pricing analytics"],
     proves: "production ops: inheriting, hardening and extending a live pipeline",
   },
   {
+    id: "mcp-toolchain",
     title: "MCP toolchain & AI infrastructure",
     domain: "AI infrastructure",
     accent: "accent-5",
+    summary: "An 11-server MCP toolchain that turned LLM-assisted analysis from a personal trick into a team-wide workflow.",
     body: "Built the team's AI-analytics infrastructure: an 11-server MCP toolchain connecting LLMs to BigQuery, GA4, Google Ads (including a custom write-enabled campaign-management server), Search Console, Matomo, Klaviyo, Sentry, Supabase, Jira/Confluence and the internal admin API, with onboarding guides that made LLM-assisted analysis a team-wide workflow rather than a personal trick.",
     stack: ["MCP server development", "Nginx"],
     approaches: ["self-hosted infra", "team enablement"],
     proves: "building the tools that multiply everyone else's output",
   },
   {
+    id: "ga4-forensics",
     title: "GA4 tracking forensics",
     domain: "analytics engineering",
     accent: "danger",
+    summary: "Root-caused and dated three GA4 tracking breaks that everyone else had been reporting around, then drove the fixes with Engineering.",
     body: "Trustworthy automation needs trustworthy inputs. I root-caused critical GA4 tracking defects (item-level purchase revenue missing since a specific release, GTM double-firing inflating events, a dead checkout event), dated each break, and drove the fixes with Engineering; contributed to server-side tagging and consent-mode implementation across 7 regions.",
     stack: ["GA4", "GTM"],
     approaches: ["server-side tagging", "consent mode", "root-cause analysis"],
@@ -287,28 +293,6 @@ const FACTS: {
   },
 ];
 
-const accentText: Record<Work["accent"], string> = {
-  accent: "text-accent",
-  "accent-2": "text-accent-2",
-  "accent-3": "text-accent-3",
-  "accent-4": "text-accent-4",
-  "accent-5": "text-accent-5",
-  "accent-6": "text-accent-6",
-  danger: "text-danger",
-};
-
-/** Representative brand colour for a chip label (first real brand hex),
- *  used to tint the stack-chip border. Concept/no-logo chips return
- *  undefined and keep the neutral border. */
-function brandColor(label: string): string | undefined {
-  const partIcons = STACK_PARTS[label]?.parts.map((p) => p.icon);
-  const icons = partIcons ?? STACK_ICONS[label];
-  const hit = (icons ?? []).find(
-    (ic): ic is StackIcon => !!ic && ic.color !== "currentColor",
-  );
-  return hit?.color;
-}
-
 const GITHUB_PATH =
   "M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12";
 
@@ -345,44 +329,6 @@ function MailIcon() {
   );
 }
 
-function ChipIcon({ icon }: { icon: StackIcon }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      className="h-3 w-3 shrink-0"
-      fill={icon.color}
-    >
-      <path d={icon.path} />
-    </svg>
-  );
-}
-
-function ChipLabel({ label }: { label: string }) {
-  const multi = STACK_PARTS[label];
-  if (multi) {
-    return (
-      <>
-        {multi.parts.map((p, i) => (
-          <span key={p.text} className="inline-flex items-center gap-1.5">
-            {i > 0 && <span className="text-faint">{multi.sep}</span>}
-            {p.icon && <ChipIcon icon={p.icon} />}
-            {p.text}
-          </span>
-        ))}
-      </>
-    );
-  }
-  return (
-    <>
-      {(STACK_ICONS[label] ?? []).map((ic) => (
-        <ChipIcon key={ic.title} icon={ic} />
-      ))}
-      {label}
-    </>
-  );
-}
-
 function SectionHeading({
   kicker,
   title,
@@ -402,81 +348,6 @@ function SectionHeading({
     </Reveal>
   );
 }
-
-function CardHead({ w }: { w: Work }) {
-  return (
-    <div className="flex items-baseline justify-between gap-4">
-      <h3 className="font-display text-xl font-bold tracking-tight text-fg">
-        {w.title}
-      </h3>
-      <span className={`shrink-0 font-mono text-[13px] font-bold ${accentText[w.accent]}`}>
-        {w.domain}
-      </span>
-    </div>
-  );
-}
-
-function StackChips({ items }: { items: string[] }) {
-  return (
-    <div className="mt-4 flex flex-wrap gap-1.5">
-      {items.map((t) => {
-        const c = brandColor(t);
-        return (
-          <span
-            key={t}
-            style={c ? { borderColor: `${c}80` } : undefined}
-            className="inline-flex items-center gap-1.5 rounded-md border border-line bg-panel-2 px-2 py-0.5 font-mono text-[11px] text-muted"
-          >
-            <ChipLabel label={t} />
-          </span>
-        );
-      })}
-    </div>
-  );
-}
-
-function ApproachChips({ items }: { items: string[] }) {
-  if (!items.length) return null;
-  return (
-    <div className="mt-2 flex flex-wrap gap-1.5">
-      {items.map((t) => (
-        <span
-          key={t}
-          className="inline-flex items-center gap-1.5 rounded-md border border-dashed border-faint/40 px-2 py-0.5 font-mono text-[11px] text-faint"
-        >
-          <ChipLabel label={t} />
-        </span>
-      ))}
-    </div>
-  );
-}
-
-function ProvesLine({ w }: { w: Work }) {
-  return (
-    <p className={`mt-4 border-t border-line pt-3 font-mono text-[13px] font-bold leading-6 ${accentText[w.accent]}`}>
-      proves: {w.proves}
-    </p>
-  );
-}
-
-function CardInner({ w, bodyMax }: { w: Work; bodyMax?: boolean }) {
-  return (
-    <>
-      <CardHead w={w} />
-      <p className={`mt-3 text-sm leading-6 text-muted${bodyMax ? " max-w-3xl" : ""}`}>
-        {w.body}
-      </p>
-      <StackChips items={w.stack} />
-      <ApproachChips items={w.approaches} />
-      <ProvesLine w={w} />
-    </>
-  );
-}
-
-const FULL_CARD =
-  "rounded-xl border border-line bg-panel p-6 transition-colors duration-300 hover:border-faint/60 sm:p-8";
-const GRID_CARD =
-  "group flex h-full flex-col rounded-xl border border-line bg-panel p-6 transition-colors duration-300 hover:border-faint/60";
 
 export default function Home() {
   return (
@@ -607,100 +478,8 @@ export default function Home() {
             title="Systems a business depends on, not demos."
             lede="Each entry says what problem it solved, what I built, and what it proves. Everything here runs in production today; the counts are real, the revenue figures deliberately absent."
           />
-          <div className="mt-12 space-y-8">
-            {/* CM Report — content + flow in one box */}
-            <Reveal>
-              <SpotCard as="article" className={FULL_CARD}>
-                <CardInner w={WORK[0]} bodyMax />
-                <div className="mt-6 border-t border-line pt-6">
-                  <CmFlow embedded />
-                </div>
-              </SpotCard>
-            </Reveal>
-
-            {/* Warehouse migration — content + flow in one box */}
-            <Reveal>
-              <SpotCard as="article" className={FULL_CARD}>
-                <CardInner w={WORK[1]} bodyMax />
-                <div className="mt-6 border-t border-line pt-6">
-                  <MigrationFlow embedded />
-                </div>
-              </SpotCard>
-            </Reveal>
-
-            {/* SEM Automation Console — two-part + flow in one box */}
-            <Reveal>
-              <SpotCard as="article" className={FULL_CARD}>
-                <CardHead w={WORK[2]} />
-                {WORK[2].sub && (
-                  <div className="mt-4 grid gap-6 md:grid-cols-2">
-                    <div className="md:pr-6">
-                      <p className="text-sm leading-6 text-muted">
-                        {WORK[2].body}
-                      </p>
-                      <StackChips items={WORK[2].stack} />
-                    </div>
-                    <div className="md:border-l md:border-line md:pl-6">
-                      <h4 className="font-display text-base font-bold tracking-tight text-fg">
-                        {WORK[2].sub.title}
-                      </h4>
-                      <p className="mt-2 text-sm leading-6 text-muted">
-                        {WORK[2].sub.body}
-                      </p>
-                      <ApproachChips items={WORK[2].approaches} />
-                    </div>
-                  </div>
-                )}
-                <ProvesLine w={WORK[2]} />
-                <div className="mt-6 border-t border-line pt-6">
-                  <SemFlow embedded />
-                </div>
-              </SpotCard>
-            </Reveal>
-
-            {/* Same-day CM prediction — content + flow in one box */}
-            <Reveal>
-              <SpotCard as="article" className={FULL_CARD}>
-                <CardInner w={WORK[3]} bodyMax />
-                <div className="mt-6 border-t border-line pt-6">
-                  <PredictFlow embedded />
-                </div>
-              </SpotCard>
-            </Reveal>
-
-            {/* RAG analytics agent — content + flow in one box */}
-            <Reveal>
-              <SpotCard as="article" className={FULL_CARD}>
-                <CardInner w={WORK[4]} bodyMax />
-                <div className="mt-6 border-t border-line pt-6">
-                  <AgentFlow embedded />
-                </div>
-              </SpotCard>
-            </Reveal>
-
-            {/* Pricing — content + flow in one box */}
-            <Reveal>
-              <SpotCard as="article" className={FULL_CARD}>
-                <CardInner w={WORK[5]} bodyMax />
-                <div className="mt-6 border-t border-line pt-6">
-                  <PriceFlow embedded />
-                </div>
-              </SpotCard>
-            </Reveal>
-
-            {/* Remaining two — 2-up grid */}
-            <div className="grid gap-5 md:grid-cols-2">
-              <Reveal>
-                <SpotCard as="article" className={GRID_CARD}>
-                  <CardInner w={WORK[6]} />
-                </SpotCard>
-              </Reveal>
-              <Reveal delay={90}>
-                <SpotCard as="article" className={GRID_CARD}>
-                  <CardInner w={WORK[7]} />
-                </SpotCard>
-              </Reveal>
-            </div>
+          <div className="mt-12">
+            <WorkGrid items={WORK} />
           </div>
         </section>
 
