@@ -476,7 +476,7 @@ export default function Home() {
           <SectionHeading
             kicker="SELECTED WORK"
             title="Systems a business depends on, not demos."
-            lede="Each entry says what problem it solved, what I built, and what it proves. Everything here runs in production today; the counts are real, the revenue figures deliberately absent."
+            lede="Each entry says what problem it solved, what I built, and what it proves; open one to see the system run. Everything here is in production today; the counts are real, the revenue figures deliberately absent."
           />
           <div className="mt-12">
             <WorkGrid items={WORK} />
@@ -742,10 +742,13 @@ export default function Home() {
                   analytics stack at Printerpix, a photo-gifting e-commerce
                   company trading in 9 markets (USA, UK, FR, IT, ES, DE, NL, AE,
                   IN), where I own the
-                  contribution-margin platform, co-built the SEM automation
-                  console, and put LLMs to work where they earn their keep:
-                  classification, NL→SQL, ad-copy generation, always with a
-                  human gate in front of anything that writes.
+                  contribution-margin platform and the warehouse under it
+                  (including its migration from MS SQL Server to PostgreSQL),
+                  co-built the SEM automation console, built the same-day
+                  profit prediction behind its bids, and put LLMs to work
+                  where they earn their keep: classification, NL→SQL, ad-copy
+                  generation, always with a human gate in front of anything
+                  that writes.
                 </p>
                 <p>
                   The fastest way to see how I think is the work above, or

@@ -9,7 +9,7 @@ import {
   CardHead,
   ProvesLine,
   StackChips,
-  accentText,
+  accentButton,
   type FlowKey,
   type Work,
 } from "@/components/work-cards";
@@ -26,6 +26,42 @@ const FLOWS: Record<FlowKey, React.ComponentType<{ embedded?: boolean }>> = {
 };
 
 const HASH_PREFIX = "#work-";
+
+const iconProps = {
+  viewBox: "0 0 24 24",
+  "aria-hidden": true,
+  className: "h-3.5 w-3.5 shrink-0",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 2.2,
+  strokeLinecap: "round",
+  strokeLinejoin: "round",
+} as const;
+
+function PlayIcon() {
+  return (
+    <svg {...iconProps}>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M10 8l6 4-6 4z" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+function DocIcon() {
+  return (
+    <svg {...iconProps}>
+      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+      <path d="M14 3v5h5" />
+      <path d="M9 13h6M9 17h6" />
+    </svg>
+  );
+}
+function ChevronIcon({ up }: { up?: boolean }) {
+  return (
+    <svg {...iconProps}>
+      <path d={up ? "m6 15 6-6 6 6" : "m6 9 6 6 6-6"} />
+    </svg>
+  );
+}
 
 function idFromHash(hash: string): string | null {
   return hash.startsWith(HASH_PREFIX) ? hash.slice(HASH_PREFIX.length) : null;
@@ -141,11 +177,24 @@ export default function WorkGrid({ items }: { items: Work[] }) {
                 onClick={() => toggle(w.id)}
                 aria-expanded={isOpen}
                 aria-controls={panelId}
-                className={`mt-4 inline-flex items-center gap-1.5 self-start font-mono text-[12px] transition-colors hover:text-fg ${
-                  isOpen ? "text-muted" : accentText[w.accent]
-                }`}
+                className={
+                  isOpen
+                    ? "mt-5 inline-flex items-center gap-1.5 self-start rounded-md border border-line px-3 py-1.5 font-mono text-[12px] text-muted transition-colors hover:border-faint hover:text-fg"
+                    : `mt-5 inline-flex items-center gap-2 self-start rounded-md border px-3.5 py-2 font-mono text-[12.5px] font-bold transition-colors ${accentButton[w.accent]}`
+                }
               >
-                {isOpen ? "collapse ↑" : Flow ? "see how it works ↓" : "read more ↓"}
+                {isOpen ? (
+                  <>
+                    <ChevronIcon up />
+                    collapse
+                  </>
+                ) : (
+                  <>
+                    {Flow ? <PlayIcon /> : <DocIcon />}
+                    {Flow ? "See it run" : "Read the full story"}
+                    <span aria-hidden="true">→</span>
+                  </>
+                )}
               </button>
             </SpotCard>
           </Reveal>

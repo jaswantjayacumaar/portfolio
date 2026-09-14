@@ -29,6 +29,17 @@ export const accentText: Record<Accent, string> = {
   danger: "text-danger",
 };
 
+/** Filled call-to-action styling per accent (Tailwind needs the full class strings). */
+export const accentButton: Record<Accent, string> = {
+  accent: "border-accent/60 bg-accent/12 text-accent hover:bg-accent/22 hover:border-accent",
+  "accent-2": "border-accent-2/60 bg-accent-2/12 text-accent-2 hover:bg-accent-2/22 hover:border-accent-2",
+  "accent-3": "border-accent-3/60 bg-accent-3/12 text-accent-3 hover:bg-accent-3/22 hover:border-accent-3",
+  "accent-4": "border-accent-4/60 bg-accent-4/12 text-accent-4 hover:bg-accent-4/22 hover:border-accent-4",
+  "accent-5": "border-accent-5/60 bg-accent-5/12 text-accent-5 hover:bg-accent-5/22 hover:border-accent-5",
+  "accent-6": "border-accent-6/60 bg-accent-6/12 text-accent-6 hover:bg-accent-6/22 hover:border-accent-6",
+  danger: "border-danger/60 bg-danger/12 text-danger hover:bg-danger/22 hover:border-danger",
+};
+
 /** Representative brand colour for a chip label (first real brand hex),
  *  used to tint the stack-chip border. Concept/no-logo chips return
  *  undefined and keep the neutral border. */
