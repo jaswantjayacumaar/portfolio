@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Reveal({
   children,
@@ -12,6 +12,9 @@ export default function Reveal({
   delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  // Held in state (not classList) so a later className change from the parent
+  // can't wipe the revealed state after the observer has disconnected.
+  const [shown, setShown] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -19,7 +22,7 @@ export default function Reveal({
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          el.classList.add("in");
+          setShown(true);
           io.disconnect();
         }
       },
@@ -32,7 +35,7 @@ export default function Reveal({
   return (
     <div
       ref={ref}
-      className={`reveal ${className}`}
+      className={`reveal ${shown ? "in " : ""}${className}`}
       style={delay ? { transitionDelay: `${delay}ms` } : undefined}
     >
       {children}
