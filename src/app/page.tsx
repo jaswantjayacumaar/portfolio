@@ -1,7 +1,9 @@
 import Image from "next/image";
 import AgentFlow from "@/components/AgentFlow";
 import CmFlow from "@/components/CmFlow";
+import MigrationFlow from "@/components/MigrationFlow";
 import MobileNav from "@/components/MobileNav";
+import PredictFlow from "@/components/PredictFlow";
 import PriceFlow from "@/components/PriceFlow";
 import SemFlow from "@/components/SemFlow";
 import Reveal from "@/components/Reveal";
@@ -43,16 +45,25 @@ const WORK: Work[] = [
     title: "Contribution Margin reporting platform",
     domain: "e-commerce analytics",
     accent: "accent",
-    body: "Profitability decisions ran on lagging, patchwork dashboards. I built and own the company's CM reporting platform: a full-stack web app (Next.js/TypeScript, Express, BigQuery, Supabase; deployed on Vercel/Railway) replacing legacy Looker Studio with live daily and hourly profitability, marketing-cost and SEM analytics across 9 international markets (USA, UK, FR, IT, ES, DE, NL, AE, IN), refreshed by scheduled queries timed around US trading waves.",
+    body: "Profitability decisions ran on lagging, patchwork dashboards. I built and own the company's CM reporting platform: a full-stack web app (Next.js/TypeScript, Express, BigQuery, Supabase; deployed on Vercel/Railway) replacing legacy Looker Studio with 9 analytical pages of live daily and hourly profitability, marketing-cost, SEM, auction-insight and conversion-maturation analytics across 9 international markets (USA, UK, FR, IT, ES, DE, NL, AE, IN), refreshed by scheduled queries timed around US trading waves.",
     stack: ["Next.js", "TypeScript", "Express", "BigQuery", "Supabase", "Vercel / Railway"],
     approaches: [],
     proves: "end-to-end platform ownership: warehouse → API → UI → adoption",
   },
   {
+    title: "Warehouse migration: MS SQL → PostgreSQL",
+    domain: "data platform",
+    accent: "accent-3",
+    body: "The company moved its data warehouse from MS SQL Server to PostgreSQL, and every feed under the CM Report ran on legacy cron scripts against the old database. I owned migrating the whole ingestion layer: audited the legacy feeds and root-caused three silent data defects (one had been overstating contribution margin for months), built a PostgreSQL-to-BigQuery sync pipeline into a new dataset, backfilled order history to 2018 within BigQuery load quotas using a metered backfill driver, and repointed 29 scheduled queries through a phased, reconciliation-gated cutover. The Day-1 exit test failed once; I rolled it back fully, fixed the causes, and re-ran it until every destination reconciled to the decimal. HealthGuard alerting now watches the result.",
+    stack: ["PostgreSQL", "BigQuery", "Python", "Cloud Run"],
+    approaches: ["reconciliation gates", "metered backfill", "rollback discipline", "root-cause analysis"],
+    proves: "data-platform migration under load: forensics, cutover, rollback, monitoring",
+  },
+  {
     title: "SEM Automation Console",
     domain: "paid media automation",
     accent: "accent-2",
-    body: "Managing Search & Shopping campaigns across 16 products × 9 countries and 17 Google Ads accounts doesn't scale manually. I co-built an 11-tool automation console (Next.js, Python/Flask, Google Ads API) and led development of most of its systems: automated bidding, negative-keyword management, keyword farming, search-query expansion, ad-copy generation and pricing optimisation. 58 Python automation scripts apply 10,000+ campaign changes a month through preview-first, human-approved writes.",
+    body: "Managing Search & Shopping campaigns across 16 products × 9 countries and 17 Google Ads accounts doesn't scale manually. I co-built a 16-tool automation console (Next.js, Python/Flask, Google Ads API) and led development of most of its systems: automated bidding, negative-keyword management, keyword farming, search-query expansion, ad-copy generation, pricing optimisation, keyword performance and product-demand analysis. 58 Python automation scripts apply 10,000+ campaign changes a month through preview-first, human-approved writes.",
     sub: {
       title: "Bidding decision systems",
       body: "Designed the profit- and growth-mode bidding decision trees behind the console: ROAS-band classification with RED/AMBER/GREEN logic executed autonomously via Cloud Run schedulers across two businesses, plus AI pipelines including a two-pass Gemini negative-keyword classifier and multi-model ad-copy generation using Claude, Gemini and GPT.",
@@ -60,6 +71,15 @@ const WORK: Work[] = [
     stack: ["Python / Flask", "Google Ads API", "Cloud Run", "BigQuery", "Next.js", "Python - Automation"],
     approaches: ["decision trees", "ROAS classification", "two-pass LLM classifier", "multi-model generation"],
     proves: "automation at scale and algorithm design that moves real money, safe by construction",
+  },
+  {
+    title: "Same-day CM prediction",
+    domain: "predictive analytics",
+    accent: "accent",
+    body: "Google Ads conversions take weeks to settle, so yesterday's profit is unknowable when bid decisions are made. I built a same-day contribution-margin prediction system inside the console: immature Day-1 data is pushed through measured conversion-maturation and tracking-loss curves to forecast settled CM per campaign, ad group and search term across Search, Shopping and PMax. Nightly BigQuery materialisers feed the tab, a validation view tracks predicted against settled CM (typically within 5–7%), and a query rework cut the filter scans from 51.5 GB to 1.2 MB, 41,000× cheaper.",
+    stack: ["Python", "BigQuery", "Next.js"],
+    approaches: ["maturation curves", "tracking-loss modelling", "nightly materialisers", "prediction validation"],
+    proves: "predictive modelling in production, with its own error rate on display",
   },
   {
     title: "Retrieval-grounded analytics agent",
@@ -115,7 +135,7 @@ const STANDARDS: {
     question: "“Would I bet a budget on this figure?”",
     points: [
       "Root-caused GA4 revenue defects (missing item revenue, double-fired events) instead of reporting around them",
-      "Warehouse metrics cross-checked against source systems before stakeholders ever see them",
+      "Warehouse cutover gated on reconciliation: the Day-1 exit test failed once, so it was fully rolled back and re-run until 18/18 destinations matched the source to the decimal",
       "Pipeline DAGs, source mappings and calculation logic documented so numbers survive an audit",
     ],
   },
@@ -140,7 +160,7 @@ const STANDARDS: {
     points: [
       "Cloud Run schedulers across two businesses, timed around regional trading waves",
       "Scheduled BigQuery queries with a documented rescheduling plan: twice-daily refresh, deliberately sequenced",
-      "Execution logs and monitoring so failures announce themselves",
+      "HealthGuard alerting on the migrated warehouse: a dead cost feed is emailed the same day, not discovered months later in an overstated margin",
     ],
   },
 ];
@@ -150,7 +170,7 @@ const TOOLING: { group: string; blurb: string; accentClass: string; items: strin
     group: "DATA & CLOUD",
     blurb: "The warehouse and the plumbing around it.",
     accentClass: "text-accent",
-    items: ["SQL", "BigQuery", "GCP (Cloud Run · Scheduler · Storage)", "PostgreSQL", "Supabase", "scheduled queries & DAG orchestration", "ETL pipelines"],
+    items: ["SQL", "BigQuery", "GCP (Cloud Run · Scheduler · Storage)", "PostgreSQL", "Supabase", "scheduled queries & DAG orchestration", "ETL pipelines", "warehouse migration & reconciliation"],
   },
   {
     group: "MARKETING ANALYTICS",
@@ -174,13 +194,13 @@ const TOOLING: { group: string; blurb: string; accentClass: string; items: strin
     group: "ML & STATISTICS",
     blurb: "The modelling underneath.",
     accentClass: "text-accent-5",
-    items: ["scikit-learn", "TensorFlow / Keras", "Bayesian inference", "MCMC", "predictive modelling", "feature engineering", "Power BI (DAX)", "Looker Studio"],
+    items: ["scikit-learn", "TensorFlow / Keras", "Bayesian inference", "MCMC", "predictive modelling", "conversion-maturation modelling", "feature engineering", "Power BI (DAX)", "Looker Studio"],
   },
   {
     group: "MONITORING & RELIABILITY",
     blurb: "Catching breaks before anyone reports them.",
     accentClass: "text-accent-6",
-    items: ["Sentry", "execution logging", "alerting & monitoring", "data-quality checks", "scheduler health checks"],
+    items: ["Sentry", "execution logging", "alerting & monitoring", "data-quality checks", "scheduler health checks", "reconciliation gates", "prediction validation"],
   },
 ];
 
@@ -522,10 +542,11 @@ export default function Home() {
               depends on.
             </h1>
             <p className="mt-6 max-w-3xl text-lg leading-8 text-muted">
-              Full-stack analytics platforms, automated Google Ads bidding, and
-              retrieval-grounded AI agents, plus the BigQuery warehouse
-              underneath, for a global photo-gifting e-commerce company trading
-              across 9 international markets. Once it ships, my job is keeping
+              Full-stack analytics platforms, automated Google Ads bidding,
+              same-day profit prediction, and retrieval-grounded AI agents,
+              plus the BigQuery warehouse underneath (and its migration), for a
+              global photo-gifting e-commerce company trading across 9
+              international markets. Once it ships, my job is keeping
               the numbers{" "}
               <strong className="font-bold text-fg">trustworthy</strong>, the{" "}
               <strong className="font-bold text-fg">automation safe</strong>,
@@ -597,32 +618,52 @@ export default function Home() {
               </SpotCard>
             </Reveal>
 
+            {/* Warehouse migration — content + flow in one box */}
+            <Reveal>
+              <SpotCard as="article" className={FULL_CARD}>
+                <CardInner w={WORK[1]} bodyMax />
+                <div className="mt-6 border-t border-line pt-6">
+                  <MigrationFlow embedded />
+                </div>
+              </SpotCard>
+            </Reveal>
+
             {/* SEM Automation Console — two-part + flow in one box */}
             <Reveal>
               <SpotCard as="article" className={FULL_CARD}>
-                <CardHead w={WORK[1]} />
-                {WORK[1].sub && (
+                <CardHead w={WORK[2]} />
+                {WORK[2].sub && (
                   <div className="mt-4 grid gap-6 md:grid-cols-2">
                     <div className="md:pr-6">
                       <p className="text-sm leading-6 text-muted">
-                        {WORK[1].body}
+                        {WORK[2].body}
                       </p>
-                      <StackChips items={WORK[1].stack} />
+                      <StackChips items={WORK[2].stack} />
                     </div>
                     <div className="md:border-l md:border-line md:pl-6">
                       <h4 className="font-display text-base font-bold tracking-tight text-fg">
-                        {WORK[1].sub.title}
+                        {WORK[2].sub.title}
                       </h4>
                       <p className="mt-2 text-sm leading-6 text-muted">
-                        {WORK[1].sub.body}
+                        {WORK[2].sub.body}
                       </p>
-                      <ApproachChips items={WORK[1].approaches} />
+                      <ApproachChips items={WORK[2].approaches} />
                     </div>
                   </div>
                 )}
-                <ProvesLine w={WORK[1]} />
+                <ProvesLine w={WORK[2]} />
                 <div className="mt-6 border-t border-line pt-6">
                   <SemFlow embedded />
+                </div>
+              </SpotCard>
+            </Reveal>
+
+            {/* Same-day CM prediction — content + flow in one box */}
+            <Reveal>
+              <SpotCard as="article" className={FULL_CARD}>
+                <CardInner w={WORK[3]} bodyMax />
+                <div className="mt-6 border-t border-line pt-6">
+                  <PredictFlow embedded />
                 </div>
               </SpotCard>
             </Reveal>
@@ -630,7 +671,7 @@ export default function Home() {
             {/* RAG analytics agent — content + flow in one box */}
             <Reveal>
               <SpotCard as="article" className={FULL_CARD}>
-                <CardInner w={WORK[2]} bodyMax />
+                <CardInner w={WORK[4]} bodyMax />
                 <div className="mt-6 border-t border-line pt-6">
                   <AgentFlow embedded />
                 </div>
@@ -640,23 +681,23 @@ export default function Home() {
             {/* Pricing — content + flow in one box */}
             <Reveal>
               <SpotCard as="article" className={FULL_CARD}>
-                <CardInner w={WORK[3]} bodyMax />
+                <CardInner w={WORK[5]} bodyMax />
                 <div className="mt-6 border-t border-line pt-6">
                   <PriceFlow embedded />
                 </div>
               </SpotCard>
             </Reveal>
 
-            {/* Remaining two — unchanged 2-up grid */}
+            {/* Remaining two — 2-up grid */}
             <div className="grid gap-5 md:grid-cols-2">
               <Reveal>
                 <SpotCard as="article" className={GRID_CARD}>
-                  <CardInner w={WORK[4]} />
+                  <CardInner w={WORK[6]} />
                 </SpotCard>
               </Reveal>
               <Reveal delay={90}>
                 <SpotCard as="article" className={GRID_CARD}>
-                  <CardInner w={WORK[5]} />
+                  <CardInner w={WORK[7]} />
                 </SpotCard>
               </Reveal>
             </div>

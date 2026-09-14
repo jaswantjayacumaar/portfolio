@@ -24,7 +24,7 @@ const STATS: {
     ),
   },
   {
-    value: 11,
+    value: 16,
     suffix: "",
     label: "SEM automation tools shipped",
     accentClass: "text-accent-2",
@@ -76,6 +76,20 @@ const STATS: {
       </>
     ),
   },
+  {
+    value: 29,
+    suffix: "",
+    label: "Warehouse pipelines migrated to PostgreSQL",
+    accentClass: "text-accent-6",
+    icon: (
+      // database
+      <>
+        <ellipse cx="12" cy="5" rx="9" ry="3" />
+        <path d="M3 5v14a9 3 0 0 0 18 0V5" />
+        <path d="M3 12a9 3 0 0 0 18 0" />
+      </>
+    ),
+  },
 ];
 
 function easeOutCubic(t: number) {
@@ -118,7 +132,7 @@ export default function StatBand() {
   return (
     <div
       ref={ref}
-      className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line lg:grid-cols-5"
+      className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-3 lg:grid-cols-6"
     >
       {STATS.map((s) => (
         <div
