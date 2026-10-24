@@ -21,7 +21,6 @@ const FLOWS: Record<FlowKey, React.ComponentType<{ embedded?: boolean }>> = {
   migration: dynamic(() => import("@/components/MigrationFlow")),
   sem: dynamic(() => import("@/components/SemFlow")),
   predict: dynamic(() => import("@/components/PredictFlow")),
-  agent: dynamic(() => import("@/components/AgentFlow")),
   price: dynamic(() => import("@/components/PriceFlow")),
 };
 

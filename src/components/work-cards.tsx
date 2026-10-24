@@ -2,7 +2,7 @@ import { STACK_ICONS, STACK_PARTS, type StackIcon } from "@/lib/stack-icons";
 
 export type Accent = "accent" | "accent-2" | "accent-3" | "accent-4" | "accent-5" | "accent-6" | "danger";
 
-export type FlowKey = "cm" | "migration" | "sem" | "predict" | "agent" | "price";
+export type FlowKey = "cm" | "migration" | "sem" | "predict" | "price";
 
 export type Work = {
   id: string;

@@ -26,68 +26,56 @@ const NAV = [
 
 const WORK: Work[] = [
   {
+    id: "bidding-agent",
+    title: "Autonomous bidding agent and approval dashboard",
+    domain: "agentic AI",
+    accent: "accent-2",
+    flow: "sem",
+    summary: "An agent that reviews every campaign overnight across 17 Google Ads accounts, argues each case through a chain of LLM roles, and hands its proposals to a human for approval before anything is written.",
+    body: "Bidding across 17 Google Ads accounts in 9 markets was a nightly manual job. I designed and built an agent that does the night shift: statistical change detection flags what moved in every Search, Shopping, Broad and PMax campaign, then a chain of LLM roles (decider, blind critic, arbiter, evidence check) argues each case to a verdict, proposing bid, budget, negative-keyword and search-term moves. Proposals land in the Agent Decisions dashboard inside the CM Report, where a human approves before anything is written to Google Ads, with rollback and a full audit trail on every change.",
+    sub: {
+      title: "The judging chain",
+      body: "Calibrated z-score gates (back-tested against 232 historical target changes) decide what is worth judging. The decider proposes, a blind critic attacks it without seeing the proposal's reasoning, the arbiter rules, and an evidence check enforces that every verdict points the direction its own numbers support. A nightly outcomes loop scores every decision against settled results, so the rules improve from what actually happened.",
+    },
+    stack: ["Python", "LangGraph", "BigQuery", "Google Ads API", "Next.js"],
+    approaches: ["change detection", "multi-model judging", "human-in-the-loop", "outcomes loop"],
+    proves: "production agentic AI that moves real budgets, with a human on the brake",
+  },
+  {
     id: "cm-platform",
     title: "Contribution Margin reporting platform",
     domain: "e-commerce analytics",
     accent: "accent",
     flow: "cm",
-    summary: "Replaced lagging, patchwork profitability dashboards with a full-stack CM platform I built and own: 9 live analytical pages across 9 markets.",
-    body: "Profitability decisions ran on lagging, patchwork dashboards. I built and own the company's CM reporting platform: a full-stack web app (Next.js/TypeScript, Express, BigQuery, Supabase; deployed on Vercel/Railway) replacing legacy Looker Studio with 9 analytical pages of live daily and hourly profitability, marketing-cost, SEM, auction-insight and conversion-maturation analytics across 9 international markets (USA, UK, FR, IT, ES, DE, NL, AE, IN), refreshed by scheduled queries timed around US trading waves.",
+    summary: "Replaced lagging, patchwork profitability dashboards with a full-stack CM platform I built and own: 11 live analytical pages across 9 markets, and the place where the bidding agent's proposals get approved.",
+    body: "Profitability decisions ran on lagging, patchwork dashboards. I built and own the company's CM reporting platform: a full-stack web app (Next.js/TypeScript, Express, BigQuery, Supabase; deployed on Vercel/Railway) replacing legacy Looker Studio with 11 pages of live daily and hourly profitability, marketing-cost, SEM, auction-insight and conversion-maturation analytics across 9 international markets (USA, UK, FR, IT, ES, DE, NL, AE, IN), refreshed by scheduled queries timed around US trading waves. It is also where the bidding agent's proposals are reviewed and approved.",
     stack: ["Next.js", "TypeScript", "Express", "BigQuery", "Supabase", "Vercel / Railway"],
     approaches: [],
     proves: "end-to-end platform ownership: warehouse → API → UI → adoption",
   },
   {
-    id: "warehouse-migration",
-    title: "Warehouse migration: MS SQL → PostgreSQL",
-    domain: "data platform",
-    accent: "accent-3",
-    flow: "migration",
-    summary: "Moved the CM Report's entire ingestion layer from MS SQL Server to PostgreSQL → BigQuery: 29 pipelines, reconciliation-gated, one rollback, no silent breaks left behind.",
-    body: "The company moved its data warehouse from MS SQL Server to PostgreSQL, and every feed under the CM Report ran on legacy cron scripts against the old database. I owned migrating the whole ingestion layer: audited the legacy feeds and root-caused three silent data defects (one had been overstating contribution margin for months), built a PostgreSQL-to-BigQuery sync pipeline into a new dataset, backfilled order history to 2018 within BigQuery load quotas using a metered backfill driver, and repointed 29 scheduled queries through a phased, reconciliation-gated cutover. The Day-1 exit test failed once; I rolled it back fully, fixed the causes, and re-ran it until every destination reconciled to the decimal. HealthGuard alerting now watches the result.",
-    stack: ["PostgreSQL", "BigQuery", "Python", "Cloud Run"],
-    approaches: ["reconciliation gates", "metered backfill", "rollback discipline", "root-cause analysis"],
-    proves: "data-platform migration under load: forensics, cutover, rollback, monitoring",
-  },
-  {
-    id: "sem-console",
-    title: "SEM Automation Console",
-    domain: "paid media automation",
-    accent: "accent-2",
-    flow: "sem",
-    summary: "Co-built a 16-tool console that applies 10,000+ human-approved Google Ads changes a month across 17 accounts and 9 countries, and designed the bidding decision trees behind it.",
-    body: "Managing Search & Shopping campaigns across 16 products × 9 countries and 17 Google Ads accounts doesn't scale manually. I co-built a 16-tool automation console (Next.js, Python/Flask, Google Ads API) and led development of most of its systems: automated bidding, negative-keyword management, keyword farming, search-query expansion, ad-copy generation, pricing optimisation, keyword performance and product-demand analysis. 58 Python automation scripts apply 10,000+ campaign changes a month through preview-first, human-approved writes.",
-    sub: {
-      title: "Bidding decision systems",
-      body: "Designed the profit- and growth-mode bidding decision trees behind the console: ROAS-band classification with RED/AMBER/GREEN logic executed autonomously via Cloud Run schedulers across two businesses, plus AI pipelines including a two-pass Gemini negative-keyword classifier and multi-model ad-copy generation using Claude, Gemini and GPT.",
-    },
-    stack: ["Python / Flask", "Google Ads API", "Cloud Run", "BigQuery", "Next.js", "Python - Automation"],
-    approaches: ["decision trees", "ROAS classification", "two-pass LLM classifier", "multi-model generation"],
-    proves: "automation at scale and algorithm design that moves real money, safe by construction",
-  },
-  {
     id: "cm-prediction",
     title: "Same-day CM prediction",
     domain: "predictive analytics",
-    accent: "accent",
+    accent: "accent-4",
     flow: "predict",
-    summary: "Forecasts today's contribution margin from still-maturing Day-1 data, typically within 5–7% of what eventually settles, and publishes its own error rate.",
-    body: "Google Ads conversions take weeks to settle, so yesterday's profit is unknowable when bid decisions are made. I built a same-day contribution-margin prediction system inside the console: immature Day-1 data is pushed through measured conversion-maturation and tracking-loss curves to forecast settled CM per campaign, ad group and search term across Search, Shopping and PMax. Nightly BigQuery materialisers feed the tab, a validation view tracks predicted against settled CM (typically within 5–7%), and a query rework cut the filter scans from 51.5 GB to 1.2 MB, 41,000× cheaper.",
+    summary: "Forecasts today's contribution margin from still-maturing Day-1 data, typically within 5-7% of what eventually settles, and publishes its own error rate.",
+    body: "Day-1 Google Ads data is a lie: conversions keep arriving for weeks and tracking loses a share of them. I measured both effects as curves (conversion maturation by campaign age, tracking loss by channel) and built a system that runs today's immature numbers through them to forecast where contribution margin will settle, per campaign and ad group, across Search, Shopping and PMax. Nightly BigQuery materialisers keep it current, a validation view tracks predicted against settled CM (typically within 5-7%), and one query rewrite cut the filter scans from 51.5 GB to 1.2 MB, 41,000x cheaper.",
     stack: ["Python", "BigQuery", "Next.js"],
-    approaches: ["maturation curves", "tracking-loss modelling", "nightly materialisers", "prediction validation"],
-    proves: "predictive modelling in production, with its own error rate on display",
+    approaches: ["maturation curves", "tracking-loss factors", "nightly materialisation", "validation loop"],
+    proves: "modelling that is checked against reality every night, not once at launch",
   },
   {
-    id: "analytics-agent",
-    title: "Retrieval-grounded analytics agent",
-    domain: "applied AI",
-    accent: "accent-4",
-    flow: "agent",
-    summary: "A retrieval-grounded NL→SQL agent over 7 live data systems, so stakeholders self-serve the answers dashboards can't give them, with guards on everything it runs.",
-    body: "Stakeholders needed answers faster than dashboards could serve them. I built a RAG analytics agent embedded in the CM platform (FastAPI, LangGraph, Gemini) that turns natural language into validated SQL over BigQuery, grounded by 18 intent playbooks with context caching, connected to 7 live data systems. Hardened with SELECT-only guards, dry-run validation and byte caps, with a streaming chat UI and exportable transcripts.",
-    stack: ["Python", "FastAPI", "LangGraph", "Gemini"],
-    approaches: ["Natural Language → SQL", "context caching", "live integrations", "Model Context Protocol (MCP)"],
-    proves: "production LLM engineering: grounded, guarded, actually used",
+    id: "warehouse-migration",
+    title: "Warehouse migration: MS SQL Server to PostgreSQL",
+    domain: "data engineering",
+    accent: "accent-3",
+    flow: "migration",
+    summary: "Moved the CM Report's entire ingestion layer from MS SQL Server to PostgreSQL and BigQuery: 29 pipelines, reconciliation-gated, one clean rollback, no silent breaks left behind.",
+    body: "The company moved its data warehouse from MS SQL Server to PostgreSQL, and every feed under the CM Report had to move with it. I audited the legacy cron feeds first and found three defects that had gone unnoticed for months, one of them overstating contribution margin. Then the rebuild: a PostgreSQL-to-BigQuery sync pipeline, order history backfilled to 2018 (6.6M+ rows) under BigQuery load quotas with a metered backfill driver, and 29 scheduled queries repointed through a phased cutover gated on reconciliation. One gate failed on day one; the rollback ran clean, the fix shipped, the re-attempt matched the source to the decimal. Health-check queries and alerting now watch the whole chain.",
+    stack: ["PostgreSQL", "BigQuery", "Python", "Cloud Scheduler"],
+    approaches: ["forensic audit", "reconciliation gates", "metered backfill", "rollback discipline"],
+    proves: "migration discipline: reconcile first, cut over second, roll back without drama",
   },
   {
     id: "pricing-pipeline",
@@ -102,26 +90,15 @@ const WORK: Work[] = [
     proves: "production ops: inheriting, hardening and extending a live pipeline",
   },
   {
-    id: "mcp-toolchain",
-    title: "MCP toolchain & AI infrastructure",
-    domain: "AI infrastructure",
+    id: "monitoring-agents",
+    title: "Monitoring agents fleet",
+    domain: "AI operations",
     accent: "accent-5",
-    summary: "An 11-server MCP toolchain that turned LLM-assisted analysis from a personal trick into a team-wide workflow.",
-    body: "Built the team's AI-analytics infrastructure: an 11-server MCP toolchain connecting LLMs to BigQuery, GA4, Google Ads (including a custom write-enabled campaign-management server), Search Console, Matomo, Klaviyo, Sentry, Supabase, Jira/Confluence and the internal admin API, with onboarding guides that made LLM-assisted analysis a team-wide workflow rather than a personal trick.",
-    stack: ["MCP server development", "Nginx"],
-    approaches: ["self-hosted infra", "team enablement"],
-    proves: "building the tools that multiply everyone else's output",
-  },
-  {
-    id: "ga4-forensics",
-    title: "GA4 tracking forensics",
-    domain: "analytics engineering",
-    accent: "danger",
-    summary: "Root-caused and dated three GA4 tracking breaks that everyone else had been reporting around, then drove the fixes with Engineering.",
-    body: "Trustworthy automation needs trustworthy inputs. I root-caused critical GA4 tracking defects (item-level purchase revenue missing since a specific release, GTM double-firing inflating events, a dead checkout event), dated each break, and drove the fixes with Engineering; contributed to server-side tagging and consent-mode implementation across 7 regions.",
-    stack: ["GA4", "GTM"],
-    approaches: ["server-side tagging", "consent mode", "root-cause analysis"],
-    proves: "diagnostic rigour: finding the breaks everyone else reported around",
+    summary: "Scheduled AI agents that audit accounts, track auction position and mine search terms every night, whose reports drove a seven-market cleanup of 100,000+ conflicting negative keywords.",
+    body: "A fleet of scheduled AI agents keeps watch over the paid-media estate: nightly account audits, auction-position tracking against competitors, search-term mining, feed and landing-page checks, each on the cheapest model that does the job. Their reports drove a seven-market account-hygiene overhaul that cleared 100,000+ conflicting negative keywords, every change registered and reversible.",
+    stack: ["Claude", "Gemini", "Google Ads API", "BigQuery"],
+    approaches: ["scheduled agents", "tiered models", "report-only by default"],
+    proves: "AI that watches so people don't have to, and never acts without a record",
   },
 ];
 
@@ -140,9 +117,9 @@ const STANDARDS: {
     borderClass: "border-l-accent",
     question: "“Would I bet a budget on this figure?”",
     points: [
-      "Root-caused GA4 revenue defects (missing item revenue, double-fired events) instead of reporting around them",
-      "Warehouse cutover gated on reconciliation: the Day-1 exit test failed once, so it was fully rolled back and re-run until 18/18 destinations matched the source to the decimal",
-      "Pipeline DAGs, source mappings and calculation logic documented so numbers survive an audit",
+      "Three legacy data defects root-caused during the warehouse migration instead of migrated along; one had been overstating margin for months",
+      "Warehouse cutover gated on reconciliation: the Day-1 exit test failed once, so it was fully rolled back and re-run until every destination matched the source to the decimal",
+      "The prediction system publishes its own error rate: predicted CM is checked against settled CM every night",
     ],
   },
   {
@@ -152,9 +129,9 @@ const STANDARDS: {
     borderClass: "border-l-accent-2",
     question: "“What's the worst thing this could write?”",
     points: [
-      "Preview-first, human-approved writes on 10,000+ monthly campaign changes",
-      "SELECT-only guards, dry-run validation and byte caps on the AI agent's SQL",
-      "RED/AMBER/GREEN decision trees: no bid moves without a classification trail",
+      "A human approval gate in front of every agent proposal: 10,000+ approved changes a month, nothing written without a yes",
+      "A blind critic and an arbiter argue each proposal before a person ever sees it, and an evidence check enforces that the verdict matches its own numbers",
+      "Rollback and a full audit trail on every change the agent writes to Google Ads",
     ],
   },
   {
@@ -164,8 +141,8 @@ const STANDARDS: {
     borderClass: "border-l-accent-3",
     question: "“Does it still work when I'm asleep?”",
     points: [
-      "Cloud Run schedulers across two businesses, timed around regional trading waves",
-      "Scheduled BigQuery queries with a documented rescheduling plan: twice-daily refresh, deliberately sequenced",
+      "The agent works the night shift across 9 markets under a cost cap, waits out rate limits and resumes where it stopped",
+      "A nightly outcomes loop scores every agent decision against settled results, so the rules improve without anyone retuning them by hand",
       "HealthGuard alerting on the migrated warehouse: a dead cost feed is emailed the same day, not discovered months later in an overstated margin",
     ],
   },
@@ -173,40 +150,40 @@ const STANDARDS: {
 
 const TOOLING: { group: string; blurb: string; accentClass: string; items: string[] }[] = [
   {
-    group: "DATA & CLOUD",
-    blurb: "The warehouse and the plumbing around it.",
+    group: "PROGRAMMING",
+    blurb: "The languages everything above is written in.",
     accentClass: "text-accent",
-    items: ["SQL", "BigQuery", "GCP (Cloud Run · Scheduler · Storage)", "PostgreSQL", "Supabase", "scheduled queries & DAG orchestration", "ETL pipelines", "warehouse migration & reconciliation"],
+    items: ["Python", "SQL", "TypeScript", "scikit-learn", "TensorFlow", "LightGBM"],
+  },
+  {
+    group: "DATA ENGINEERING & CLOUD",
+    blurb: "The warehouse and the plumbing around it.",
+    accentClass: "text-accent-3",
+    items: ["BigQuery", "scheduled queries & DAG orchestration", "BigQuery cost optimisation", "GCP (Cloud Run · Scheduler · Storage)", "PostgreSQL", "Supabase (RLS · RBAC)", "ETL pipelines", "warehouse migration & reconciliation", "data-quality monitoring & alerting"],
+  },
+  {
+    group: "AI & AGENTIC SYSTEMS",
+    blurb: "LLMs put to work, with guardrails.",
+    accentClass: "text-accent-4",
+    items: ["LangGraph multi-agent pipelines", "LLM judging chains (critic · arbiter)", "human-in-the-loop approval design", "RAG", "LLM evaluation & back-testing", "Gemini · Claude · GPT APIs", "MCP-accelerated workflows", "Claude Code · Cursor"],
+  },
+  {
+    group: "STATISTICS & ML",
+    blurb: "The modelling underneath.",
+    accentClass: "text-accent-5",
+    items: ["Bayesian inference", "MCMC", "statistical change detection (z-score gating)", "conversion-maturation & time-series modelling", "regression", "Monte Carlo simulation", "predictive modelling", "back-testing & validation"],
   },
   {
     group: "MARKETING ANALYTICS",
     blurb: "The channels the automation actually drives.",
     accentClass: "text-accent-2",
-    items: ["Google Ads API", "GA4", "Search Console", "Merchant Center", "Matomo", "Klaviyo", "Bing Ads", "GTM & server-side tagging", "SEM / ROAS optimisation"],
+    items: ["Google Ads API & auction insights", "Bing Ads API", "GA4", "Search Console", "Merchant Center", "GTM & server-side tagging", "SEM bid automation", "ROAS / CM optimisation", "competitor-price intelligence"],
   },
   {
-    group: "AI / LLM ENGINEERING",
-    blurb: "LLMs put to work, with guardrails.",
-    accentClass: "text-accent-4",
-    items: ["LangGraph", "RAG / retrieval-grounded agents", "NL→SQL", "Gemini · Claude · GPT APIs", "MCP server development", "context caching", "prompt engineering", "Claude Code · Cursor"],
-  },
-  {
-    group: "ENGINEERING",
+    group: "WEB, BI & DELIVERY",
     blurb: "The services that carry it all.",
-    accentClass: "text-accent-3",
-    items: ["Python", "TypeScript", "FastAPI · Flask · Express", "Next.js / React", "Docker", "Vercel · Railway", "Git / GitHub"],
-  },
-  {
-    group: "ML & STATISTICS",
-    blurb: "The modelling underneath.",
-    accentClass: "text-accent-5",
-    items: ["scikit-learn", "TensorFlow / Keras", "Bayesian inference", "MCMC", "predictive modelling", "conversion-maturation modelling", "feature engineering", "Power BI (DAX)", "Looker Studio"],
-  },
-  {
-    group: "MONITORING & RELIABILITY",
-    blurb: "Catching breaks before anyone reports them.",
     accentClass: "text-accent-6",
-    items: ["Sentry", "execution logging", "alerting & monitoring", "data-quality checks", "scheduler health checks", "reconciliation gates", "prediction validation"],
+    items: ["Next.js / React", "FastAPI · Flask · Express", "Docker", "Vercel · Railway", "Power BI (DAX)", "Looker Studio", "Git / GitHub", "pytest / TDD"],
   },
 ];
 
@@ -252,7 +229,7 @@ const FACTS: {
         <circle cx="12" cy="12" r="2" />
       </>
     ),
-    value: "Analytics platforms · Automation · Production LLM tooling",
+    value: "Analytics platforms · Agentic AI · Production data systems",
   },
   {
     label: "DOMAINS",
@@ -413,11 +390,11 @@ export default function Home() {
               depends on.
             </h1>
             <p className="mt-6 max-w-3xl text-lg leading-8 text-muted">
-              Full-stack analytics platforms, automated Google Ads bidding,
-              same-day profit prediction, and retrieval-grounded AI agents,
-              plus the BigQuery warehouse underneath (and its migration), for a
-              global photo-gifting e-commerce company trading across 9
-              international markets. Once it ships, my job is keeping
+              Full-stack analytics platforms, an autonomous bidding agent
+              with human approval, same-day profit prediction, and the
+              BigQuery warehouse underneath (and its migration), for a global
+              photo-gifting e-commerce company trading across 9 international
+              markets. Once it ships, my job is keeping
               the numbers{" "}
               <strong className="font-bold text-fg">trustworthy</strong>, the{" "}
               <strong className="font-bold text-fg">automation safe</strong>,
@@ -744,11 +721,10 @@ export default function Home() {
                   IN), where I own the
                   contribution-margin platform and the warehouse under it
                   (including its migration from MS SQL Server to PostgreSQL),
-                  co-built the SEM automation console, built the same-day
-                  profit prediction behind its bids, and put LLMs to work
-                  where they earn their keep: classification, NL→SQL, ad-copy
-                  generation, always with a human gate in front of anything
-                  that writes.
+                  built the autonomous bidding agent that proposes its Google
+                  Ads changes, and the same-day profit prediction behind
+                  them, always with a human gate in front of anything that
+                  writes.
                 </p>
                 <p>
                   The fastest way to see how I think is the work above, or

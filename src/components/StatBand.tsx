@@ -24,9 +24,9 @@ const STATS: {
     ),
   },
   {
-    value: 16,
+    value: 17,
     suffix: "",
-    label: "SEM automation tools shipped",
+    label: "Google Ads accounts under the agent",
     accentClass: "text-accent-2",
     icon: (
       // modules grid
@@ -41,7 +41,7 @@ const STATS: {
   {
     value: 10000,
     suffix: "+",
-    label: "Campaign changes applied / month",
+    label: "Approved campaign changes / month",
     accentClass: "text-accent-4",
     icon: (
       // refresh cycle

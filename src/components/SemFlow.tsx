@@ -45,23 +45,24 @@ const ICON: Record<string, Icon> = {
 
 type Node = { x: number; y: number; w: number; h: number; label: string; sub?: string; kind: Kind };
 
+// The agent's night: sources feed a detector; what crosses a gate is argued
+// down a chain of LLM roles; the proposal waits at a human gate; the write is
+// scored against settled results and that score feeds the next night.
 const N: Record<string, Node> = {
-  sched: { x: 196, y: 22, w: 120, h: 28, label: "Cloud Run", kind: "sched" },
+  sched: { x: 196, y: 22, w: 120, h: 28, label: "nightly run", kind: "sched" },
   srcAds: { x: 18, y: 150, w: 144, h: 38, label: "Google Ads API", kind: "source" },
   srcBq: { x: 18, y: 190, w: 144, h: 38, label: "BigQuery", kind: "source" },
-  ingest: { x: 196, y: 162, w: 120, h: 52, label: "ingest", sub: "scheduled queries", kind: "ingest" },
-  bid: { x: 376, y: 43, w: 172, h: 30, label: "Bidding", kind: "module" },
-  neg: { x: 376, y: 89, w: 172, h: 30, label: "Negativisation", kind: "module" },
-  farm: { x: 376, y: 135, w: 172, h: 30, label: "Keyword farming", kind: "module" },
-  expand: { x: 376, y: 181, w: 172, h: 30, label: "Query expansion", kind: "module" },
-  copy: { x: 376, y: 227, w: 172, h: 30, label: "Ad-copy gen", kind: "module" },
-  price: { x: 376, y: 273, w: 172, h: 30, label: "Pricing", kind: "module" },
-  decision: { x: 606, y: 152, w: 150, h: 64, label: "decision trees", sub: "profit · growth", kind: "decision" },
+  detect: { x: 196, y: 162, w: 120, h: 52, label: "detect", sub: "z-score gates", kind: "ingest" },
+  decider: { x: 376, y: 50, w: 172, h: 34, label: "decider", kind: "module" },
+  critic: { x: 376, y: 114, w: 172, h: 34, label: "blind critic", kind: "module" },
+  arbiter: { x: 376, y: 178, w: 172, h: 34, label: "arbiter", kind: "module" },
+  evidence: { x: 376, y: 242, w: 172, h: 34, label: "evidence check", kind: "module" },
+  proposal: { x: 606, y: 152, w: 150, h: 64, label: "proposal", sub: "bid · budget · terms", kind: "decision" },
   apply: { x: 858, y: 162, w: 118, h: 44, label: "apply", sub: "Ads API write", kind: "apply" },
 };
 const GATE = { cx: 810, cy: 184, r: 27 };
-const STORE = { x: 840, y: 250, w: 136, h: 30, label: "log · Supabase" };
-const MODULES = ["bid", "neg", "farm", "expand", "copy", "price"] as const;
+const STORE = { x: 826, y: 250, w: 150, h: 30, label: "outcomes · scored" };
+const CHAIN = ["decider", "critic", "arbiter", "evidence"] as const;
 
 const cx = (n: Node) => n.x + n.w / 2;
 const cy = (n: Node) => n.y + n.h / 2;
@@ -71,6 +72,9 @@ const leftA = (n: Node): [number, number] => [n.x, cy(n)];
 function edge(a: [number, number], b: [number, number]) {
   const dx = (b[0] - a[0]) * 0.5;
   return `M${a[0]} ${a[1]} C ${a[0] + dx} ${a[1]}, ${b[0] - dx} ${b[1]}, ${b[0]} ${b[1]}`;
+}
+function down(a: Node, b: Node) {
+  return `M${cx(a)} ${a.y + a.h} L${cx(b)} ${b.y}`;
 }
 
 const GRAD: Record<string, string> = {
@@ -82,24 +86,25 @@ const GRAD: Record<string, string> = {
 
 type EdgeDef = { d: string; color: string };
 const EDGES: EdgeDef[] = [
-  { d: edge(rightA(N.srcAds), leftA(N.ingest)), color: "var(--accent)" },
-  { d: edge(rightA(N.srcBq), leftA(N.ingest)), color: "var(--accent)" },
-  ...MODULES.map((m) => ({ d: edge(rightA(N.ingest), leftA(N[m])), color: "var(--accent-4)" })),
-  ...MODULES.map((m) => ({ d: edge(rightA(N[m]), leftA(N.decision)), color: "var(--accent-3)" })),
-  { d: edge(rightA(N.decision), [GATE.cx - GATE.r, GATE.cy]), color: "var(--accent-3)" },
+  { d: edge(rightA(N.srcAds), leftA(N.detect)), color: "var(--accent)" },
+  { d: edge(rightA(N.srcBq), leftA(N.detect)), color: "var(--accent)" },
+  { d: edge(rightA(N.detect), leftA(N.decider)), color: "var(--accent-4)" },
+  ...CHAIN.slice(0, -1).map((k, i) => ({ d: down(N[k], N[CHAIN[i + 1]]), color: "var(--accent-4)" })),
+  { d: edge(rightA(N.evidence), leftA(N.proposal)), color: "var(--accent-3)" },
+  { d: edge(rightA(N.proposal), [GATE.cx - GATE.r, GATE.cy]), color: "var(--accent-3)" },
   { d: edge([GATE.cx + GATE.r, GATE.cy], leftA(N.apply)), color: "var(--accent-2)" },
 ];
-const TRIGGER = `M${cx(N.sched)} ${N.sched.y + N.sched.h} L${cx(N.sched)} ${N.ingest.y}`;
+const TRIGGER = `M${cx(N.sched)} ${N.sched.y + N.sched.h} L${cx(N.sched)} ${N.detect.y}`;
 const LOG_EDGE = `M${cx(N.apply)} ${N.apply.y + N.apply.h} L${cx(N.apply)} ${STORE.y}`;
-// closed control loop: the write schedules the next run (arcs over the top)
+// closed loop: tonight's scored outcomes tune the next night (arcs over the top)
 const LOOP = `M${cx(N.apply)} ${N.apply.y} C ${cx(N.apply)} 10, ${cx(N.sched)} 10, ${cx(N.sched)} ${N.sched.y}`;
 
 const LOG: { text: string; tone: string }[] = [
-  { text: "[run 36] applied · 356 changes · 0 errors", tone: "dim" },
-  { text: "[run 37] pulled 27,412 search terms · 9,014 ad groups", tone: "default" },
-  { text: "[classify] 412 RED · 1,038 AMBER · 7,564 GREEN", tone: "amber" },
-  { text: "[preview] 356 bid changes queued — awaiting approval", tone: "pink" },
-  { text: "[apply] writing via Google Ads API ✓", tone: "green" },
+  { text: "[night 36] 9 regions · 17 accounts · 4 channels · 1,214 decisions scored", tone: "dim" },
+  { text: "[detect] 27,412 search terms · 9,014 ad groups · 388 crossed a gate", tone: "default" },
+  { text: "[judge] decider 388 · critic held 61 · arbiter ruled 327 · evidence check 0 flips", tone: "amber" },
+  { text: "[proposal] 327 moves queued · awaiting human approval", tone: "pink" },
+  { text: "[apply] 312 approved · written via Google Ads API ✓ · scored tonight", tone: "green" },
 ];
 const toneClass: Record<string, string> = {
   dim: "text-faint",
@@ -184,13 +189,13 @@ export default function SemFlow({ embedded = false }: { embedded?: boolean }) {
   return (
     <div className={embedded ? "" : "rounded-xl border border-line bg-panel/70 p-4 backdrop-blur sm:p-6"}>
       <div className="mb-3 flex items-center justify-between gap-4 font-mono text-[11px] sm:text-xs">
-        <span className="text-muted">sem console · cloud run</span>
+        <span className="text-muted">bidding agent · nightly</span>
         <span className="flex items-center gap-3 text-faint">
           <span className="text-muted">
-            run <span className="text-fg">{run}</span>
+            night <span className="text-fg">{run}</span>
           </span>
           <span className="hidden sm:inline">
-            campaigns <span className="text-fg">239</span>
+            accounts <span className="text-fg">17</span>
           </span>
           <span className="flex items-center gap-1.5">
             <span className={`h-2 w-2 rounded-full ${done ? "bg-accent-2" : "bg-accent dot-pulse"}`} />
@@ -203,7 +208,7 @@ export default function SemFlow({ embedded = false }: { embedded?: boolean }) {
         viewBox="0 0 996 320"
         className="w-full"
         role="img"
-        aria-label="SEM automation console control loop: Google Ads API and BigQuery feed an ingest step triggered by a Cloud Run scheduler, fanning out to six tool modules (bidding, negativisation, keyword farming, query expansion, ad-copy generation, pricing), converging on a RED/AMBER/GREEN decision engine, through a human approval gate, to a guarded write via the Google Ads API; the result is logged to Supabase and loops back to trigger the next scheduled run."
+        aria-label="The bidding agent's nightly loop: Google Ads API and BigQuery feed a change detector with z-score gates; what crosses a gate runs down a chain of LLM roles (decider, blind critic, arbiter, evidence check) into a proposal of bid, budget and search-term moves; the proposal waits at a human approval gate before a guarded write via the Google Ads API; the outcome is scored against settled results and that score feeds the next night."
       >
         <defs>
           <marker id="loopHead" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -232,13 +237,16 @@ export default function SemFlow({ embedded = false }: { embedded?: boolean }) {
         </defs>
 
         <text x={810} y={140} textAnchor="middle" fill="var(--accent-2)" fontSize={11} fontFamily="var(--font-mono)">
-          approval gate
+          human approval
+        </text>
+        <text x={cx(N.decider)} y={N.decider.y - 12} textAnchor="middle" fill="var(--accent-4)" fontSize={11} fontFamily="var(--font-mono)" opacity={0.85}>
+          judging chain
         </text>
 
-        {/* closed control loop back to the scheduler */}
+        {/* closed loop: scored outcomes tune the next night */}
         <path d={LOOP} fill="none" stroke="var(--accent-3)" strokeWidth={1.3} opacity={0.5} markerEnd="url(#loopHead)" />
         <text x={(cx(N.apply) + cx(N.sched)) / 2} y={8} textAnchor="middle" fill="var(--accent-3)" fontSize={11} fontFamily="var(--font-mono)" opacity={0.85}>
-          loop · next scheduled run
+          loop · outcomes tune the next night
         </text>
 
         <path d={TRIGGER} fill="none" stroke="var(--faint)" strokeWidth={1.2} opacity={0.6} />
@@ -278,12 +286,6 @@ export default function SemFlow({ embedded = false }: { embedded?: boolean }) {
         />
 
         {Object.entries(N).map(([k, n]) => renderNode(k, n))}
-
-        <g>
-          <circle cx={cx(N.decision) - 16} cy={N.decision.y + N.decision.h - 12} r={4} fill="var(--danger)" />
-          <circle cx={cx(N.decision)} cy={N.decision.y + N.decision.h - 12} r={4} fill="var(--accent-3)" />
-          <circle cx={cx(N.decision) + 16} cy={N.decision.y + N.decision.h - 12} r={4} fill="var(--accent-2)" />
-        </g>
       </svg>
 
       <div className="mt-3 h-28 overflow-hidden font-mono text-[11px] leading-6 sm:text-[12px]">
@@ -295,8 +297,8 @@ export default function SemFlow({ embedded = false }: { embedded?: boolean }) {
         ))}
       </div>
       <p className="mt-1 font-mono text-[11px] leading-5 text-faint">
-        # simulated · preview-first, human-approved writes on Cloud Run
-        schedulers
+        # simulated · detect, judge, approve, write, score: every night, under a
+        cost cap, with a human on the gate
       </p>
     </div>
   );

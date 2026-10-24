@@ -160,8 +160,8 @@ export default function OpenGraphImage() {
               lineHeight: 1.45,
             }}
           >
-            Full-stack analytics platforms, automated Google Ads bidding &amp;
-            retrieval-grounded AI — across 9 international markets.
+            Full-stack analytics platforms, an autonomous bidding agent with
+            human approval, and the warehouse underneath, across 9 markets.
           </div>
         </div>
 
